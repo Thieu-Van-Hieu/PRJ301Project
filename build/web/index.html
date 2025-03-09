@@ -1,16 +1,96 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
--->
 <html>
-  <head>
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-      <div>TODO write content</div>
-      <p>Duma cai dau buoi gi vay</p>
-  </body>
+    <head>
+        <title>4Club - Welcome</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Welcome to 4Club, the best place to connect and share."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./assets/css/base.css" />
+        <style>
+            .app {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                height: 100vh;
+                width: 100%;
+                background: url("./assets/img/background_full.gif") no-repeat
+                    center center;
+            }
+
+            .app__heading {
+                margin-top: 10rem;
+                font-family: "Oi", sans-serif;
+                font-size: 16rem;
+                color: #fff;
+                text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+                font-weight: 400;
+            }
+
+            .app__btn {
+                display: flex;
+                justify-content: center;
+                gap: 10rem;
+                width: 100%;
+                margin-top: 4rem;
+            }
+
+            .btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 2rem 3.6rem;
+                font-size: 5.2rem;
+                line-height: 1.2;
+                color: #fff;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .btn:hover {
+                background: rgba(255, 255, 255, 0.5);
+                transform: scale(1.1);
+            }
+
+            .btn a {
+                text-decoration: none;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app">
+            <h1 class="app__heading">4Club</h1>
+            <div class="app__btn">
+                <div class="btn" onmouseover="move(this)">
+                    <a href="./signup.html">Sign Up</a>
+                </div>
+                <div class="btn" onmouseover="move(this)">
+                    <a href="./login.html">Log In</a>
+                </div>
+            </div>
+        </div>
+        <script>
+            function move(element) {
+                var x =
+                    Math.random() * (window.innerWidth - element.clientWidth);
+                var y =
+                    Math.random() * (window.innerHeight - element.clientHeight);
+                element.style.position = "absolute";
+                element.style.left = x + "px";
+                element.style.top = y + "px";
+            }
+        </script>
+    </body>
 </html>

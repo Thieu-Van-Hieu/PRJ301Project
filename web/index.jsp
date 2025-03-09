@@ -1,5 +1,6 @@
+<%@page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>4Club - Welcome</title>
         <meta charset="UTF-8" />
@@ -14,47 +15,37 @@
             href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
             rel="stylesheet"
         />
-        <link rel="stylesheet" href="./assets/css/base.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <style>
             .app {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
                 height: 100vh;
                 width: 100%;
-                background: url("./assets/img/background_full.gif") no-repeat
+                background: url("${pageContext.request.contextPath}/assets/img/background_full.gif") no-repeat
                     center center;
             }
 
-            .app__heading {
-                margin-top: 10rem;
+            .app__heading h1 {
                 font-family: "Oi", sans-serif;
                 font-size: 16rem;
                 color: #fff;
                 text-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
                 font-weight: 400;
+                text-align: center;
             }
 
             .app__btn {
-                display: flex;
-                justify-content: center;
-                gap: 10rem;
-                width: 100%;
                 margin-top: 4rem;
             }
 
             .btn {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 2rem 3.6rem;
                 font-size: 5.2rem;
                 line-height: 1.2;
                 color: #fff;
                 background: rgba(255, 255, 255, 0.2);
                 border-radius: 1rem;
                 cursor: pointer;
+                text-align: center;
                 transition: all 0.3s ease;
             }
 
@@ -64,6 +55,9 @@
             }
 
             .btn a {
+                display: block;
+                width: 100%;
+                padding: 2rem 3.6rem;
                 text-decoration: none;
                 color: #fff;
             }
@@ -71,13 +65,17 @@
     </head>
     <body>
         <div class="app">
-            <h1 class="app__heading">4Club</h1>
-            <div class="app__btn">
-                <div class="btn" onmouseover="move(this)">
-                    <a href="./signup.html">Sign Up</a>
+            <div class="grid wide">
+                <div class="app__heading row">
+                    <h1 class="col l-12">4Club</h1>
                 </div>
-                <div class="btn" onmouseover="move(this)">
-                    <a href="./login.html">Log In</a>
+                <div class="app__btn row">
+                    <div class="btn col l-3 l-o-2">
+                        <a href="${pageContext.request.contextPath}/view/signup.jsp">Sign Up</a>
+                    </div>
+                    <div class="btn col l-3 l-o-1">
+                        <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
+                    </div>
                 </div>
             </div>
         </div>

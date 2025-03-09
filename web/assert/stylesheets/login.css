@@ -96,4 +96,24 @@
   .btn-submit:hover {
     background: #0056b3;
   }
-  
+  .signup-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup-link p {
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.signup-link a {
+    color: #ADD8E6; 
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+    color: #AFEEEE; 
+}

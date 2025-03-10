@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,6 +10,15 @@
             name="description"
             content="Welcome to 4Club, the best place to connect and share."
         />
+        <%-- <c:forEach var="season" begin="0" end="3">
+            <c:forEach var="time" begin="0" end="5">
+                <link
+                    rel="preload"
+                    href="${pageContext.request.contextPath}/assets/img/background/${season}_${time}.png"
+                    as="image"
+                />
+            </c:forEach>
+        </c:forEach> --%>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -18,11 +28,27 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <style>
+            #background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: -1;
+                width: 100%;
+                height: 100%;
+                background: url('${pageContext.request.contextPath}/assets/img/background/0_0.png') no-repeat center center;
+                transition: background-image 2s ease-in-out;
+            }
+
+            #preloadBackground {
+                display: none;
+                background: url('${pageContext.request.contextPath}/assets/img/background/0_1.png') no-repeat center center;
+            }
+
             .app {
                 height: 100vh;
                 width: 100%;
-                background: url("${pageContext.request.contextPath}/assets/img/background_full.gif") no-repeat
-                    center center;
             }
 
             .app__heading h1 {
@@ -79,6 +105,9 @@
                 </div>
             </div>
         </div>
+
+        <div id="background"></div>
+        <div id="preload-background"></div>
         <script>
             function move(element) {
                 var x =
@@ -89,6 +118,21 @@
                 element.style.left = x + "px";
                 element.style.top = y + "px";
             }
+
+            let index = 0;
+
+            function updateBackground() {
+                index = (index + 1) % 24;
+                let background = document.getElementById("background");
+                let preloadBackground = document.getElementById("preload-background");
+
+                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index / 6)) + "_" + (index % 6) + ".png')";
+                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor((index + 1) / 6)) + "_" + ((index + 1) % 6) + ".png')";
+                background.style.backgroundImage = backgroundUrl;
+                preloadBackground.style.backgroundImage = preloadBackgroundUrl;
+            }
+
+            setInterval(updateBackground, 3000);
         </script>
     </body>
 </html>

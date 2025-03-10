@@ -1,4 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,6 +10,15 @@
             name="description"
             content="Welcome to 4Club, the best place to connect and share."
         />
+        <%-- <c:forEach var="season" begin="0" end="3">
+            <c:forEach var="time" begin="0" end="5">
+                <link
+                    rel="preload"
+                    href="${pageContext.request.contextPath}/assets/img/background/${season}_${time}.png"
+                    as="image"
+                />
+            </c:forEach>
+        </c:forEach> --%>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -28,7 +38,12 @@
                 width: 100%;
                 height: 100%;
                 background: url('${pageContext.request.contextPath}/assets/img/background/0_0.png') no-repeat center center;
-                transition: background-image 2s linear;
+                transition: background-image 2s ease-in-out;
+            }
+
+            #preloadBackground {
+                display: none;
+                background: url('${pageContext.request.contextPath}/assets/img/background/0_1.png') no-repeat center center;
             }
 
             .app {
@@ -75,7 +90,7 @@
         </style>
     </head>
     <body>
-        <div class="app" id="background">
+        <div class="app">
             <div class="grid wide">
                 <div class="app__heading row">
                     <h1 class="col l-12">4Club</h1>
@@ -90,6 +105,9 @@
                 </div>
             </div>
         </div>
+
+        <div id="background"></div>
+        <div id="preload-background"></div>
         <script>
             function move(element) {
                 var x =
@@ -106,11 +124,15 @@
             function updateBackground() {
                 index = (index + 1) % 24;
                 let background = document.getElementById("background");
+                let preloadBackground = document.getElementById("preload-background");
+
                 let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index / 6)) + "_" + (index % 6) + ".png')";
+                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor((index + 1) / 6)) + "_" + ((index + 1) % 6) + ".png')";
                 background.style.backgroundImage = backgroundUrl;
+                preloadBackground.style.backgroundImage = preloadBackgroundUrl;
             }
 
-            setInterval(updateBackground, 5000);
+            setInterval(updateBackground, 3000);
         </script>
     </body>
 </html>

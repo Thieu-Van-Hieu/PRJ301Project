@@ -18,11 +18,22 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <style>
+            #background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: -1;
+                width: 100%;
+                height: 100%;
+                background: url('${pageContext.request.contextPath}/assets/img/background/0_0.png') no-repeat center center;
+                transition: background-image 2s linear;
+            }
+
             .app {
                 height: 100vh;
                 width: 100%;
-                background: url("${pageContext.request.contextPath}/assets/img/background_full.gif") no-repeat
-                    center center;
             }
 
             .app__heading h1 {
@@ -64,7 +75,7 @@
         </style>
     </head>
     <body>
-        <div class="app">
+        <div class="app" id="background">
             <div class="grid wide">
                 <div class="app__heading row">
                     <h1 class="col l-12">4Club</h1>
@@ -89,6 +100,17 @@
                 element.style.left = x + "px";
                 element.style.top = y + "px";
             }
+
+            let index = 0;
+
+            function updateBackground() {
+                index = (index + 1) % 24;
+                let background = document.getElementById("background");
+                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index / 6)) + "_" + (index % 6) + ".png')";
+                background.style.backgroundImage = backgroundUrl;
+            }
+
+            setInterval(updateBackground, 5000);
         </script>
     </body>
 </html>

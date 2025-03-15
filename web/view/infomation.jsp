@@ -1,3 +1,4 @@
+<%@page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/hoaroi.css" />
-    <link rel="stylesheet" href="../assets/css/register.css" />
+    <link rel="stylesheet" href="../assets/css/information.css" />
 </head>
 <style>
     .petal {
@@ -170,18 +171,24 @@
 
                 <div class="inner-address">
                     <div class="form-row">
-                        <label for="tinhThanh">Tỉnh/Thành phố:</label>
-                        <input type="text" id="tinhThanh" name="tinhThanh" required>
+                        <label>Tỉnh/Thành phố:</label>
+                        <select id="province" onchange="loadDistricts()">
+                            <option value="">Chọn tỉnh/thành phố</option>
+                        </select>
                     </div>
                     <div class="form-row">
-                        <label for="quanHuyen">Quận/Huyện:</label>
-                        <input type="text" id="quanHuyen" name="quanHuyen" required>
+                        <label>Quận/Huyện:</label>
+                        <select id="district" onchange="loadWards()">
+                            <option value="">Chọn quận/huyện</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <label for="phuongXa">Phường/Xã:</label>
-                    <input type="text" id="phuongXa" name="phuongXa" required>
+                    <label>Phường/Xã:</label>
+                    <select id="ward">
+                        <option value="">Chọn phường/xã</option>
+                    </select>
                 </div>
 
                 <button type="submit" style="color: white; font-weight: 700;">Gửi</button>
@@ -191,5 +198,86 @@
 </body>
 <script src="../assets/js/roihoa.js"></script>
 <script src="../assets/js/valiate/datadate.js"></script>
+<script>
+    async function loadProvinces() {
+        const response = await fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1");
+        const data = await response.json();
+        let provinceSelect = document.getElementById("province");
+        
+        data.data.data.forEach(province => {
+            let option = document.createElement("option");
+            option.value = province.code;
+            option.textContent = province.name;
+            provinceSelect.appendChild(option);
+        });
+    }
 
+    async function loadDistricts() {
+    let provinceId = document.getElementById("province").value;
+    let districtSelect = document.getElementById("district");
+    
+    districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+
+    if (provinceId) {
+        try {
+            let response = await fetch("https://vn-public-apis.fpo.vn/districts/getAll?limit=-1");
+            let data = await response.json();
+
+            console.log("API Response:", data); // Kiểm tra API trả về
+
+            let districts = data.data.data.filter(d => d.parent_code === provinceId);
+
+            if (districts.length === 0) {
+                console.error("❌ Không có dữ liệu quận/huyện cho tỉnh này.");
+                return;
+            }
+
+            districts.forEach(district => {
+                let option = document.createElement("option");
+                option.value = district.code;
+                option.textContent = district.name;
+                districtSelect.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error("Lỗi khi tải danh sách quận/huyện:", error);
+        }
+    }
+}
+
+    async function loadWards() {
+    let districtId = document.getElementById("district").value;
+    let wardSelect = document.getElementById("ward");
+    
+    wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+
+    if (districtId) {
+        try {
+            let response = await fetch("https://vn-public-apis.fpo.vn/wards/getAll?limit=-1");
+            let data = await response.json();
+
+            console.log("API Response (Wards):", data); // Kiểm tra API trả về
+
+            let wards = data.data.data.filter(w => w.parent_code === districtId);
+
+            if (wards.length === 0) {
+                console.error("❌ Không có dữ liệu phường/xã cho quận này.");
+                return;
+            }
+
+            wards.forEach(ward => {
+                let option = document.createElement("option");
+                option.value = ward.code;
+                option.textContent = ward.name;
+                wardSelect.appendChild(option);
+            });
+
+        } catch (error) {
+            console.error("Lỗi khi tải danh sách phường/xã:", error);
+        }
+    }
+}
+
+    window.onload = loadProvinces;
+</script>
 </html>

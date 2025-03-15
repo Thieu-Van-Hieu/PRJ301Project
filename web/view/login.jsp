@@ -213,7 +213,7 @@
           <button id="login" style="color: #B3BBBD;">Đăng nhập</button>
         </div>
         <div class="inputGroup inputGroup4">
-          <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.html" style="text-decoration: none;color: #3D2097; ">Đăng ký</a></p>
+          <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.jsp" style="text-decoration: none;color: #3D2097; ">Đăng ký</a></p>
         </div>
       </form>
     </div>

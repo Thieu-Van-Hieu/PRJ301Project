@@ -1,6 +1,7 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../assets/css/discovery.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -141,7 +141,7 @@
             align-items: center;
             gap: 12px;
             padding: 20px 5px;
-            
+
         }
 
         .sidebar-header__item {
@@ -152,7 +152,7 @@
         }
 
         .sidebar-header__name {
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 600;
         }
 
@@ -207,9 +207,6 @@
 
             height: calc(100vh - 60px);
         }
-
-        
-        
     </style>
     <jsp:include page="/view/background.jsp" />
     <div class="container">
@@ -220,7 +217,6 @@
                 <span>Nhóm 1</span>
             </div>
             <div class="header-icons">
-                <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
                 <a href="#"><i class="fa-solid fa-envelope"></i></a>
                 <a href="#">?</a>
             </div>
@@ -229,7 +225,7 @@
         <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
         <div class="left-toolbar">
             <ul>
-                <li><img src="../assets/img/logo_3.jpg" alt=""></li>
+                <li><img src="../assets/img/logo-img/logo_3.jpg" alt=""></li>
                 <li>1</li>
                 <li><i class="fa-solid fa-plus"></i></li>
                 <li><i class="fa-regular fa-compass"></i></li>
@@ -244,7 +240,7 @@
                 <div class="sidebar-header__name">Câu Lạc Bộ A</div>
             </div>
             <div class="sidebar-coverImg">
-                <img src="../assets/img/loginnight.jpg" alt="">
+                <img src="../assets/img/login-img/loginnight.jpg" alt="">
             </div>
             <ul>
                 <li><a href="#">Diễn đàn</a></li>
@@ -264,49 +260,470 @@
         </div>
 
         <!-- Ná»i dung chÃ­nh -->
-         <style>
+        <style>
             .content-header {
                 color: #064273;
                 display: flex;
-                padding: 12px 5px;
+                padding: 20px 24px;
                 justify-content: space-between;
+                border-bottom: 1px solid #ccc;
             }
 
             .content-header_util {
                 display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 12px;
+                font-size: 24px;
+                position: relative;
             }
 
-         </style>
+            .content-header_util input {
+                padding: 6px;
+                border-radius: 12px;
+                border: 1px solid;
+            }
+
+            .content-header_util .content-search {
+                position: absolute;
+                right: 10px;
+                font-size: 16px;
+                color: #CCC
+            }
+        </style>
         <div class="content">
             <header class="content-header">
-                <h1>Diễn đàn</h1>
+                <h2>Diễn đàn</h2>
                 <div class="content-header_util">
                     <i class="fa-solid fa-scroll"></i>
                     <i class="fa-solid fa-user-group"></i>
-                    <input type="text" name="" id="">
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" name="" id="" placeholder="Tìm kiếm">
+                    <i class="fa-solid fa-magnifying-glass content-search"></i>
                 </div>
             </header>
-            <div class="content-create">
-                <div class="comment-container" onclick="openModal()">
-                    <div class="avatar"></div>
-                    <input type="text" id="commentInput" class="input" placeholder="Bạn đang nghĩ gì?" disabled>
-                    <button class="button">Ảnh/Video</button>
+
+            <style>
+                .content-create {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #fff;
+                    padding: 5px 24px;
+                    border-radius: 12px;
+                    margin: 12px 32px;
+                }
+
+                .content-text {
+                    display: flex;
+                    gap: 12px;
+                    padding: 12px 0;
+                    border-bottom: 1px solid #ccc;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                .content-text .avatar {
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .content-text .input {
+                    padding: 8px 6px;
+                    width: 95%;
+                    border-radius: 12px;
+                    border: none;
+                }
+
+                .content-text img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+
+                .content-img {
+                    display: flex;
+                    gap: 12px;
+                    justify-content: center;
+                    align-items: center;
+                    color: #064273;
+                    margin-top: 12px;
+                }
+
+                #fileInput {
+                    display: none;
+                }
+
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background-color: rgba(0, 0, 0, 0.4);
+                    align-items: center;
+                    justify-content: center;
+                    display: none;
+                }
+
+                .modal.open {
+                    display: flex;
+                }
+
+                .modal-container {
+                    background-color: #fff;
+                    width: 900px;
+                    max-width: calc(100% - 32px);
+                    min-height: 200px;
+                    position: relative;
+                    animation: modalFadeIn ease 0.5s;
+                    border-radius: 12px;
+                }
+
+                .modal-close {
+                    position: absolute;
+                    right: 24px;
+                    top: 16px;
+                    color: #000;
+                    cursor: pointer;
+                    opacity: 0.8;
+                    font-size: 24px;
+                    background-color: #ccc;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                }
+
+                .modal-header {
+                    text-align: center;
+                    padding: 24px 0;
+                    font-size: 32px;
+                    font-weight: 600;
+                    border-bottom: 1px solid #ccc;
+                }
+
+                .modal-body {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 12px 18px;
+                }
+
+                .modal-body .modal-body-header {
+                    display: flex;
+                    justify-content: left;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 18px;
+                }
+
+                .modal-body .modal-body-avatar {
+                    width: 36px;
+                    height: 36px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .modal-body-avatar img {
+                    width: 100%;
+                    border-radius: 50%;
+                }
+
+                .modal-content {
+                    padding-bottom: 68px;
+                    border: none;
+                    font-size: 24px;
+                }
+
+                .modal-content::placeholder {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transform: translateY(4px);
+                    font-size: 24px;
+                    color: gray;
+                }
+
+                .modal-select {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 12px 0;
+                    font-size: 18px;
+                    gap: 8px;
+                    cursor: pointer;
+                }
+
+                .modal .btn-submit {
+                    width: 100%;
+                    border: none;
+                    padding: 12px 0;
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #fff;
+                    background-color: #064273;
+                    border-radius: 16px;
+                    margin-top: 24px;
+                    cursor: pointer;
+                }
+
+                @keyframes modalFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-150px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            </style>
+            <div class="content-create js-open-modal">
+                <div class="content-text">
+                    <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                    <input type="text" id="commentInput" class="input" placeholder="Content gì chưa người đẹp?">
                 </div>
-                <div class="modal" id="modal">
-                    <div class="modal-content">
-                        <span class="close" onclick="closeModal()">&times;</span>
-                        <h2>Tạo bài viết</h2>
-                        <textarea placeholder="Nhập nội dung..."></textarea>
-                        <button>Đăng</button>
+                <div class="content-img">
+                    <i class="fa-solid fa-images"></i>
+                    <p>Ảnh / Video</p>
+                </div>
+            </div>
+            <div class="modal js-modal" id="modal">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="modal-container js-modal-container">
+                        <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
+                        <div class="modal-header">Tạo Bài Viết</div>
+                        <div class="modal-body">
+                            <div class="modal-body-header">
+                                <div class="modal-body-avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                                <p>Chong cua Bo</p>
+                            </div>
+                            <input type="text" class="modal-content" placeholder="Content gì chưa người đẹp?">
+                            <div class="modal-select" id="customFileUpload"><i class="fa-solid fa-images"></i>
+                                <p>Thêm ảnh gì không người đẹp?</p>
+                            </div>
+                            <input type="file" id="fileInput" name="file" required>
+                            <button type="submit" class="btn-submit">Đăng</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <style>
+                .content-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 24px;
+                    margin: 12px 32px;
+                }
+
+                .content-item {
+                    display: flex;
+                    flex-direction: column;
+                    background-color: #fff;
+                    border-radius: 12px;
+                }
+
+                .item-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 16px 24px;
+                }
+
+                .item-avatar {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 12px;
+                }
+
+                .item-img {
+                    width: 46px;
+                    height: 46px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                }
+
+                .content-item .item-img img {
+                    border-radius: 50%;
+                }
+
+                .content-item img {
+                    width: 100%;
+                }
+
+                .item-name-date {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: left;
+                    align-items: center;
+
+                }
+
+                .item-name {
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .item-date {
+                    font-size: 12px;
+                }
+
+                .item-utils {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 12px;
+                    font-size: 24px;
+                    opacity: 0.7;
+                }
+
+                .item-extend {}
+
+                .item-close {}
+
+                .item-body {}
+
+                .item-content-text {
+                    padding: 0 12px 6px;
+                }
+
+                .item-content-comment {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: 0 12px;
+                    border-bottom: 1px solid #ccc;
+                    padding: 12px 0;
+                }
+
+                .item-body-love {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .item-body-love i {
+                    font-size: 18px;
+                    color: pink;
+                }
+
+                .item-footer {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 48px;
+                }
+
+                .item-footer-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 5px;
+                    font-size: 24px;
+                    padding: 12px 48px 8px;
+                    cursor: pointer;
+                }
+
+                .input-comment {
+                    padding-left: 12px ;
+                    display: none;
+                }
+
+                .comment-list {
+                    padding: 0px 24px 12px;
+                    display: none;
+                }
+                
+                .comment-body {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 4px;
+                    width: 85%;
+                }
+
+                .comment-name {
+                    font-size: 24px;
+                    font-weight: 600;
+                }
+
+                .comment-content {
+                    font-size: 18px;
+                }
+
+            </style>
+            <div class="content-list">
+                <div class="content-item">
+                    <div class="item-header">
+                        <div class="item-avatar">
+                            <div class="item-img"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="item-name-date">
+                                <div class="item-name">Chong cua Bo</div>
+                                <div class="item-date">14 Tháng 3, 6:36 PM</div>
+                            </div>
+                        </div>
+                        <div class="item-utils">
+                            <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                            <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-body">
+                        <div class="item-content-text">Mùa xuân sang có hoa anh đào</div>
+                        <div class="item-content-img"><img src="../assets/img/login-img/loginmorning.jpg" alt=""></div>
+                        <div class="item-content-comment">
+                            <div class="item-body-love">
+                                <i class="fa-solid fa-heart"></i>
+                                <p>123</p>
+                            </div>
+                            <div class="item-body-comment">1 bình luận</div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-footer-item love">
+                            <i class="fa-regular fa-heart"></i>
+                            <p>Thích</p>
+                        </div>
+                        <div class="item-footer-item comment">
+                            <i class="fa-regular fa-comment"></i>
+                            <p>Bình Luận</p>
+                        </div>
+                    </div>
+                    <div class="content-text input-comment">
+                        <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                        <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
+                    </div>
+                    <div class="comment-list">
+                        <div class="content-text">
+                            <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="comment-body">
+                                <div class="comment-name">Chong cua Bo</div>
+                                <div class="comment-content">Bài viết thật hay và sáng tạo</div>
+                            </div>
+                            <div class="item-utils">
+                                <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                                <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+
+
     <script>
-        document.getElementById('toggle-tasks').addEventListener('click', function(event) {
+        document.getElementById('toggle-tasks').addEventListener('click', function (event) {
             event.preventDefault();
             let taskList = document.getElementById('task-list');
             taskList.classList.toggle('show');
@@ -316,9 +733,59 @@
         function openModal() {
             document.getElementById('modal').style.display = 'flex';
         }
+
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
+
+        document.getElementById("customFileUpload").addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+        })
+
+        const newContent = document.querySelector('.js-open-modal')
+        const modal = document.querySelector('.js-modal')
+        const modalContainer = document.querySelector('.js-modal-container')
+        const modalClose = document.querySelector('.js-modal-close')
+
+        const comment = document.querySelector('.input-comment')
+        const commentList = document.querySelector('.comment-list')
+        const openComment = document.querySelector('.comment')
+        function showModal() {
+            modal.classList.add('open')
+        }
+
+        function hideModal() {
+            modal.classList.remove('open')
+        }
+
+        function showComment() {
+            comment.style.display = "flex";
+            commentList.style.display = "block"
+        }
+
+        function hideComment() {
+            comment.style.display = "none";
+            commentList.style.display = "none";
+        }        
+
+        openComment.addEventListener('click', function(){
+            if(comment.style.display === "none" && comment.style.display === "none"){
+                showComment();
+            } else {
+                hideComment();
+            }
+        })
+
+        newContent.addEventListener('click', showModal)
+
+        modalClose.addEventListener('click', hideModal)
+
+        modal.addEventListener('click', hideModal)
+
+        modalContainer.addEventListener('click', function (event) {
+            event.stopPropagation();
+        })
     </script>
 </body>
+
 </html>

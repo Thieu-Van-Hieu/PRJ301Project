@@ -21,7 +21,7 @@
         <div class="header">
             <div class="header-title">
                 <i class="fa-regular fa-compass"></i>
-                <span>Khám Phá</span>
+                <span>Nhóm 1</span>
             </div>
             <div class="header-icons">
                 <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
@@ -43,29 +43,39 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <h2>Khám Phá Câu Lạc Bộ</h2>
+            <div class="sidebar-header" id="sidebar-header">
+                <i class="fa-solid fa-house"></i>
+                <p>Câu lạc bộ A</p>
+            </div>
             <ul>
-                <li><a href="#">Trang Chủ</a></li>
-                <li><a href="#">Gaming</a></li>
-                <li><a href="#">Âm Nhạc</a></li>
-                <li><a href="#">Khoa học & Công Nghệ</a></li>
-                <li><a href="#">Thể Thao</a></li>
-                <li><a href="#">Giáo Dục</a></li>
+                <li><a href="#">Diễn đàn</a></li>
+                <li><a href="#">Lịch</a></li>
+                <li><a href="#">Sự Kiện</a></li>
+                <li><a href="#">Đóng tiền</a></li>
+                <li> Nhiệm vụ
+                    <ul>
+                        <li>Nhiệm vụ được giao</li>
+                        <li>Giao nhiệm vụ</li>
+                    </ul>
+                </li>
+                <li><a href="#">Báo Cáo</a></li>
+                <li><a href="#">Nhóm của bạn</a></li>
             </ul>
         </div>
 
         <!-- Ná»i dung chÃ­nh -->
         <div class="content">
             <header class="content-header">
-                <h1>TÌM NHỮNG CÂU LẠC BỘ DÀNH CHO BẠN TRÊN 4CLUB</h1>
-                <p>Luôn có câu lạc bộ phù hợp với bạn trên 4Club</p>
+                <div class="content-header__name">Diễn đàn</div>
+                <div class="content-header__utils">
+                    <i class="fa-solid fa-bullhorn"></i>
+                    <i class="fa-solid fa-user-group"></i>
+                    <input type="text">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
             </header>
 
-            <section class="club-section">
-                <h3>Câu Lạc Bộ Nổi Bật</h3>
-                <div class="club-list">                              
-                </div>
-            </section>
+            
         </div>
     </div>
 </body>

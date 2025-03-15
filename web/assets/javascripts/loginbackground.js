@@ -22,11 +22,11 @@ function updateBackground() {
     let container = document.querySelector(".container");
 
     if (hour >= 5 && hour < 12) {
-        container.style.backgroundImage = "url('../asserts/image/loginmorning.jpg')";
+        container.style.backgroundImage = "url('../assets/image/loginmorning.jpg')";
     } else if (hour >= 12 && hour < 18 ) {
-        container.style.backgroundImage = "url('../asserts/image/loginmorning.jpg')";
+        container.style.backgroundImage = "url('../assets/image/loginmorning.jpg')";
     } else{
-        container.style.backgroundImage = "url('../asserts/image/loginnight.jpg')";
+        container.style.backgroundImage = "url('../assets/image/loginnight.jpg')";
     }
     container.style.backgroundSize = "cover";
     container.style.backgroundPosition = "center";

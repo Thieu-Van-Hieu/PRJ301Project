@@ -29,6 +29,7 @@
       margin-left: 0;
       margin-bottom: 20px;
       text-align: center;
+      display: none;
     }
   }
   
@@ -45,6 +46,7 @@
       margin-left: 0;
       margin-bottom: 20px;
       text-align: center;
+      display: none;
     }
     .login-form {
       width: 100%;

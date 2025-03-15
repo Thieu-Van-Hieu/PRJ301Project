@@ -39,12 +39,35 @@
                 border-bottom: 1px solid #ccc;
             }
 
-            .calendar__day, .calendar__hour, .calendar__cell, .calendar__event {
+            .calendar__controls, .calendar__day, .calendar__hour, .calendar__cell, .calendar__event {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 background-color: #ccc;
                 font-size: 1.4rem;
+            }
+
+            .calendar__controls {
+                flex-direction: column;
+            }
+
+            .calendar__buttons {
+                display: flex;
+                justify-content: space-evenly;
+                width: 100%;              
+            }
+
+            .calendar__buttons button {
+                padding: 0.5rem 1rem;
+                font-size: 1.4rem;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                border-radius: 0.5rem;
+                cursor: pointer;
+            }
+
+            .calendar__buttons button:hover {
+                background-color: #f0f0f0;
             }
 
             .calendar__day {
@@ -87,9 +110,9 @@
             ArrayList<Event> events = new ArrayList<>();
 
             // Thêm một vài sự kiện với ngày và giờ cụ thể
-            events.add(new Event(1, "Meeting", "Team meeting for project", Timestamp.valueOf("2025-03-08 10:00:00"), Timestamp.valueOf("2025-03-12 11:00:00")));
+            events.add(new Event(1, "Meeting", "Team meeting for project", Timestamp.valueOf("2025-03-10 10:00:00"), Timestamp.valueOf("2025-03-12 11:00:00")));
             events.add(new Event(2, "Workshop", "Java Web Development workshop", Timestamp.valueOf("2025-03-14 14:00:00"), Timestamp.valueOf("2025-03-14 17:00:00")));
-            events.add(new Event(3, "Conference", "Annual tech conference", Timestamp.valueOf("2025-03-15 09:00:00"), Timestamp.valueOf("2025-03-17 18:00:00")));
+            events.add(new Event(3, "Conference", "Annual tech conference", Timestamp.valueOf("2025-03-15 09:00:00"), Timestamp.valueOf("2025-03-16 18:00:00")));
             events.add(new Event(4, "Deadline", "Submit project report", Timestamp.valueOf("2025-03-25 22:00:00"), Timestamp.valueOf("2025-03-26 00:00:00")));
             events.add(new Event(5, "Hackathon", "Coding competition", Timestamp.valueOf("2025-04-10 08:00:00"), Timestamp.valueOf("2025-04-11 20:00:00")));
 
@@ -103,11 +126,30 @@
 
             // Ngày bắt đầu của tuần
             Calendar startOfWeekCalendar = Calendar.getInstance();
-            startOfWeekCalendar.add(Calendar.DAY_OF_WEEK, -currentDayOfWeek + 1);
+            startOfWeekCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+            startOfWeekCalendar.set(Calendar.HOUR_OF_DAY, 0);
+            startOfWeekCalendar.set(Calendar.MINUTE, 0);
+            startOfWeekCalendar.set(Calendar.SECOND, 0);
+            startOfWeekCalendar.set(Calendar.MILLISECOND, 0);
 
             // Ngày kết thúc của tuần
-            Calendar endOfWeekCalendar = Calendar.getInstance();
-            endOfWeekCalendar.add(Calendar.DAY_OF_WEEK, 7 - currentDayOfWeek);
+            Calendar endOfWeekCalendar = (Calendar) startOfWeekCalendar.clone();
+            endOfWeekCalendar.add(Calendar.DAY_OF_WEEK, 6);
+            endOfWeekCalendar.set(Calendar.HOUR_OF_DAY, 23);
+            endOfWeekCalendar.set(Calendar.MINUTE, 59);
+            endOfWeekCalendar.set(Calendar.SECOND, 59);
+            endOfWeekCalendar.set(Calendar.MILLISECOND, 999);
+
+            String startDate = startOfWeekCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+                            (startOfWeekCalendar.get(Calendar.MONTH) + 1) + "/" +
+                            startOfWeekCalendar.get(Calendar.YEAR);
+
+            String endDate = endOfWeekCalendar.get(Calendar.DAY_OF_MONTH) + "/" +
+                            (endOfWeekCalendar.get(Calendar.MONTH) + 1) + "/" +
+                            endOfWeekCalendar.get(Calendar.YEAR);
+
+            String week = startDate + " - " + endDate;
+            pageContext.setAttribute("week", week);
 
             // Lấy danh sách các sự kiện trong tuần
             ArrayList<Event> eventsInWeek = new ArrayList<>();
@@ -120,6 +162,8 @@
 
             int reminingTimeSlots = 0;
 
+            ArrayList<Event> eventAreas = new ArrayList<>();
+
             // Tạo một mảng 2 chiều để lưu thông tin các sự kiện trong tuần
             final int HOURS = 24;
             final int DAYS = 7;
@@ -127,6 +171,12 @@
             for (Event event : eventsInWeek) {
                 calendar.setTime(event.getStartDate());
                 int startDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                if (startDayOfWeek == 1) {
+                    startDayOfWeek = 7;
+                } else {
+                    startDayOfWeek--;
+                }
+
                 int startHourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 
                 if (calendar.before(startOfWeekCalendar)) {
@@ -136,6 +186,11 @@
 
                 calendar.setTime(event.getEndDate());
                 int endDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                if (endDayOfWeek == 1) {
+                    endDayOfWeek = 7;
+                } else {
+                    endDayOfWeek--;
+                }
                 int endHourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
 
                 if (calendar.after(endOfWeekCalendar)) {
@@ -150,14 +205,19 @@
                     }
                     
                     int endHour = endHourOfDay;
-                    if (startDayOfWeek != endDayOfWeek) {
+                    if (i != endDayOfWeek - 1) {
                         endHour = 24;
                     }
-                    for (int j = startHourOfDay; j < endHour; j++) {
-                        eventSlots[j][i] = "event-" + event.getId();
+
+                    for (int j = startHour; j < endHour; j++) {
+                        eventSlots[j][i] = "event-" + eventAreas.size();
                     }
+                    
+                    eventAreas.add(event);
                 }
             }
+
+            pageContext.setAttribute("eventAreas", eventAreas);
 
             // Tính số lượng ô trống còn lại
             for (int i = 0; i < HOURS; i++) {
@@ -179,6 +239,7 @@
                     gridAreas.append(eventSlots[i][j]);
                     gridAreas.append(" ");
                 }
+
                 gridAreas.append("'\n");
             }
 
@@ -186,12 +247,17 @@
 
         %>
         <jsp:include page="background.jsp" />
-        <%-- <h1>${eventsInWeek}</h1> --%>
         <div class="box">
             <div class="calendar">
                 <div class="calendar__header">
-                    <div class="calendar__day">
-                        bu
+                    <div class="calendar__controls">
+                        <div class="calendar__week">
+                            ${week}
+                        </div>
+                        <div class="calendar__buttons">
+                            <button onclick="location.href='#'">Previous</button>
+                            <button onclick="location.href='#'">Next</button>
+                        </div>
                     </div>
                     <div class="calendar__day">Thứ 2</div>
                     <div class="calendar__day">Thứ 3</div>
@@ -211,8 +277,8 @@
                         <c:forEach var="i" begin="1" end="${reminingTimeSlots}">
                             <div class="calendar__cell"></div>
                         </c:forEach>
-                        <c:forEach var="event" items="${eventsInWeek}">
-                            <div class="calendar__event" style="grid-area: event-${event.id}">${event.name}</div>
+                        <c:forEach var="i" begin="0" end="${eventAreas.size() - 1}">
+                            <div class="calendar__event" style="grid-area: event-${i}">${eventAreas.get(i).name}</div>
                         </c:forEach>
                     </div>
                 </div>

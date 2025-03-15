@@ -134,13 +134,36 @@
 
         }
 
-        .sidebar h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #064273;
-            margin-top: 10px;
-            padding-left: 20px;
+        .sidebar .sidebar-header {
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 20px 5px;
+            
         }
+
+        .sidebar-header__item {
+            color: #fff;
+            background-color: #064273;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .sidebar-header__name {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .sidebar-coverImg {
+            width: 100%;
+        }
+
+        .sidebar-coverImg img {
+            width: 100%;
+        }
+
 
         .sidebar ul {
             list-style: none;
@@ -149,7 +172,16 @@
             gap: 10px;
         }
 
-        .sidebar ul li {}
+        .sidebar ul .hidden {
+            max-height: 0;
+            display: none;
+            transition: max-height 2s ease-in-out;
+        }
+
+        .sidebar ul .show {
+            max-height: 300px;
+            margin-left: 16px;
+        }
 
         .sidebar ul li a {
             text-decoration: none;
@@ -176,32 +208,7 @@
             height: calc(100vh - 60px);
         }
 
-        /* Header của content (chiếm full width) */
-        .content-header {
-            background: #4a6fa5;
-            /* Màu nền header content */
-            color: white;
-            padding: 40px 30px;
-            text-align: left;
-            width: 100%;
-            /* Chiếm toàn bộ chiều rộng */
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .content-header h1 {
-            width: 60%;
-            font-size: 30px;
-            font-family: "Oi", sans-serif;
-            font-weight: 400;
-        }
-
-        .content-header p {
-            font-size: 20px;
-        }
-
+        
         
     </style>
     <jsp:include page="/view/background.jsp" />
@@ -232,19 +239,23 @@
 
         <!-- Sidebar -->
         <div class="sidebar">
-            <div class="sidebar-header" id="sidebar-header">
-                <i class="fa-solid fa-house"></i>
-                <p>Câu lạc bộ A</p>
+            <div class="sidebar-header">
+                <div class="sidebar-header__item"><i class="fa-solid fa-house"></i></div>
+                <div class="sidebar-header__name">Câu Lạc Bộ A</div>
+            </div>
+            <div class="sidebar-coverImg">
+                <img src="../assets/img/loginnight.jpg" alt="">
             </div>
             <ul>
                 <li><a href="#">Diễn đàn</a></li>
                 <li><a href="#">Lịch</a></li>
                 <li><a href="#">Sự Kiện</a></li>
                 <li><a href="#">Đóng tiền</a></li>
-                <li> Nhiệm vụ
-                    <ul>
-                        <li>Nhiệm vụ được giao</li>
-                        <li>Giao nhiệm vụ</li>
+                <li>
+                    <a href="#" id="toggle-tasks">Nhiệm vụ</a>
+                    <ul id="task-list" class="hidden">
+                        <li><a href="#">Nhiệm vụ được giao</a></li>
+                        <li><a href="#">Giao nhiệm vụ</a></li>
                     </ul>
                 </li>
                 <li><a href="#">Báo Cáo</a></li>
@@ -253,22 +264,61 @@
         </div>
 
         <!-- Ná»i dung chÃ­nh -->
+         <style>
+            .content-header {
+                color: #064273;
+                display: flex;
+                padding: 12px 5px;
+                justify-content: space-between;
+            }
+
+            .content-header_util {
+                display: flex;
+            }
+
+         </style>
         <div class="content">
             <header class="content-header">
-                <div class="content-header__name">Diễn đàn</div>
-                <div class="content-header__utils">
-                    <i class="fa-solid fa-bullhorn"></i>
+                <h1>Diễn đàn</h1>
+                <div class="content-header_util">
+                    <i class="fa-solid fa-scroll"></i>
                     <i class="fa-solid fa-user-group"></i>
-                    <input type="text">
+                    <input type="text" name="" id="">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </header>
             <div class="content-create">
-
+                <div class="comment-container" onclick="openModal()">
+                    <div class="avatar"></div>
+                    <input type="text" id="commentInput" class="input" placeholder="Bạn đang nghĩ gì?" disabled>
+                    <button class="button">Ảnh/Video</button>
+                </div>
+                <div class="modal" id="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h2>Tạo bài viết</h2>
+                        <textarea placeholder="Nhập nội dung..."></textarea>
+                        <button>Đăng</button>
+                    </div>
+                </div>
             </div>
-
-
         </div>
     </div>
+
+    <script>
+        document.getElementById('toggle-tasks').addEventListener('click', function(event) {
+            event.preventDefault();
+            let taskList = document.getElementById('task-list');
+            taskList.classList.toggle('show');
+            taskList.classList.toggle('hidden');
+        });
+
+        function openModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

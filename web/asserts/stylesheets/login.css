@@ -54,7 +54,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    background: url('../assert/image/hoaanhdao.png') no-repeat center center;
+    background: url('../asserts/image/hoaanhdao.png') no-repeat center center;
     background-size: contain;
     opacity: 0.9;
     animation: fall linear infinite;

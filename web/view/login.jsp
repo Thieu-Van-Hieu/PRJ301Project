@@ -7,16 +7,16 @@
   <meta charset="UTF-8" />
   <title>Login Page with Animation</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-  <link rel="stylesheet" href="../assets/css/login.css" />
-  <link rel="stylesheet" href="../assets/css/responsivelogin.css">
-  <link rel="stylesheet" href="../assets/css/loginmoney.css" />
+  <link rel="stylesheet" href="../assets/css/login-css/login.css" />
+  <link rel="stylesheet" href="../assets/css/login-css/responsivelogin.css">
+  <link rel="stylesheet" href="../assets/css/login-css/loginmoney.css" />
   <link rel="stylesheet" href="../assets/css/hoaroi.css" />
   <style>
      .petal {
       position: absolute;
       width: 20px;
       height: 20px;
-      background: url('../assets/img/hoaanhdao.png') no-repeat center center;
+      background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
       background-size: contain;
       opacity: 0.9;
       animation: fall linear infinite;
@@ -199,7 +199,7 @@
         </div>
         <div class="inputGroup inputGroup1">
           <label for="loginEmail" id="loginEmailLabel" style="color: #B3BBBD;">Tên đăng nhập</label>
-          <input type="email" id="loginEmail" maxlength="254" placeholder="Tên đăng nhập" />
+          <input type="text" id="loginEmail" maxlength="254" placeholder="Tên đăng nhập" />
         </div>
         <div class="inputGroup inputGroup2">
           <label for="loginPassword" id="loginPasswordLabel" style="color: #B3BBBD;">Mật khẩu</label>
@@ -213,15 +213,16 @@
           <button id="login" style="color: #B3BBBD;">Đăng nhập</button>
         </div>
         <div class="inputGroup inputGroup4">
-          <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.jsp" style="text-decoration: none;color: #3D2097; ">Đăng ký</a></p>
+          <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
         </div>
       </form>
     </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
   <script src="./NextgenmediaSVGPlugin.min_2.js"></script>
-  <script src="../assets/js/loginbackground.js"></script>
-  <script src="../assets/js/loginmoney.js"></script>
-  <script src="../assets/js/roihoa.js"></script>
+  <script src="../assets/js/login-js/loginbackground.js"></script>
+  <script src="../assets/js/login-js/loginmoney.js"></script>
+  <script src="../assets/js/effect-js/roihoa.js"></script>
+  <script src="../assets/js/valiate/formlogin.js"></script>
 </body>
 </html>

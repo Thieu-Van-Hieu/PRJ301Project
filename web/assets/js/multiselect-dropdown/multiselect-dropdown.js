@@ -14,7 +14,7 @@ style.innerHTML = `
   background-size: 16px 12px;
 }
 .multiselect-dropdown .optexts{
-  height: 100%;
+  height: 40px;
   overflow: auto;
 }
 .multiselect-dropdown span.optext, .multiselect-dropdown span.placeholder{
@@ -238,9 +238,9 @@ function MultiselectDropdown(options) {
             div.listEl = listWrap;
 
             div.refresh = () => {
-                div.querySelectorAll("span.optext, span.placeholder").forEach(
-                    (t) => div.removeChild(t)
-                );
+                if (div.querySelector(".optexts")) {
+                    div.querySelector(".optexts").remove();
+                }
                 var optexts = newEl("div", { class: "optexts" });
                 var sels = Array.from(el.selectedOptions);
                 if (
@@ -291,8 +291,8 @@ function MultiselectDropdown(options) {
                                 config.placeholder,
                         })
                     );
+                div.appendChild(optexts);
             };
-            div.appendChild(optextsContainer);
             div.refresh();
         };
         el.loadOptions();

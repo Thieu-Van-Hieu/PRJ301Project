@@ -12,5 +12,4 @@ function updateBackground() {
     }
 }
 
-// Gọi hàm sau khi DOM đã tải xong
 document.addEventListener("DOMContentLoaded", updateBackground);

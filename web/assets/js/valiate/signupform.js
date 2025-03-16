@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerForm = document.querySelector("form");
   const errorMessage = document.getElementById("error-message");
 
-  const validationRegex = /^(?=.{8,16}$)(?=.*[A-Za-z])(?!.*(?:--|['";])).+$/;
+  const validationRegex = /^(?=.{8,16}$)(?=.*[A-Za-z])[A-Za-z0-9]+$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@(fpt\.edu\.vn|gmail\.com)$/;
 
   function createErrorElement(input) {
@@ -21,6 +21,30 @@ document.addEventListener("DOMContentLoaded", () => {
       input.parentElement.appendChild(errorEl);
     }
     return errorEl;
+  }
+
+  function allowOnlyAlphanumeric(event) {
+    if (event.key.length > 1) return; 
+    if (!/[A-Za-z0-9]/.test(event.key)) {
+      event.preventDefault();
+      const errorEl = createErrorElement(event.target);
+      errorEl.textContent = "Không chấp nhận ký tự đặc biệt!";
+      event.target.style.border = "2px solid red";
+    }
+  }
+
+  function filterInput(event) {
+    const originalValue = event.target.value;
+    const filteredValue = originalValue.replace(/[^A-Za-z0-9]/g, '');
+    if (originalValue !== filteredValue) {
+      event.target.value = filteredValue;
+      const errorEl = createErrorElement(event.target);
+      errorEl.textContent = "Chỉ cho phép chữ và số!";
+      event.target.style.border = "2px solid red";
+    } else {
+      const errorEl = createErrorElement(event.target);
+      errorEl.textContent = "";
+    }
   }
 
   function validateField(input, regex, errorText) {
@@ -68,12 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  usernameInput.addEventListener("keydown", allowOnlyAlphanumeric);
+  passwordInput.addEventListener("keydown", allowOnlyAlphanumeric);
+  usernameInput.addEventListener("input", filterInput);
+  passwordInput.addEventListener("input", filterInput);
+
   usernameInput.addEventListener("input", () => {
-    validateField(usernameInput, validationRegex, "Tài khoản phải có ít nhất 1 chữ cái, từ 8-16 ký tự");
+    validateField(usernameInput, validationRegex, "Tài khoản phải có từ 8-16 ký tự, ít nhất 1 chữ, chỉ chữ và số");
   });
 
   passwordInput.addEventListener("input", () => {
-    validateField(passwordInput, validationRegex, "Mật khẩu phải có ít nhất 1 chữ cái, từ 8-16 ký tự");
+    validateField(passwordInput, validationRegex, "Mật khẩu phải có từ 8-16 ký tự, ít nhất 1 chữ, chỉ chữ và số");
   });
 
   confirmPasswordInput.addEventListener("input", checkPasswordMatch);

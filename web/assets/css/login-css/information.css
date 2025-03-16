@@ -7,6 +7,7 @@
 html, body {
   height: 100%;
   font-family: Arial, sans-serif;
+  font-size: 1rem;
 }
 
 .container {
@@ -23,26 +24,26 @@ html, body {
 }
 
 .form-register {
+  width: 90%;
+  max-width: 37.5rem;
+  margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  width: 60%;
-}
-
-h2 {
-  font-weight: 700;
-}
-
-p {
-  font-weight: 700;
+  padding: 1.875rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1);
+  height: 70vh;
+  overflow-y: auto;
 }
 
 h2 {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
   color: #444A51;
+  font-weight: 700;
+}
+
+p {
   font-weight: 700;
 }
 
@@ -52,29 +53,29 @@ form {
 }
 
 label {
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
   font-weight: bold;
   display: block;
   width: 100%;
 }
 
 input, select {
-  padding: 10px;
-  margin-bottom: 15px;
+  padding: 0.625rem;
+  margin-bottom: 0.9375rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
   width: 100%;
 }
 
 button {
-  padding: 12px;
+  padding: 0.75rem;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
   width: 100%;
   transition: background-color 0.3s;
 }
@@ -86,8 +87,8 @@ button:hover {
 .inner-name, .inner-masv, .inner-address {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-row {
@@ -97,7 +98,7 @@ button:hover {
 }
 
 .form-register h1 {
-  padding-bottom: 15px;
+  padding-bottom: 0.9375rem;
 }
 
 .inner-name .form-row, .inner-masv .form-row, .inner-address .form-row {
@@ -109,10 +110,10 @@ button:hover {
 }
 
 input[type="date"] {
-  padding: 10px;
+  padding: 0.625rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
   background-color: white;
   color: #333;
   width: 100%;
@@ -122,10 +123,10 @@ input[type="date"] {
 }
 
 input, select {
-  padding: 10px;
+  padding: 0.625rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
   background-color: white;
   color: #333;
   width: 100%;
@@ -137,7 +138,7 @@ input, select {
 input:focus, select:focus {
   outline: none;
   border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  box-shadow: 0 0 0.3125rem rgba(76, 175, 80, 0.5);
 }
 
 input:hover, select:hover {
@@ -152,15 +153,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .select-wrapper {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 0.625rem;
+  margin-bottom: 0.9375rem;
 }
 
 .select-wrapper select {
-  padding: 8px;
+  padding: 0.5rem;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
   width: 32%;
   box-sizing: border-box;
   appearance: none;
@@ -172,7 +173,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 select:focus {
   outline: none;
   border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  box-shadow: 0 0 0.3125rem rgba(76, 175, 80, 0.5);
 }
 
 select:hover {
@@ -180,11 +181,11 @@ select:hover {
 }
 
 select option {
-  font-size: 14px;
-  padding: 8px;
+  font-size: 0.875rem;
+  padding: 0.5rem;
 }
 
 select:focus option {
-  max-height: 150px;
+  max-height: 9.375rem;
   overflow-y: auto;
 }

@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/hoaroi.css" />
     <link rel="stylesheet" href="../assets/css/login-css/information.css" />
+    <link rel="stylesheet" href="../assets/css/reponsivecss/reponsiveinfor.css">
     <style>
         .petal {
             position: absolute;

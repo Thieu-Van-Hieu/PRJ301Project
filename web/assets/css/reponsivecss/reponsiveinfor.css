@@ -1,0 +1,82 @@
+@media (max-width: 690px) {
+  .form-register {
+    width: 50%;
+    max-width: none;
+    padding: 1.25rem;
+  }
+  
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.9375rem;
+  }
+  
+  label,
+  input,
+  select,
+  button {
+    font-size: 0.875rem;
+  }
+  
+  input,
+  select {
+    padding: 0.375rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  label {
+    margin-bottom: 0.25rem;
+  }
+  
+  .inner-name,
+  .inner-masv,
+  .inner-address {
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  
+  .inner-name .form-row,
+  .inner-masv .form-row,
+  .inner-address .form-row {
+    width: 100%;
+  }
+  
+  .select-wrapper {
+    flex-direction: column;
+  }
+  
+  .select-wrapper select {
+    width: 100%;
+  }
+}
+
+@media (max-width: 399px) {
+  .form-register {
+    padding: 1rem;
+  }
+  
+  h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  label,
+  input,
+  select,
+  button {
+    font-size: 0.75rem;
+  }
+  
+  input,
+  select {
+    padding: 0.3125rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  label {
+    margin-bottom: 0.2rem;
+  }
+  
+  .select-wrapper select {
+    padding: 0.25rem;
+  }
+}

@@ -2,14 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  html, body {
+}
+
+html, body {
     height: 100%;
     font-family: Arial, sans-serif;
-  }
-  
-  .container {
+}
+
+.container {
     width: 100%;
     height: 100vh;
     background-size: cover;
@@ -20,54 +20,54 @@
     justify-content: center;
     align-items: center;
     color: #444A51;
-  }
-  
-  .form-register {
+}
+
+.form-register {
     background-color: rgba(255, 255, 255, 0.9);
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     width: 40%;
-  }
-  
-  h2 {
+}
+
+h2 {
     font-weight: 700;
-  }
-  
-  p {
+}
+
+p {
     font-weight: 700;
-  }
-  
-  h2 {
+}
+
+h2 {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #444A51;
     font-weight: 700;
-  }
-  
-  form {
+}
+
+form {
     display: flex;
     flex-direction: column;
-  }
-  
-  label {
+}
+
+label {
     margin-bottom: 5px;
     font-weight: bold;
     display: block;
     width: 100%;
-  }
-  
-  input, select {
+}
+
+input, select {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
     width: 100%;
-  }
-  
-  button {
+}
+
+button {
     padding: 12px;
     background-color: #4CAF50;
     color: white;
@@ -77,38 +77,38 @@
     font-size: 16px;
     width: 100%;
     transition: background-color 0.3s;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
-  .inner-name, .inner-masv, .inner-address {
+}
+
+.inner-name, .inner-masv, .inner-address {
     display: flex;
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 20px;
-  }
-  
-  .form-row {
+}
+
+.form-row {
     display: flex;
     flex-direction: column;
     flex: 1;
-  }
-  
-  .form-register h1 {
+}
+
+.form-register h1 {
     padding-bottom: 15px;
-  }
-  
-  .inner-name .form-row, .inner-masv .form-row, .inner-address .form-row {
+}
+
+.inner-name .form-row, .inner-masv .form-row, .inner-address .form-row {
     width: 48%;
-  }
-  
-  .inner-address .form-row {
+}
+
+.inner-address .form-row {
     flex: 1 1 48%;
-  }
-  
-  input[type="date"] {
+}
+
+input[type="date"] {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -119,9 +119,9 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-  }
-  
-  input, select {
+}
+
+input, select {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -132,32 +132,31 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-  }
-  
-  input:focus, select:focus {
+}
+
+input:focus, select:focus {
     outline: none;
     border-color: #4CAF50;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-  }
-  
-  input:hover, select:hover {
+}
+
+input:hover, select:hover {
     border-color: #45a049;
-  }
-  
-  input[type="date"]::-webkit-calendar-picker-indicator {
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
     background: url('path_to_custom_icon.png') no-repeat center center;
     background-size: contain;
-  }
-  
-  /* Điều chỉnh dropdown size 5 mục */
-  .select-wrapper {
+}
+
+.select-wrapper {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-bottom: 15px;
-  }
-  
-  .select-wrapper select {
+}
+
+.select-wrapper select {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -168,30 +167,26 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     transition: all 0.3s ease;
-    height: auto; /* Giảm chiều cao của select */
+    height: auto;
     overflow: hidden;
-  }
-  
-  /* Tạo viền khi focus vào các trường select */
-  select:focus {
+}
+
+select:focus {
     outline: none;
     border-color: #4CAF50;
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
-  }
-  
-  select:hover {
+}
+
+select:hover {
     border-color: #45a049;
-  }
-  
-  /* Điều chỉnh option trong dropdown */
-  select option {
+}
+
+select option {
     font-size: 14px;
     padding: 8px;
-  }
-  
-  /* Giới hạn số lượng mục được hiển thị trong dropdown */
-  select:focus option {
+}
+
+select:focus option {
     max-height: 150px;
     overflow-y: auto;
-  }
-  
+}

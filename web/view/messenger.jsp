@@ -11,7 +11,7 @@
         <style>
             .chat-box {
                 display: flex;
-                height: 100vh;
+                height: 100%;
                 width: 100%;
                 flex-direction: column;
                 overflow: auto;
@@ -131,10 +131,101 @@
                 background-color: transparent;
                 color: #fff;
             }
-        </style>
-        <script>
 
-        </script>
+            /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
+            @media (max-width: 768px) {
+                .chat-box {
+                    flex-direction: column;
+                    height: 100vh; /* Chiều cao toàn màn hình */
+                }
+
+                .messages {
+                    flex: 1;
+                    padding: 10px;
+                    font-size: 1.4rem; /* Giảm kích thước chữ */
+                }
+
+                .message {
+                    flex-direction: column; /* Sắp xếp tin nhắn theo cột */
+                    align-items: flex-start;
+                }
+
+                .message.self {
+                    align-self: flex-end;
+                }
+
+                .message__description {
+                    font-size: 1.4rem; /* Giảm kích thước chữ */
+                    padding: 8px;
+                }
+
+                .message__username {
+                    font-size: 1.2rem; /* Giảm kích thước tên người dùng */
+                }
+
+                .message__content {
+                    font-size: 1.4rem; /* Giảm kích thước nội dung tin nhắn */
+                }
+
+                .message-container {
+                    flex-direction: row;
+                    padding: 10px;
+                    gap: 10px;
+                }
+
+                .message__input {
+                    font-size: 1.4rem; /* Giảm kích thước chữ trong ô nhập */
+                    padding: 8px;
+                }
+
+                .message__send {
+                    font-size: 1.4rem; /* Giảm kích thước nút gửi */
+                    height: 40px;
+                    width: 40px;
+                }
+            }
+
+            /* Responsive cho màn hình nhỏ hơn 1024px (máy tính bảng) */
+            @media (max-width: 1024px) {
+                .chat-box {
+                    height: 90vh; /* Chiều cao 90% màn hình */
+                }
+
+                .messages {
+                    padding: 15px;
+                    font-size: 1.6rem; /* Điều chỉnh kích thước chữ */
+                }
+
+                .message__description {
+                    font-size: 1.6rem; /* Điều chỉnh kích thước chữ */
+                    padding: 10px;
+                }
+
+                .message__username {
+                    font-size: 1.4rem; /* Điều chỉnh kích thước tên người dùng */
+                }
+
+                .message__content {
+                    font-size: 1.6rem; /* Điều chỉnh kích thước nội dung tin nhắn */
+                }
+
+                .message-container {
+                    padding: 15px;
+                    gap: 15px;
+                }
+
+                .message__input {
+                    font-size: 1.6rem; /* Điều chỉnh kích thước chữ trong ô nhập */
+                    padding: 10px;
+                }
+
+                .message__send {
+                    font-size: 1.6rem; /* Điều chỉnh kích thước nút gửi */
+                    height: 48px;
+                    width: 48px;
+                }
+            }
+        </style>
     </head>
     <body>
         <% 
@@ -153,7 +244,9 @@
             messages.add(new Message(9, "user4", "Practice makes perfect."));
             messages.add(new Message(10, "user4", "End of test messages."));
             pageContext.setAttribute("messages", messages);
+            request.setAttribute("contentHeader", "Messenger");
         %>
+        <jsp:include page="contentHeader.jsp" />
         <div class="chat-box">
             <div class="messages">
                 <c:forEach var="message" items="${messages}">

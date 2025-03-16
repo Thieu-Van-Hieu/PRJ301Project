@@ -56,8 +56,7 @@ style.innerHTML = `
 .multiselect-dropdown-list{
   padding:2px;
   height: 15rem;
-  overflow-y:auto;
-  overflow-x: hidden;
+  overflow: auto;
 }
 .multiselect-dropdown-list::-webkit-scrollbar {
   width: 6px;

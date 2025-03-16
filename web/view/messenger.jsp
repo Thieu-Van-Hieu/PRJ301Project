@@ -11,9 +11,10 @@
         <style>
             .chat-box {
                 display: flex;
-                height: 100%;
+                height: 100vh;
                 width: 100%;
                 flex-direction: column;
+                overflow: auto;
                 background-color: #f0f0f0;
             }
 
@@ -68,6 +69,7 @@
                 font-size: 1.6rem;
                 color: #fff;
                 background-color: #77cbe2;
+                cursor: pointer;
             }
             .message__username {
                 margin-bottom: 10px;
@@ -77,6 +79,24 @@
             .message__content {
                 flex: 1;
                 font-size: 1.6rem;
+            }
+
+            .message__control {
+                display: none;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+                height: 32px;
+                width: 32px;
+                border-radius: 5px;
+                font-size: 1.6rem;
+                color: #fff;
+                background-color: #ff3d00;
+                cursor: pointer;
+            }
+
+            .message__control--active {
+                display: flex;
             }
 
             .message-container {
@@ -138,7 +158,8 @@
             <div class="messages">
                 <c:forEach var="message" items="${messages}">
                 <div class="message ${message.getUsername() == username ? 'self' : 'other'}">
-                    <span class="message__btn">⋮</span>
+                    <div class="message__control">Gỡ</div>
+                    <span class="message__btn" onclick="showDeleteBtn(this)">⋮</span>
                     <div class="message__description">
                         <span class="message__username">${message.getUsername()}</span>
                         <span class="message__content">${message.getContent()}</span>
@@ -154,6 +175,10 @@
         </div>
 
         <script>
+            function showDeleteBtn(element) {
+                element.closest('.message').querySelector('.message__control').classList.toggle('message__control--active');
+            }
+
             const messagesContainer = document.querySelector('.messages');
 
             // Cuộn xuống cuối cùng khi load trang

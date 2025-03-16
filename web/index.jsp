@@ -87,6 +87,43 @@
                 text-decoration: none;
                 color: #fff;
             }
+
+            /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
+            @media (max-width: 768px) {
+                .app__heading h1 {
+                    font-size: 8rem; /* Giảm kích thước tiêu đề */
+                }
+
+                .app__btn {
+                    flex-direction: column; /* Sắp xếp các nút theo cột */
+                    align-items: center;
+                    gap: 1rem;
+                }
+
+                .btn {
+                    font-size: 4rem; /* Giảm kích thước chữ trong nút */
+                    width: 80%; /* Đặt chiều rộng nút phù hợp với màn hình nhỏ */
+                }
+
+                .btn a {
+                    padding: 1.5rem 2rem; /* Giảm padding trong nút */
+                }
+            }
+
+            /* Responsive cho màn hình nhỏ hơn 1024px (máy tính bảng) */
+            @media (max-width: 1024px) {
+                .app__heading h1 {
+                    font-size: 12rem; /* Điều chỉnh kích thước tiêu đề */
+                }
+
+                .btn {
+                    font-size: 4.5rem; /* Điều chỉnh kích thước chữ trong nút */
+                }
+
+                .btn a {
+                    padding: 1.8rem 2.8rem; /* Điều chỉnh padding trong nút */
+                }
+            }
         </style>
     </head>
     <body>
@@ -97,7 +134,7 @@
                 </div>
                 <div class="app__btn row">
                     <div class="btn col l-3 l-o-2">
-                        <a href="${pageContext.request.contextPath}/view/signup.jsp">Sign Up</a>
+                        <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
                     </div>
                     <div class="btn col l-3 l-o-1">
                         <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>

@@ -15,7 +15,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
+                height: 100%;
+                width: 100%;
+                overflow: auto;
             }
 
             .calendar {
@@ -26,8 +28,8 @@
                 width: 100%;
                 height: 100%;
                 overflow-y: auto;
-                background-color: #f0f0f0;
-                opacity: 0.6;
+                background-color:#f0f0f0;
+                color: #131314;
             }
 
             .calendar__header {
@@ -43,7 +45,7 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: #ccc;
+                background-color: #fff;
                 font-size: 1.4rem;
             }
 
@@ -95,18 +97,120 @@
             }
 
             .calendar__event {
-                background-color: green;
                 padding: 0.5rem;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+                border-radius: 1rem;
             }
 
+            /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
+            @media (max-width: 768px) {
+                .calendar {
+                    grid-template-rows: auto 1fr; /* Điều chỉnh chiều cao các phần */
+                    gap: 5px;
+                }
+
+                .calendar__header {
+                    grid-template-columns: repeat(7, 1fr); /* Giữ nguyên 7 cột nhưng giảm kích thước */
+                    gap: 2px;
+                }
+
+                .calendar__day {
+                    font-size: 1.2rem; /* Giảm kích thước chữ của ngày */
+                    padding: 0.5rem;
+                }
+
+                .calendar__body {
+                    grid-template-columns: 1fr 7fr; /* Giữ nguyên tỷ lệ cột giờ và sự kiện */
+                    gap: 2px;
+                }
+
+                .calendar__hours {
+                    font-size: 1rem; /* Giảm kích thước chữ của giờ */
+                }
+
+                .calendar__events {
+                    grid-template-columns: repeat(7, 1fr); /* Giữ nguyên 7 cột */
+                    grid-template-rows: repeat(24, 1fr); /* Giữ nguyên 24 hàng */
+                    gap: 2px;
+                }
+
+                .calendar__event {
+                    font-size: 1rem; /* Giảm kích thước chữ trong sự kiện */
+                    padding: 0.3rem;
+                }
+            }
+
+            /* Responsive cho màn hình nhỏ hơn 1024px (máy tính bảng) */
+            @media (max-width: 1024px) {
+                .calendar {
+                    grid-template-rows: auto 1fr;
+                    gap: 10px;
+                }
+
+                .calendar__header {
+                    grid-template-columns: repeat(7, 1fr); /* Giữ nguyên 7 cột */
+                    gap: 5px;
+                }
+
+                .calendar__day {
+                    font-size: 1.6rem; /* Điều chỉnh kích thước chữ của ngày */
+                    padding: 0.8rem;
+                }
+
+                .calendar__body {
+                    grid-template-columns: 1fr 7fr; /* Giữ nguyên tỷ lệ cột giờ và sự kiện */
+                    gap: 5px;
+                }
+
+                .calendar__hours {
+                    font-size: 1.2rem; /* Điều chỉnh kích thước chữ của giờ */
+                }
+
+                .calendar__events {
+                    grid-template-columns: repeat(7, 1fr); /* Giữ nguyên 7 cột */
+                    grid-template-rows: repeat(24, 1fr); /* Giữ nguyên 24 hàng */
+                    gap: 5px;
+                }
+
+                .calendar__event {
+                    font-size: 1.2rem; /* Điều chỉnh kích thước chữ trong sự kiện */
+                    padding: 0.5rem;
+                }
+            }
         </style>
     </head>
     <body>
         <%
+            ArrayList<String> colors = new ArrayList<>(Arrays.asList(
+                "#fbf8cc", // Màu vàng nhạt
+                "#fde4cf", // Màu cam nhạt
+                "#ffcfd2", // Màu hồng phấn
+                "#f1c0e8", // Màu hồng tím
+                "#cfbaf0", // Màu tím nhạt
+                "#a3c4f3", // Màu xanh dương nhạt
+                "#90dbf4", // Màu xanh nước biển nhạt
+                "#8eecf5", // Màu xanh cyan nhạt
+                "#98f5e1", // Màu xanh bạc hà
+                "#b9fbc0"  // Màu xanh lá nhạt
+            ));
+            
+            ArrayList<Integer> colorNumber = new ArrayList<>();
+            for (int i = 0; i < colors.size(); i++) {
+                colorNumber.add(i);
+            }
+
+            ArrayList<Integer> randomIndexColor = new ArrayList<>();
+            for (int i = 0; i < colors.size(); i++) {
+                int randomIndex = (int) (Math.random() * colorNumber.size());
+                randomIndexColor.add(colorNumber.get(randomIndex));
+                colorNumber.remove(randomIndex);
+            }
+
             // Tạo một ArrayList để lưu các sự kiện
+            ArrayList<String> colorAreas = new ArrayList<>();
+
             ArrayList<Event> events = new ArrayList<>();
 
             // Thêm một vài sự kiện với ngày và giờ cụ thể
@@ -118,14 +222,15 @@
 
             // Lấy ngày hiện tại
             Date currentDate = new Date(System.currentTimeMillis());
-
+            
             // Lấy ngày hiện tại trong tuần
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(currentDate);
-            int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            calendar.setFirstDayOfWeek(Calendar.MONDAY);
+            
 
             // Ngày bắt đầu của tuần
-            Calendar startOfWeekCalendar = Calendar.getInstance();
+            Calendar startOfWeekCalendar = (Calendar) calendar.clone();
             startOfWeekCalendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
             startOfWeekCalendar.set(Calendar.HOUR_OF_DAY, 0);
             startOfWeekCalendar.set(Calendar.MINUTE, 0);
@@ -213,10 +318,12 @@
                         eventSlots[j][i] = "event-" + eventAreas.size();
                     }
                     
+                    colorAreas.add(colors.get(randomIndexColor.get(eventsInWeek.indexOf(event) % colors.size())));
                     eventAreas.add(event);
                 }
             }
 
+            pageContext.setAttribute("colorAreas", colorAreas);
             pageContext.setAttribute("eventAreas", eventAreas);
 
             // Tính số lượng ô trống còn lại
@@ -244,9 +351,9 @@
             }
 
             pageContext.setAttribute("gridAreas", gridAreas.toString());
-
+            request.setAttribute("contentHeader", "Lịch");
         %>
-        <jsp:include page="background.jsp" />
+        <jsp:include page="contentHeader.jsp" />
         <div class="box">
             <div class="calendar">
                 <div class="calendar__header">
@@ -278,7 +385,7 @@
                             <div class="calendar__cell"></div>
                         </c:forEach>
                         <c:forEach var="i" begin="0" end="${eventAreas.size() - 1}">
-                            <div class="calendar__event" style="grid-area: event-${i}">${eventAreas.get(i).name}</div>
+                            <div class="calendar__event" style="grid-area: event-${i}; background-color: ${colorAreas.get(i)}">${eventAreas.get(i).name}</div>
                         </c:forEach>
                     </div>
                 </div>

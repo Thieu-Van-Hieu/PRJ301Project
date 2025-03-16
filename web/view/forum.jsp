@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../assets/css/hoaroi.css">
+    <style>
+        .petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
+            background-size: contain;
+            opacity: 0.9;
+            animation: fall linear infinite;
+        }
+    </style>
 </head>
 
 <body>
@@ -175,7 +187,7 @@
         .sidebar ul .hidden {
             max-height: 0;
             display: none;
-            transition: max-height 2s ease-in-out;
+            animation: sidebarFadeIn 2s ease-in-out;
         }
 
         .sidebar ul .show {
@@ -208,6 +220,7 @@
             height: calc(100vh - 60px);
         }
     </style>
+    <div id="petalContainer"></div>
     <jsp:include page="/view/background.jsp" />
     <div class="container">
         <!-- Header -->
@@ -472,6 +485,18 @@
                     cursor: pointer;
                 }
 
+                @keyframes sidebarFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-50px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
                 @keyframes modalFadeIn {
                     from {
                         opacity: 0;
@@ -501,7 +526,8 @@
                         <div class="modal-header">Tạo Bài Viết</div>
                         <div class="modal-body">
                             <div class="modal-body-header">
-                                <div class="modal-body-avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                                <div class="modal-body-avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt="">
+                                </div>
                                 <p>Chong cua Bo</p>
                             </div>
                             <input type="text" class="modal-content" placeholder="Content gì chưa người đẹp?">
@@ -585,9 +611,41 @@
                     gap: 12px;
                     font-size: 24px;
                     opacity: 0.7;
+                    position: relative;
                 }
 
-                .item-extend {}
+                .item-utils ul {
+                    display: none;
+                    background-color: #fff;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    width: 120px;
+                    top: 32px;
+                    right: 28px;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6);
+                    border-radius: 12px;
+                    padding: 4px;
+                }
+
+                .item-utils li {
+                    list-style-type: none;
+                    font-size: 16px;
+                    padding: 6px 4px 6px 20px;
+                    border-radius: 12px;
+                    width: 95%;
+                    cursor: pointer;
+                }
+
+                .item-utils li:hover {
+                    background-color: #575656;
+                    color: #fff;
+                }
+
+                .item-extend {
+                    padding: 8px 12px;
+                }
 
                 .item-close {}
 
@@ -636,7 +694,7 @@
                 }
 
                 .input-comment {
-                    padding-left: 12px ;
+                    padding-left: 12px;
                     display: none;
                 }
 
@@ -644,7 +702,7 @@
                     padding: 0px 24px 12px;
                     display: none;
                 }
-                
+
                 .comment-body {
                     display: flex;
                     flex-direction: column;
@@ -661,9 +719,68 @@
                     font-size: 18px;
                 }
 
+                @keyframes likeAnimation {
+                    0% {
+                        transform: scale(1) translateY(0);
+                    }
+
+                    20% {
+                        transform: scale(1.5) translateY(-10px);
+                    }
+
+                    40% {
+                        transform: scale(1.3) translateY(-5px);
+                    }
+
+                    60% {
+                        transform: scale(1.4) translateY(-8px) rotate(10deg);
+                    }
+
+                    80% {
+                        transform: scale(1.3) translateY(-5px) rotate(-10deg);
+                    }
+
+                    100% {
+                        transform: scale(1) translateY(0);
+                    }
+                }
+
+                @keyframes unlikeAnimation {
+                    0% {
+                        transform: scale(1) translateY(0);
+                    }
+
+                    20% {
+                        transform: scale(0.8) translateY(5px);
+                    }
+
+                    40% {
+                        transform: scale(0.9) translateY(3px);
+                    }
+
+                    60% {
+                        transform: scale(0.85) translateY(4px) rotate(-5deg);
+                    }
+
+                    80% {
+                        transform: scale(0.9) translateY(3px) rotate(5deg);
+                    }
+
+                    100% {
+                        transform: scale(1) translateY(0);
+                    }
+                }
+
+                .heart-animate {
+                    animation: likeAnimation 3s ease;
+                }
+
+                .heart-unlike {
+                    animation: unlikeAnimation 0.8s ease;
+                }
             </style>
             <div class="content-list">
-                <div class="content-item">
+                <div class="content-item" data-id="1">
                     <div class="item-header">
                         <div class="item-avatar">
                             <div class="item-img"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
@@ -674,6 +791,10 @@
                         </div>
                         <div class="item-utils">
                             <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                            <ul>
+                                <li>Chỉnh sửa</li>
+                                <li>Ẩn</li>
+                            </ul>
                             <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
                         </div>
                     </div>
@@ -716,10 +837,67 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="content-item" data-id="2">
+                    <div class="item-header">
+                        <div class="item-avatar">
+                            <div class="item-img"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="item-name-date">
+                                <div class="item-name">Chong cua Bo</div>
+                                <div class="item-date">14 Tháng 3, 6:20 PM</div>
+                            </div>
+                        </div>
+                        <div class="item-utils">
+                            <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                            <ul>
+                                <li>Chỉnh sửa</li>
+                                <li>Ẩn</li>
+                            </ul>
+                            <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                        </div>
+                    </div>
+                    <div class="item-body">
+                        <div class="item-content-text">Đêm rồi em có nhớ anh không?</div>
+                        <div class="item-content-img"><img src="../assets/img/login-img/loginnight.jpg" alt=""></div>
+                        <div class="item-content-comment">
+                            <div class="item-body-love">
+                                <i class="fa-solid fa-heart"></i>
+                                <p>123</p>
+                            </div>
+                            <div class="item-body-comment">1 bình luận</div>
+                        </div>
+                    </div>
+                    <div class="item-footer">
+                        <div class="item-footer-item love">
+                            <i class="fa-regular fa-heart"></i>
+                            <p>Thích</p>
+                        </div>
+                        <div class="item-footer-item comment">
+                            <i class="fa-regular fa-comment"></i>
+                            <p>Bình Luận</p>
+                        </div>
+                    </div>
+                    <div class="content-text input-comment">
+                        <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                        <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
+                    </div>
+                    <div class="comment-list">
+                        <div class="content-text">
+                            <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="comment-body">
+                                <div class="comment-name">Chong cua Bo</div>
+                                <div class="comment-content">Bài viết thật hay và sáng tạo</div>
+                            </div>
+                            <div class="item-utils">
+                                <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                                <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 
 
     <script>
@@ -747,9 +925,6 @@
         const modalContainer = document.querySelector('.js-modal-container')
         const modalClose = document.querySelector('.js-modal-close')
 
-        const comment = document.querySelector('.input-comment')
-        const commentList = document.querySelector('.comment-list')
-        const openComment = document.querySelector('.comment')
         function showModal() {
             modal.classList.add('open')
         }
@@ -757,24 +932,6 @@
         function hideModal() {
             modal.classList.remove('open')
         }
-
-        function showComment() {
-            comment.style.display = "flex";
-            commentList.style.display = "block"
-        }
-
-        function hideComment() {
-            comment.style.display = "none";
-            commentList.style.display = "none";
-        }        
-
-        openComment.addEventListener('click', function(){
-            if(comment.style.display === "none" && comment.style.display === "none"){
-                showComment();
-            } else {
-                hideComment();
-            }
-        })
 
         newContent.addEventListener('click', showModal)
 
@@ -785,7 +942,74 @@
         modalContainer.addEventListener('click', function (event) {
             event.stopPropagation();
         })
+
+        document.querySelectorAll('.content-item').forEach((item) => {
+            const statusId = item.getAttribute('data-id');
+
+            const loveBtn = item.querySelector('.love');
+            const commentBtn = item.querySelector('.comment');
+            const commentBox = item.querySelector('.input-comment');
+            const commentList = item.querySelector('.comment-list');
+            const heartIcon = loveBtn.querySelector('i');
+            const extendBtn = item.querySelector('.item-extend');
+            const utils = item.querySelector('.item-utils')
+            const menu = utils.querySelector('ul');
+            const hideOption = menu.querySelector('li:nth-child(2)');
+
+            // if (localStorage.getItem(`hidden-${statusId}`)) {
+            //     item.style.display = 'none';
+            // }
+
+            loveBtn.addEventListener('click', function () {
+                if (heartIcon.classList.contains('fa-regular')) {
+                    heartIcon.classList.remove('fa-regular');
+                    heartIcon.classList.add('fa-solid', 'heart-animate');
+                    heartIcon.style.color = 'pink';
+
+                    setTimeout(() => heartIcon.classList.remove('heart-animate'), 3000);
+                } else {
+                    heartIcon.classList.remove('fa-solid');
+                    heartIcon.classList.add('fa-regular', 'heart-unlike');
+                    heartIcon.style.color = '';
+
+                    setTimeout(() => heartIcon.classList.remove('heart-unlike'), 800);
+                }
+            });
+
+            commentBtn.addEventListener('click', function () {
+                if (commentBox.style.display === "none" || commentBox.style.display === "") {
+                    commentBox.style.display = "flex";
+                    commentList.style.display = "block";
+                } else {
+                    commentBox.style.display = "none";
+                    commentList.style.display = "none";
+                }
+            });
+
+            extendBtn.addEventListener('click', function (event) {
+                event.stopPropagation(); // Ngăn chặn sự kiện lan ra ngoài
+                menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+            });
+
+            hideOption.addEventListener('click', function () {
+                item.style.display = 'none';
+            });
+            // Ẩn vĩnh viễn 
+            // hideOption.addEventListener('click', function () {
+            //     item.style.display = 'none';
+            //     localStorage.setItem(`hidden-${statusId}`, true); // Lưu trạng thái ẩn
+            // });
+
+            // ✅ Click ra ngoài để ẩn menu
+            document.addEventListener('click', function (event) {
+                if (!extendBtn.contains(event.target) && !menu.contains(event.target)) {
+                    menu.style.display = 'none';
+                }
+            });
+        });
     </script>
+
 </body>
+<script src="../assets/js/effect-js/roihoa.js"></script>
 
 </html>

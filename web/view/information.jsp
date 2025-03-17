@@ -21,6 +21,7 @@
             animation: fall linear infinite;
         }
 
+        /* Nếu "mySlect" là lỗi đánh máy, bạn có thể đổi thành "mySelect" */
         .mySlect {
             padding: 0.5rem;
             border: 1px solid #ddd;
@@ -301,6 +302,7 @@
     <!-- Thư viện bên ngoài -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    
     <style>
         .select2-container .select2-selection--single {
             height: 50px !important;

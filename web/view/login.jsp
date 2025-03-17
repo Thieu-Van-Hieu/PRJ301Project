@@ -230,5 +230,7 @@
              document.getElementById('myForm').submit();
      });
       </script>
-      </body > 
+     <jsp:include page="/view/background.jsp" />
+      </body >
+      
       </html>

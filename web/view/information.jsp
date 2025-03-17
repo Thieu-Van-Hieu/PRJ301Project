@@ -8,9 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/hoaroi.css" />
     <link rel="stylesheet" href="../assets/css/login-css/information.css" />
-    <link rel="stylesheet" href="../assets/css/reponsivecss/reponsiveinfor.css">
+    <link rel="stylesheet" href="../assets/css/reponsivecss/reponsiveinfor.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-
     <style>
         .petal {
             position: absolute;
@@ -23,21 +22,19 @@
         }
 
         .mySlect {
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 0.3125rem;
-    font-size: 0.875rem;
-    width: 32%;
-    box-sizing: border-box;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    transition: all 0.3s ease;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.3125rem;
+            font-size: 0.875rem;
+            width: 32%;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
-
-
 
 <body>
     <div id="petalContainer"></div>
@@ -184,8 +181,7 @@
                     </div>
                 </div>
 
-
-                <h1>Địa chỉ</h1>
+                <h2>Địa chỉ</h2>
 
                 <div class="inner-address">
                     <div class="form-row">
@@ -213,121 +209,122 @@
             </form>
         </div>
     </div>
+
+    <!-- Các file JS nội bộ -->
+    <script src="../assets/js/effect-js/roihoa.js"></script>
+    <script src="../assets/js/valiate/datadate.js"></script>
+    <script src="../assets/js/valiate/information.js"></script>
+
+    <script>
+        async function loadProvinces() {
+            const response = await fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1");
+            const data = await response.json();
+            let provinceSelect = document.getElementById("province");
+
+            data.data.data.forEach(province => {
+                let option = document.createElement("option");
+                option.value = province.code;
+                option.textContent = province.name;
+                provinceSelect.appendChild(option);
+            });
+        }
+
+        async function loadDistricts() {
+            let provinceId = document.getElementById("province").value;
+            let districtSelect = document.getElementById("district");
+
+            districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
+
+            if (provinceId) {
+                try {
+                    let response = await fetch("https://vn-public-apis.fpo.vn/districts/getAll?limit=-1");
+                    let data = await response.json();
+
+                    console.log("API Response:", data);
+
+                    let districts = data.data.data.filter(d => d.parent_code === provinceId);
+
+                    if (districts.length === 0) {
+                        console.error("❌ Không có dữ liệu quận/huyện cho tỉnh này.");
+                        return;
+                    }
+
+                    districts.forEach(district => {
+                        let option = document.createElement("option");
+                        option.value = district.code;
+                        option.textContent = district.name;
+                        districtSelect.appendChild(option);
+                    });
+
+                } catch (error) {
+                    console.error("Lỗi khi tải danh sách quận/huyện:", error);
+                }
+            }
+        }
+
+        async function loadWards() {
+            let districtId = document.getElementById("district").value;
+            let wardSelect = document.getElementById("ward");
+
+            wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+
+            if (districtId) {
+                try {
+                    let response = await fetch("https://vn-public-apis.fpo.vn/wards/getAll?limit=-1");
+                    let data = await response.json();
+
+                    console.log("API Response (Wards):", data);
+
+                    let wards = data.data.data.filter(w => w.parent_code === districtId);
+
+                    if (wards.length === 0) {
+                        console.error("❌ Không có dữ liệu phường/xã cho quận này.");
+                        return;
+                    }
+
+                    wards.forEach(ward => {
+                        let option = document.createElement("option");
+                        option.value = ward.code;
+                        option.textContent = ward.name;
+                        wardSelect.appendChild(option);
+                    });
+
+                } catch (error) {
+                    console.error("Lỗi khi tải danh sách phường/xã:", error);
+                }
+            }
+        }
+
+        window.onload = loadProvinces;
+    </script>
+
+    <!-- Thư viện bên ngoài -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <style>
+        .select2-container .select2-selection--single {
+            height: 50px !important;
+            font-size: 20px !important;
+            padding: 10px !important;
+        }
+
+        .select2-selection__arrow {
+            display: none !important;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#ngaySinh, #thangSinh, #namSinh').select2({
+                dropdownAutoWidth: true,
+                width: '200px',
+                maximumSelectionLength: 5,
+                minimumResultsForSearch: -1
+            });
+
+            // Xóa icon dropdown
+            $('.select2-selection__arrow').remove();
+        });
+    </script>
 </body>
-<script src="../assets/js/effect-js/roihoa.js"></script>
-<script src="../assets/js/valiate/datadate.js"></script>
-<script src="../assets/js/valiate/information.js"></script>
-<script>
-    async function loadProvinces() {
-        const response = await fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1");
-        const data = await response.json();
-        let provinceSelect = document.getElementById("province");
-
-        data.data.data.forEach(province => {
-            let option = document.createElement("option");
-            option.value = province.code;
-            option.textContent = province.name;
-            provinceSelect.appendChild(option);
-        });
-    }
-
-    async function loadDistricts() {
-        let provinceId = document.getElementById("province").value;
-        let districtSelect = document.getElementById("district");
-
-        districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
-
-        if (provinceId) {
-            try {
-                let response = await fetch("https://vn-public-apis.fpo.vn/districts/getAll?limit=-1");
-                let data = await response.json();
-
-                console.log("API Response:", data); // Kiểm tra API trả về
-
-                let districts = data.data.data.filter(d => d.parent_code === provinceId);
-
-                if (districts.length === 0) {
-                    console.error("❌ Không có dữ liệu quận/huyện cho tỉnh này.");
-                    return;
-                }
-
-                districts.forEach(district => {
-                    let option = document.createElement("option");
-                    option.value = district.code;
-                    option.textContent = district.name;
-                    districtSelect.appendChild(option);
-                });
-
-            } catch (error) {
-                console.error("Lỗi khi tải danh sách quận/huyện:", error);
-            }
-        }
-    }
-
-    async function loadWards() {
-        let districtId = document.getElementById("district").value;
-        let wardSelect = document.getElementById("ward");
-
-        wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
-
-        if (districtId) {
-            try {
-                let response = await fetch("https://vn-public-apis.fpo.vn/wards/getAll?limit=-1");
-                let data = await response.json();
-
-                console.log("API Response (Wards):", data); // Kiểm tra API trả về
-
-                let wards = data.data.data.filter(w => w.parent_code === districtId);
-
-                if (wards.length === 0) {
-                    console.error("❌ Không có dữ liệu phường/xã cho quận này.");
-                    return;
-                }
-
-                wards.forEach(ward => {
-                    let option = document.createElement("option");
-                    option.value = ward.code;
-                    option.textContent = ward.name;
-                    wardSelect.appendChild(option);
-                });
-
-            } catch (error) {
-                console.error("Lỗi khi tải danh sách phường/xã:", error);
-            }
-        }
-    }
-
-    window.onload = loadProvinces;
-</script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-<style>
-    .select2-container .select2-selection--single {
-        height: 50px !important; /* Tăng chiều cao */
-        font-size: 20px !important; /* Tăng kích thước chữ */
-        padding: 10px !important;
-    }
-
-    .select2-selection__arrow {
-        display: none !important; /* Ẩn icon dropdown */
-    }
-
-</style>
-<script>
-    $(document).ready(function() {
-        $('#ngaySinh, #thangSinh, #namSinh').select2({
-            dropdownAutoWidth: true, // Để dropdown tự động co theo nội dung
-            width: '200px',          // Độ rộng của select
-            maximumSelectionLength: 5, // Giới hạn số option hiển thị
-            minimumResultsForSearch: -1 // Ẩn ô tìm kiếm
-        });
-
-        // Xóa icon dropdown
-        $('.select2-selection__arrow').remove();
-    });
-    
-</script>
-
-
 
 </html>

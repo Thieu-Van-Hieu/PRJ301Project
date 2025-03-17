@@ -1,9 +1,7 @@
 
 .content-container {
-    grid-area: cont;
     background: #eaf8f2;
     overflow-y: auto;
-
     height: calc(100vh - 60px);
 }
 
@@ -402,9 +400,4 @@ textarea[name="description"] {
     word-break: break-word;
     padding: 12px;
 
-}
-
-/* Flatpickr Calendar */
-.flatpickr-calendar {
-    z-index: 9999 !important;
 }

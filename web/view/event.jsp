@@ -14,9 +14,19 @@
             <form action="#" method="GET">
                 <table>
                     <tr>
-                        <td class="filter-time">Ngày đăng <input type="date"></td>
+                        <td class="filter-time">Ngày Đăng <input type="date"></td>
                         <td><select name="type" id="">
                                 <option value="0">Loại sự kiện</option>
+                                <option value="1">ABC</option>
+                                <option value="2">CDF</option>
+                            </select>
+                        </td>                       
+                        <td class="filter-search"><input type="text" placeholder="Name, id, location"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="clubName" id="">
+                                <option value="0">Câu Lạc Bộ Tổ Chức</option>
                                 <option value="1">ABC</option>
                                 <option value="2">CDF</option>
                             </select>
@@ -29,19 +39,7 @@
                                 <option value="3">Đã kết thúc</option>
                             </select>
                         </td>
-                        <td class="filter-search"><input type="text" placeholder="Name, id, location"></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <select name="clubName" id="">
-                                <option value="0">Câu Lạc Bộ Tổ Chức</option>
-                                <option value="1">ABC</option>
-                                <option value="2">CDF</option>
-                            </select>
-                        </td>
-                        <td></td>
                         <td class="filter-submit"><input type="submit" value="Filter"></td>
-                        <td></td>
                     </tr>
                 </table>
             </form>

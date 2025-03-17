@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
        
@@ -22,7 +22,7 @@
                 <p>Chúc bạn có một hành trình tuyệt vời phía trước!</p>
             </div>
             <div class="login-form">
-                <form action="${pageContext.request.contextPath}/login" method="post" id="myForm">
+                <form action="${pageContext.request.contextPath}/LoginServlet" method="post" id="myForm">
                     <div class="svgContainer">
                         <div>
                             <svg class="mySVG" xmlns="http://www.w3.org/2000/svg" 
@@ -201,6 +201,7 @@
                     <div class="inputGroup inputGroup3">
                         <button id="login" style="color: #B3BBBD; cursor: pointer">Đăng nhập</button>
                     </div>
+                    <h2 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${error}</h2>
                     <div class="inputGroup inputGroup4">
                         <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
                     </div>

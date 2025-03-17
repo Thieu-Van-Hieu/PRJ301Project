@@ -4,8 +4,16 @@
         <servlet-name>CalendarServlet</servlet-name>
         <servlet-class>controler.CalendarServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MessengerServlet</servlet-name>
+        <servlet-class>controler.MessengerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessengerServlet</servlet-name>
+        <url-pattern>/MessengerServlet</url-pattern>
     </servlet-mapping>
 </web-app>

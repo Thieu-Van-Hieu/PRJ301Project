@@ -9,7 +9,7 @@
         <meta
             name="description"
             content="Welcome to 4Club, the best place to connect and share."
-        />
+            />
         <%-- <c:forEach var="season" begin="0" end="3">
             <c:forEach var="time" begin="0" end="5">
                 <link
@@ -24,10 +24,20 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
             rel="stylesheet"
-        />
+            />
+        <link rel="stylesheet" href="assets/css/hoaroi.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <style>
+            .petal {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: url('assets/img/effect-img/hoaanhdao.png') no-repeat center center;
+                background-size: contain;
+                opacity: 0.9;
+                animation: fall linear infinite;
+            }
             #background {
                 position: absolute;
                 top: 0;
@@ -134,18 +144,19 @@
         </style>
     </head>
     <body>
+          <div id="petalContainer"></div>
         <div class="app">
-                <div class="app__heading">
-                    <h1>4Club</h1>
+            <div class="app__heading">
+                <h1>4Club</h1>
+            </div>
+            <div class="app__btn">
+                <div class="btn" random-position="mouseover">
+                    <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
                 </div>
-                <div class="app__btn">
-                    <div class="btn" random-position="mouseover">
-                        <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
-                    </div>
-                    <div class="btn" random-position="mouseover">
-                        <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
-                    </div>
+                <div class="btn" random-position="mouseover">
+                    <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
                 </div>
+            </div>
         </div>
 
         <div id="background"></div>
@@ -169,4 +180,5 @@
         </script>
         <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
     </body>
+    <script src="assets/js/effect-js/roihoa.js"></script>
 </html>

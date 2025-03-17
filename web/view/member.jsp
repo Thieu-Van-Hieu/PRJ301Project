@@ -24,9 +24,6 @@
             animation: fall linear infinite;
         }
     </style>
-</head>
-
-<body>
     <style>
         * {
             margin: 0;
@@ -220,6 +217,11 @@
             height: calc(100vh - 60px);
         }
     </style>
+</head>
+
+<body>
+    
+    
     <div id="petalContainer"></div>
     <jsp:include page="/view/background.jsp" />
     <div class="container">

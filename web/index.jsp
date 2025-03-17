@@ -9,7 +9,7 @@
         <meta
             name="description"
             content="Welcome to 4Club, the best place to connect and share."
-        />
+            />
         <%-- <c:forEach var="season" begin="0" end="3">
             <c:forEach var="time" begin="0" end="5">
                 <link
@@ -24,10 +24,21 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
             rel="stylesheet"
-        />
+            />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
+        <link rel="stylesheet" href="assets/css/hoaroi.css" />
+
         <style>
+              .petal {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background: url('assets/img/effect-img/hoaanhdao.png') no-repeat center center;
+                background-size: contain;
+                opacity: 0.9;
+                animation: fall linear infinite;
+            }
             #background {
                 position: absolute;
                 top: 0;
@@ -124,9 +135,11 @@
                     padding: 1.8rem 2.8rem; /* Điều chỉnh padding trong nút */
                 }
             }
+          
         </style>
     </head>
     <body>
+        <div id="petalContainer"></div>
         <div class="app">
             <div class="grid wide">
                 <div class="app__heading row">
@@ -148,9 +161,9 @@
         <script>
             function move(element) {
                 var x =
-                    Math.random() * (window.innerWidth - element.clientWidth);
+                        Math.random() * (window.innerWidth - element.clientWidth);
                 var y =
-                    Math.random() * (window.innerHeight - element.clientHeight);
+                        Math.random() * (window.innerHeight - element.clientHeight);
                 element.style.position = "absolute";
                 element.style.left = x + "px";
                 element.style.top = y + "px";
@@ -172,4 +185,6 @@
             setInterval(updateBackground, 3000);
         </script>
     </body>
+    
+    <script src="assets/js/effect-js/roihoa.js"></script>
 </html>

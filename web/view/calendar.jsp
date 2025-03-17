@@ -9,7 +9,7 @@
     <head>
         <meta charset="UTF-8" />
         <title>Calendar Page</title>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
+        
         <style>
             .box {
                 display: flex;

@@ -6,25 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ÄÄng kÃ½</title>
-    <link rel="stylesheet" href="../assets/css/hoaroi.css" />
-    <link rel="stylesheet" href="../assets/css/login-css/register.css" />
-
-    <style>
-        .petal {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
-            background-size: contain;
-            opacity: 0.9;
-            animation: fall linear infinite;
-        }
-    </style>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/register.css" />
 </head>
 
 <body>
-
-    <div id="petalContainer"></div>
+    <jsp:include page="sakura.jsp" />
     <div class="container">
         <div class="form-register">
             <h2>Đăng ký tài khoản</h2>
@@ -57,8 +43,7 @@
         </div>
     </div>
 </body>
-<script src="../assets/js/effect-js/roihoa.js"></script>
-<script src="../assets/js/valiate/passwordright.js"></script>
-<script src="../assets/js/valiate/signupform.js"></script>
+<script src="${pageContext.request.contextPath}assets/js/valiate/passwordright.js"></script>
+<script src="${pageContext.request.contextPath}assets/js/valiate/signupform.js"></script>
 
 </html>

@@ -6,39 +6,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../assets/css/hoaroi.css" />
-    <link rel="stylesheet" href="../assets/css/login-css/information.css" />
-    <link rel="stylesheet" href="../assets/css/reponsivecss/reponsiveinfor.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/information.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/reponsivecss/reponsiveinfor.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
-        .petal {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
-            background-size: contain;
-            opacity: 0.9;
-            animation: fall linear infinite;
-        }
-
         .mySlect {
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 0.3125rem;
-    font-size: 0.875rem;
-    width: 32%;
-    box-sizing: border-box;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    transition: all 0.3s ease;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.3125rem;
+            font-size: 0.875rem;
+            width: 32%;
+            box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
 
 <body>
-    <div id="petalContainer"></div>
+    <jsp:include page="sakura.jsp" />
     <div class="container">
         <div class="form-register">
             <h2>Thông tin cá nhân</h2>
@@ -212,9 +201,8 @@
     </div>
 
     <!-- Các file JS nội bộ -->
-    <script src="../assets/js/effect-js/roihoa.js"></script>
-    <script src="../assets/js/valiate/datadate.js"></script>
-    <script src="../assets/js/valiate/information.js"></script>
+    <script src="${pageContext.request.contextPath}assets/js/valiate/datadate.js"></script>
+    <script src="${pageContext.request.contextPath}assets/js/valiate/information.js"></script>
 
     <script>
         async function loadProvinces() {

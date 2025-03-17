@@ -10,27 +10,29 @@ package dao;
  */
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import repository.UserRepository;
 
-public class UserRepositoryImpl {
+public class UserRepositoryImpl implements UserRepository {
 
-    public static boolean isLogin(String username, String password) {
-    DBContext db = DBContext.getInstance();
-    try {
-        String sql = """
+    @Override
+    public boolean isLogin(String username, String password) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
                      SELECT * FROM users u
                      WHERE u.username = ? AND u.password = ?
                      """;
-        PreparedStatement st = db.getConnection().prepareStatement(sql);
-        st.setString(1, username);
-        st.setString(2, password);
-        ResultSet rs = st.executeQuery();
-        
-        return rs.next();
-        
-    } catch (Exception e) {
-        e.printStackTrace();
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+
+            return rs.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-    return false;
-}
 
 }

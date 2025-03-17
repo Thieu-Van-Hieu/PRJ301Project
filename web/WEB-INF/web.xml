@@ -9,6 +9,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>controler.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MessengerServlet</servlet-name>
+        <servlet-class>controler.MessengerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -16,5 +20,9 @@
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessengerServlet</servlet-name>
+        <url-pattern>/MessengerServlet</url-pattern>
     </servlet-mapping>
 </web-app>

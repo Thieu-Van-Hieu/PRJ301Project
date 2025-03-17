@@ -10,34 +10,14 @@
             name="description"
             content="Welcome to 4Club, the best place to connect and share."
             />
-        <%-- <c:forEach var="season" begin="0" end="3">
-            <c:forEach var="time" begin="0" end="5">
-                <link
-                    rel="preload"
-                    href="${pageContext.request.contextPath}/assets/img/background/${season}_${time}.png"
-                    as="image"
-                />
-            </c:forEach>
-        </c:forEach> --%>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
             href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
             rel="stylesheet"
             />
-        <link rel="stylesheet" href="assets/css/hoaroi.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <style>
-            .petal {
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                background: url('assets/img/effect-img/hoaanhdao.png') no-repeat center center;
-                background-size: contain;
-                opacity: 0.9;
-                animation: fall linear infinite;
-            }
             #background {
                 position: absolute;
                 top: 0;
@@ -144,7 +124,7 @@
         </style>
     </head>
     <body>
-          <div id="petalContainer"></div>
+        <jsp:include page="view/sakura.jsp" />
         <div class="app">
             <div class="app__heading">
                 <h1>4Club</h1>
@@ -180,5 +160,4 @@
         </script>
         <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
     </body>
-    <script src="assets/js/effect-js/roihoa.js"></script>
 </html>

@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import services.UserService;
 
 /**
  *
@@ -70,11 +71,18 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean isCheck = UserRepositoryImpl.isLogin(username, password);
+        
+        UserRepositoryImpl userReposttory = new UserRepositoryImpl();
+        
+        UserService userService = new UserService(userReposttory);
+        
+        boolean isCheck = userService.checkLogin(username, password);
+        
         if(isCheck){
             request.getRequestDispatcher("view/discovery.jsp").forward(request, response);
         }else{
-            out.print("cut");
+            request.setAttribute("error", "Tài Khoản hoặc Mật Khẩu không đúng");
+            request.getRequestDispatcher("view/login.jsp").forward(request, response);
         }        
     }
 

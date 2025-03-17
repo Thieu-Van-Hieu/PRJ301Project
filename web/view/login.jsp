@@ -8,26 +8,14 @@
         <meta charset="UTF-8" />
         <title>Login Page with Animation</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-        <link rel="stylesheet" href="../assets/css/login-css/login.css" />
-        <link rel="stylesheet" href="../assets/css/reponsivecss/responsivelogin.css">
-        <link rel="stylesheet" href="../assets/css/login-css/loginmoney.css" />
-        <link rel="stylesheet" href="../assets/css/hoaroi.css" />
-        <style>
-            .petal {
-                position: absolute;
-                width: 20px;
-                height: 20px;
-                background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
-                background-size: contain;
-                opacity: 0.9;
-                animation: fall linear infinite;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/login.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/reponsivecss/responsivelogin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/loginmoney.css" />
 
     </head>
 
     <body>
-        <div id="petalContainer"></div>
+        <jsp:include page="sakura.jsp" />
         <div class="container">
             <div class="left-intro">
                 <h1 id="greeting"></h1>
@@ -221,16 +209,15 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
         <script src="./NextgenmediaSVGPlugin.min_2.js"></script>
-        <script src="../assets/js/login-js/loginbackground.js"></script>
-        <script src="../assets/js/login-js/loginmoney.js"></script>
-        <script src="../assets/js/effect-js/roihoa.js"></script>
-        <script src="../assets/js/valiate/formlogin.js"></script>
+        <script src="${pageContext.request.contextPath}assets/js/login-js/loginbackground.js"></script>
+        <script src="${pageContext.request.contextPath}assets/js/login-js/loginmoney.js"></script>
+        <script src="${pageContext.request.contextPath}assets/js/valiate/formlogin.js"></script>
         <script>
              document.getElementById('login').addEventListener('click', function() {
              document.getElementById('myForm').submit();
      });
       </script>
-     <jsp:include page="/view/background.jsp" />
+     <jsp:include page="background.jsp" />
       </body >
       
       </html>

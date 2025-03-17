@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/hoaroi.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/hoaroi.css">
     <style>
         .petal {
             position: absolute;
             width: 20px;
             height: 20px;
-            background: url('${pageContext.request.contextPath}assets/img/effect-img/hoaanhdao.png') no-repeat center center;
+            background: url('${pageContext.request.contextPath}/ssets/img/effect-img/hoaanhdao.png') no-repeat center center;
             background-size: contain;
             opacity: 0.9;
             animation: fall linear infinite;
@@ -429,7 +429,7 @@
         <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
         <div class="left-toolbar">
             <ul>
-                <li><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></li>
+                <li><img src="${pageContext.request.contextPath}/ssets/img/logo-img/logo_3.jpg" alt=""></li>
                 <li>1</li>
                 <li><i class="fa-solid fa-plus"></i></li>
                 <li><i class="fa-regular fa-compass"></i></li>
@@ -444,7 +444,7 @@
                 <div class="sidebar-header__name">Câu Lạc Bộ A</div>
             </div>
             <div class="sidebar-coverImg">
-                <img src="${pageContext.request.contextPath}assets/img/login-img/loginnight.jpg" alt="">
+                <img src="${pageContext.request.contextPath}/ssets/img/login-img/loginnight.jpg" alt="">
             </div>
             <ul>
                 <li><a href="#">Diễn đàn</a></li>
@@ -561,6 +561,6 @@
             });
         </script>
 </body>
-<script src="${pageContext.request.contextPath}assets/js/effect-js/roihoa.js"></script>
+<script src="${pageContext.request.contextPath}/ssets/js/effect-js/roihoa.js"></script>
 
 </html>

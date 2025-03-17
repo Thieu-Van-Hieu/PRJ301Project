@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ÄÄng kÃ½</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/register.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/login-css/register.css" />
 </head>
 
 <body>
@@ -43,7 +43,7 @@
         </div>
     </div>
 </body>
-<script src="${pageContext.request.contextPath}assets/js/valiate/passwordright.js"></script>
-<script src="${pageContext.request.contextPath}assets/js/valiate/signupform.js"></script>
+<script src="${pageContext.request.contextPath}/ssets/js/valiate/passwordright.js"></script>
+<script src="${pageContext.request.contextPath}/ssets/js/valiate/signupform.js"></script>
 
 </html>

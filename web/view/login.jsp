@@ -8,9 +8,9 @@
         <meta charset="UTF-8" />
         <title>Login Page with Animation</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/login.css" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/reponsivecss/responsivelogin.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}assets/css/login-css/loginmoney.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/login-css/login.css" />
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/reponsivecss/responsivelogin.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/login-css/loginmoney.css" />
 
     </head>
 
@@ -209,9 +209,9 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
         <script src="./NextgenmediaSVGPlugin.min_2.js"></script>
-        <script src="${pageContext.request.contextPath}assets/js/login-js/loginbackground.js"></script>
-        <script src="${pageContext.request.contextPath}assets/js/login-js/loginmoney.js"></script>
-        <script src="${pageContext.request.contextPath}assets/js/valiate/formlogin.js"></script>
+        <script src="${pageContext.request.contextPath}/ssets/js/login-js/loginbackground.js"></script>
+        <script src="${pageContext.request.contextPath}/ssets/js/login-js/loginmoney.js"></script>
+        <script src="${pageContext.request.contextPath}/ssets/js/valiate/formlogin.js"></script>
         <script>
              document.getElementById('login').addEventListener('click', function() {
              document.getElementById('myForm').submit();

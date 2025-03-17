@@ -226,7 +226,7 @@
         <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
         <div class="left-toolbar">
             <ul>
-                <li><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></li>
+                <li><img src="${pageContext.request.contextPath}/ssets/img/logo-img/logo_3.jpg" alt=""></li>
                 <li>1</li>
                 <li><i class="fa-solid fa-plus"></i></li>
                 <li><i class="fa-regular fa-compass"></i></li>
@@ -241,7 +241,7 @@
                 <div class="sidebar-header__name">Câu Lạc Bộ A</div>
             </div>
             <div class="sidebar-coverImg">
-                <img src="${pageContext.request.contextPath}assets/img/login-img/loginnight.jpg" alt="">
+                <img src="${pageContext.request.contextPath}/ssets/img/login-img/loginnight.jpg" alt="">
             </div>
             <ul>
                 <li><a href="#">Diễn đàn</a></li>

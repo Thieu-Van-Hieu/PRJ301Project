@@ -2,39 +2,36 @@ package model;
 
 public class Message {
     private int id;
-    private String username;
+    private Member member;
     private String content;
 
     public Message() {
     }
 
-    public Message(int id, String username, String content) {
-        this.id = id;
-        this.username = username;
-        this.content = content;
-    }
-
-    public int getId() {
+    public getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Message setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getUsername() {
-        return username;
+        return member.getName();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public Message setUsername(String username) {
+        this.member.setName(username);
+        return this;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public Message setContent(String content) {
         this.content = content;
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Member;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -7,23 +8,12 @@ public class Task {
     private int id;
     private String name;
     private String description;
-    private String assignedBy;
-    private String assignedTo;
+    private Member assignedBy;
+    private Member assignedTo;
     private String status;
     private Date dueDate;
 
     public Task() {
-    }
-
-    public Task(int id, String name, String description, String assignedBy, String assignedTo, String status,
-            Date dueDate) {
-        this.id = id;
-        this.name = name;
-        this.description = description; 
-        this.assignedBy = assignedBy;
-        this.assignedTo = assignedTo;
-        this.status = status;
-        this.dueDate = dueDate;
     }
 
     public int getId() {
@@ -54,20 +44,20 @@ public class Task {
     }
 
     public String getAssignedBy() {
-        return assignedBy;
+        return assignedBy.getName();
     }
 
     public Task setAssignedBy(String assignedBy) {
-        this.assignedBy = assignedBy;
+        this.assignedBy.setName(assignedBy);
         return this;
     }
 
     public String getAssignedTo() {
-        return assignedTo;
+        return assignedTo.getName();
     }
 
     public Task setAssignedTo(String assignedTo) {
-        this.assignedTo = assignedTo;
+        this.assignedTo.setName(assignedTo);
         return this;
     }
 

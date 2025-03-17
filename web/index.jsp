@@ -47,8 +47,13 @@
             }
 
             .app {
+                position: relative;
                 height: 100vh;
                 width: 100%;
+                display: grid;
+                grid-template-rows: 1fr 1fr 3fr;
+                justify-content: center;
+                align-items: center;
             }
 
             .app__heading h1 {
@@ -61,6 +66,8 @@
             }
 
             .app__btn {
+                display: flex;
+                justify-content: space-around;
                 margin-top: 4rem;
             }
 
@@ -128,33 +135,22 @@
     </head>
     <body>
         <div class="app">
-            <div class="grid wide">
-                <div class="app__heading row">
-                    <h1 class="col l-12">4Club</h1>
+                <div class="app__heading">
+                    <h1>4Club</h1>
                 </div>
-                <div class="app__btn row">
-                    <div class="btn col l-3 l-o-2">
+                <div class="app__btn">
+                    <div class="btn" random-position="mouseover">
                         <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
                     </div>
-                    <div class="btn col l-3 l-o-1">
+                    <div class="btn" random-position="mouseover">
                         <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
                     </div>
                 </div>
-            </div>
         </div>
 
         <div id="background"></div>
         <div id="preload-background"></div>
         <script>
-            function move(element) {
-                var x =
-                    Math.random() * (window.innerWidth - element.clientWidth);
-                var y =
-                    Math.random() * (window.innerHeight - element.clientHeight);
-                element.style.position = "absolute";
-                element.style.left = x + "px";
-                element.style.top = y + "px";
-            }
 
             let index = 0;
 
@@ -171,5 +167,6 @@
 
             setInterval(updateBackground, 3000);
         </script>
+        <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
     </body>
 </html>

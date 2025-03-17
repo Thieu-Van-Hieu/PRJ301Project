@@ -11,11 +11,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 /**
  * @author quann
  */
-public class FirstServlet extends HttpServlet {
+public class CalendarServlet extends HttpServlet {
+    
+    private Calendar calendar = Calendar.getInstance();
 
     /**
      * Handles requests for both HTTP GET and POST methods.
@@ -24,6 +28,7 @@ public class FirstServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            out.println(calendar.getTime());
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");

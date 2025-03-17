@@ -384,9 +384,11 @@
                         <c:forEach var="i" begin="1" end="${reminingTimeSlots}">
                             <div class="calendar__cell"></div>
                         </c:forEach>
-                        <c:forEach var="i" begin="0" end="${eventAreas.size() - 1}">
-                            <div class="calendar__event" style="grid-area: event-${i}; background-color: ${colorAreas.get(i)}">${eventAreas.get(i).name}</div>
-                        </c:forEach>
+                        <c:if test="${eventAreas.size() > 0}">
+                            <c:forEach var="i" begin="0" end="${eventAreas.size() - 1}">
+                                <div class="calendar__event" style="grid-area: event-${i}; background-color: ${colorAreas.get(i)}">${eventAreas.get(i).name}</div>
+                            </c:forEach>
+                        </c:if>
                     </div>
                 </div>
             </div>

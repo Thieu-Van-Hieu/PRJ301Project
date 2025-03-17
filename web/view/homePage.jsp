@@ -9,12 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/event-css/event.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/forum-css/forum.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/member-css/member.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
+    
     <jsp:include page="sakura.jsp" />
     <jsp:include page="background.jsp" />
     <style>
@@ -128,12 +132,11 @@
             position: fixed;
             top: 60px;
             left: 8.4%;
-            width: 25%;
+            width: 26%;
             height: calc(100vh - 60px);
             grid-area: sidebar;
             background-color: #b2d8d8;
             border-top-left-radius: 10px;
-
         }
 
         .sidebar .sidebar-header {
@@ -244,10 +247,10 @@
                 <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">
             </div>
             <ul>
-                <li><a href="#">Diễn đàn</a></li>
+                <li><a href="#" onclick="location.href='?includeWeb=forum.jsp'">Diễn đàn</a></li>
                 <li><a href="#" onclick="location.href='?includeWeb=calendar.jsp'">Lịch</a></li>
-                <li><a href="#">Sự Kiện</a></li>
-                <li><a href="#">Đóng tiền</a></li>
+                <li><a href="#" onclick="location.href='?includeWeb=event.jsp'">Sự Kiện</a></li>
+                <li><a href="#">Đóng tiền</a></li>  
                 <li>
                     <a href="#" id="toggle-tasks">Nhiệm vụ</a>
                     <ul id="task-list" class="hidden">

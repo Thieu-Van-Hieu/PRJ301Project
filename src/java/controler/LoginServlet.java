@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import services.UserService;
 
 /**
@@ -75,13 +76,12 @@ public class LoginServlet extends HttpServlet {
         UserRepositoryImpl userReposttory = new UserRepositoryImpl();
         
         UserService userService = new UserService(userReposttory);
-        
         boolean isCheck = userService.checkLogin(username, password);
-        
         if(isCheck){
-            request.getRequestDispatcher("view/discovery.jsp").forward(request, response);
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
         }else{
-            request.setAttribute("error", "Tài Khoản hoặc Mật Khẩu không đúng");
+            request.setAttribute("errorMessage", "Sai tài khoản hoặc mật khẩu!");
             request.getRequestDispatcher("view/login.jsp").forward(request, response);
         }        
     }

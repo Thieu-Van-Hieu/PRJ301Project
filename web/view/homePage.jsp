@@ -131,8 +131,7 @@
         .sidebar {
             position: fixed;
             top: 60px;
-            left: 8.4%;
-            width: 26%;
+            width: 25%;
             height: calc(100vh - 60px);
             grid-area: sidebar;
             background-color: #b2d8d8;

@@ -6,31 +6,21 @@
         <title>4Club - Welcome</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Welcome to 4Club, the best place to connect and share."
-            />
+        <meta name="description" content="Welcome to 4Club, the best place to connect and share." />
         <%-- <c:forEach var="season" begin="0" end="3">
             <c:forEach var="time" begin="0" end="5">
-                <link
-                    rel="preload"
-                    href="${pageContext.request.contextPath}/assets/img/background/${season}_${time}.png"
-                    as="image"
-                />
+                <link rel="preload" href="${pageContext.request.contextPath}/assets/img/background/${season}_${time}.png" as="image" />
             </c:forEach>
         </c:forEach> --%>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
-            rel="stylesheet"
-            />
+        <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/grid.css" />
         <link rel="stylesheet" href="assets/css/hoaroi.css" />
 
         <style>
-              .petal {
+            .petal {
                 position: absolute;
                 width: 20px;
                 height: 20px;
@@ -51,17 +41,20 @@
                 background: url('${pageContext.request.contextPath}/assets/img/background/0_0.png') no-repeat center center;
                 transition: background-image 2s ease-in-out;
             }
-
-            #preloadBackground {
+            /* Sửa ID để khớp với HTML */
+            #preload-background {
                 display: none;
                 background: url('${pageContext.request.contextPath}/assets/img/background/0_1.png') no-repeat center center;
             }
-
             .app {
+                position: relative;
                 height: 100vh;
                 width: 100%;
+                display: grid;
+                grid-template-rows: 1fr 1fr 3fr;
+                justify-content: center;
+                align-items: center;
             }
-
             .app__heading h1 {
                 font-family: "Oi", sans-serif;
                 font-size: 16rem;
@@ -70,11 +63,11 @@
                 font-weight: 400;
                 text-align: center;
             }
-
             .app__btn {
+                display: flex;
+                justify-content: space-around;
                 margin-top: 4rem;
             }
-
             .btn {
                 font-size: 5.2rem;
                 line-height: 1.2;
@@ -85,12 +78,10 @@
                 text-align: center;
                 transition: all 0.3s ease;
             }
-
             .btn:hover {
                 background: rgba(255, 255, 255, 0.5);
                 transform: scale(1.1);
             }
-
             .btn a {
                 display: block;
                 width: 100%;
@@ -98,93 +89,83 @@
                 text-decoration: none;
                 color: #fff;
             }
-
             /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
             @media (max-width: 768px) {
                 .app__heading h1 {
-                    font-size: 8rem; /* Giảm kích thước tiêu đề */
+                    font-size: 8rem;
                 }
-
                 .app__btn {
-                    flex-direction: column; /* Sắp xếp các nút theo cột */
+                    flex-direction: column;
                     align-items: center;
                     gap: 1rem;
                 }
-
                 .btn {
-                    font-size: 4rem; /* Giảm kích thước chữ trong nút */
-                    width: 80%; /* Đặt chiều rộng nút phù hợp với màn hình nhỏ */
+                    font-size: 4rem;
+                    width: 80%;
                 }
-
                 .btn a {
-                    padding: 1.5rem 2rem; /* Giảm padding trong nút */
+                    padding: 1.5rem 2rem;
                 }
             }
-
             /* Responsive cho màn hình nhỏ hơn 1024px (máy tính bảng) */
             @media (max-width: 1024px) {
                 .app__heading h1 {
-                    font-size: 12rem; /* Điều chỉnh kích thước tiêu đề */
+                    font-size: 12rem;
                 }
-
                 .btn {
-                    font-size: 4.5rem; /* Điều chỉnh kích thước chữ trong nút */
+                    font-size: 4.5rem;
                 }
-
                 .btn a {
-                    padding: 1.8rem 2.8rem; /* Điều chỉnh padding trong nút */
+                    padding: 1.8rem 2.8rem;
                 }
             }
-          
         </style>
     </head>
     <body>
         <div id="petalContainer"></div>
         <div class="app">
-            <div class="grid wide">
-                <div class="app__heading row">
-                    <h1 class="col l-12">4Club</h1>
+            <div class="app__heading">
+                <h1>4Club</h1>
+            </div>
+            <div class="app__btn">
+                <div class="btn" data-random-position="mouseover">
+                    <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
                 </div>
-                <div class="app__btn row">
-                    <div class="btn col l-3 l-o-2">
-                        <a href="${pageContext.request.contextPath}/view/register.jsp">Sign Up</a>
-                    </div>
-                    <div class="btn col l-3 l-o-1">
-                        <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
-                    </div>
+                <div class="btn" data-random-position="mouseover">
+                    <a href="${pageContext.request.contextPath}/view/login.jsp">Log In</a>
                 </div>
             </div>
         </div>
-
         <div id="background"></div>
         <div id="preload-background"></div>
+
         <script>
+            // Khai báo biến index để theo dõi background hiện tại
+            let index = 0;
             function move(element) {
-                var x =
-                        Math.random() * (window.innerWidth - element.clientWidth);
-                var y =
-                        Math.random() * (window.innerHeight - element.clientHeight);
+                var x = Math.random() * (window.innerWidth - element.clientWidth);
+                var y = Math.random() * (window.innerHeight - element.clientHeight);
                 element.style.position = "absolute";
                 element.style.left = x + "px";
                 element.style.top = y + "px";
             }
-
-            let index = 0;
 
             function updateBackground() {
                 index = (index + 1) % 24;
                 let background = document.getElementById("background");
                 let preloadBackground = document.getElementById("preload-background");
 
-                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index / 6)) + "_" + (index % 6) + ".png')";
-                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor((index + 1) / 6)) + "_" + ((index + 1) % 6) + ".png')";
+                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" 
+                    + Math.floor(index / 6) + "_" + (index % 6) + ".png')";
+                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" 
+                    + Math.floor((index + 1) / 6) + "_" + ((index + 1) % 6) + ".png')";
                 background.style.backgroundImage = backgroundUrl;
                 preloadBackground.style.backgroundImage = preloadBackgroundUrl;
             }
 
             setInterval(updateBackground, 3000);
         </script>
+        <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/effect-js/roihoa.js"></script>
     </body>
-    
-    <script src="assets/js/effect-js/roihoa.js"></script>
 </html>

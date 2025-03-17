@@ -184,6 +184,7 @@
         </style>
     </head>
     <body>
+        <jsp:include page="sakura.jsp" />
         <jsp:include page="contentHeader.jsp" />
         <div class="box">
             <div class="calendar">

@@ -386,6 +386,6 @@
         </script>
 
 </body>
-<script src="../assets/js/effect-js/roihoa.js"></script>
+<script src="${pageContext.request.contextPath}assets/js/effect-js/roihoa.js"></script>
 
 </html>

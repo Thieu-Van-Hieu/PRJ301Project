@@ -12,21 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../assets/css/hoaroi.css">
-    <style>
-        .petal {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: url('../assets/img/effect-img/hoaanhdao.png') no-repeat center center;
-            background-size: contain;
-            opacity: 0.9;
-            animation: fall linear infinite;
-        }
-    </style>
 </head>
 
 <body>
+    <jsp:include page="sakura.jsp" />
     <style>
         * {
             margin: 0;
@@ -701,7 +690,7 @@
         <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
         <div class="left-toolbar">
             <ul>
-                <li><img src="../assets/img/logo-img/logo_3.jpg" alt=""></li>
+                <li><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></li>
                 <li>1</li>
                 <li><i class="fa-solid fa-plus"></i></li>
                 <li><i class="fa-regular fa-compass"></i></li>
@@ -716,7 +705,7 @@
                 <div class="sidebar-header__name">Câu Lạc Bộ A</div>
             </div>
             <div class="sidebar-coverImg">
-                <img src="../assets/img/login-img/loginnight.jpg" alt="">
+                <img src="${pageContext.request.contextPath}assets/img/login-img/loginnight.jpg" alt="">
             </div>
             <ul>
                 <li><a href="#">Diễn đàn</a></li>
@@ -751,7 +740,7 @@
             
             <div class="content-create js-open-modal">
                 <div class="content-text">
-                    <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                    <div class="avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                     <input type="text" id="commentInput" class="input" placeholder="Content gì chưa người đẹp?">
                 </div>
                 <div class="content-img">
@@ -766,7 +755,7 @@
                         <div class="modal-header">Tạo Bài Viết</div>
                         <div class="modal-body">
                             <div class="modal-body-header">
-                                <div class="modal-body-avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt="">
+                                <div class="modal-body-avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt="">
                                 </div>
                                 <p>Chong cua Bo</p>
                             </div>
@@ -786,7 +775,7 @@
                 <div class="content-item" data-id="1">
                     <div class="item-header">
                         <div class="item-avatar">
-                            <div class="item-img"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="item-img"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                             <div class="item-name-date">
                                 <div class="item-name">Chong cua Bo</div>
                                 <div class="item-date">14 Tháng 3, 6:36 PM</div>
@@ -803,7 +792,7 @@
                     </div>
                     <div class="item-body">
                         <div class="item-content-text">Mùa xuân sang có hoa anh đào</div>
-                        <div class="item-content-img"><img src="../assets/img/login-img/loginmorning.jpg" alt=""></div>
+                        <div class="item-content-img"><img src="${pageContext.request.contextPath}assets/img/login-img/loginmorning.jpg" alt=""></div>
                         <div class="item-content-comment">
                             <div class="item-body-love">
                                 <i class="fa-solid fa-heart"></i>
@@ -823,12 +812,12 @@
                         </div>
                     </div>
                     <div class="content-text input-comment">
-                        <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                        <div class="avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                         <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
                     </div>
                     <div class="comment-list">
                         <div class="content-text">
-                            <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                             <div class="comment-body">
                                 <div class="comment-name">Chong cua Bo</div>
                                 <div class="comment-content">Bài viết thật hay và sáng tạo</div>
@@ -844,7 +833,7 @@
                 <div class="content-item" data-id="2">
                     <div class="item-header">
                         <div class="item-avatar">
-                            <div class="item-img"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="item-img"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                             <div class="item-name-date">
                                 <div class="item-name">Chong cua Bo</div>
                                 <div class="item-date">14 Tháng 3, 6:20 PM</div>
@@ -861,7 +850,7 @@
                     </div>
                     <div class="item-body">
                         <div class="item-content-text">Đêm rồi em có nhớ anh không?</div>
-                        <div class="item-content-img"><img src="../assets/img/login-img/loginnight.jpg" alt=""></div>
+                        <div class="item-content-img"><img src="${pageContext.request.contextPath}assets/img/login-img/loginnight.jpg" alt=""></div>
                         <div class="item-content-comment">
                             <div class="item-body-love">
                                 <i class="fa-solid fa-heart"></i>
@@ -881,12 +870,12 @@
                         </div>
                     </div>
                     <div class="content-text input-comment">
-                        <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                        <div class="avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                         <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
                     </div>
                     <div class="comment-list">
                         <div class="content-text">
-                            <div class="avatar"><img src="../assets/img/logo-img/logo_3.jpg" alt=""></div>
+                            <div class="avatar"><img src="${pageContext.request.contextPath}assets/img/logo-img/logo_3.jpg" alt=""></div>
                             <div class="comment-body">
                                 <div class="comment-name">Chong cua Bo</div>
                                 <div class="comment-content">Bài viết thật hay và sáng tạo</div>
@@ -1013,6 +1002,5 @@
     </script>
 
 </body>
-<script src="../assets/js/effect-js/roihoa.js"></script>
 
 </html>

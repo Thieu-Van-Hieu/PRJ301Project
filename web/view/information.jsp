@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../assets/css/hoaroi.css" />
     <link rel="stylesheet" href="../assets/css/login-css/information.css" />
     <link rel="stylesheet" href="../assets/css/reponsivecss/reponsiveinfor.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
     <style>
         .petal {
             position: absolute;
@@ -18,6 +20,19 @@
             background-size: contain;
             opacity: 0.9;
             animation: fall linear infinite;
+        }
+
+        .mySlect {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.3125rem;
+    font-size: 0.875rem;
+    width: 32%;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -284,5 +299,34 @@
 
     window.onload = loadProvinces;
 </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<style>
+    .select2-container .select2-selection--single {
+        height: 50px !important; /* Tăng chiều cao */
+        font-size: 20px !important; /* Tăng kích thước chữ */
+        padding: 10px !important;
+    }
+
+    .select2-selection__arrow {
+        display: none !important; /* Ẩn icon dropdown */
+    }
+
+</style>
+<script>
+    $(document).ready(function() {
+        $('#ngaySinh, #thangSinh, #namSinh').select2({
+            dropdownAutoWidth: true, // Để dropdown tự động co theo nội dung
+            width: '200px',          // Độ rộng của select
+            maximumSelectionLength: 5, // Giới hạn số option hiển thị
+            minimumResultsForSearch: -1 // Ẩn ô tìm kiếm
+        });
+
+        // Xóa icon dropdown
+        $('.select2-selection__arrow').remove();
+    });
+    
+</script>
+
 
 </html>

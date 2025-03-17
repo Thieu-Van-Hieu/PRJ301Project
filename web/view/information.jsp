@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/login-css/information.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/ssets/css/reponsivecss/reponsiveinfor.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login-css/information.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reponsivecss/reponsiveinfor.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 
     <style>
@@ -201,8 +201,8 @@
     </div>
 
     <!-- Các file JS nội bộ -->
-    <script src="${pageContext.request.contextPath}/ssets/js/valiate/datadate.js"></script>
-    <script src="${pageContext.request.contextPath}/ssets/js/valiate/information.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/valiate/datadate.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/valiate/information.js"></script>
 
     <script>
         async function loadProvinces() {

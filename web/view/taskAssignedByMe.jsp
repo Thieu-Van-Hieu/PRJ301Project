@@ -9,6 +9,7 @@
         <meta charset="UTF-8" />
         <title>Task Assigned By Me Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <style>
             /* Căn giữa trang */
             .box {
@@ -91,6 +92,10 @@
                 background: #f9f9f9;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            }
+
+            .time-picker {
+                text-align: center;
             }
 
             .multiselect-dropdown .optexts {
@@ -244,7 +249,7 @@
                 <div class="tasks__body">
                     <c:forEach items="${tasks}" var="task">
                     <div class="task">
-                        <input type="text" class="task__item" value="${task.name}">
+                        <input type="text" class="task__item" value="${task.name}" required>
                         <textarea class="task__item">${task.description}</textarea>
                         <div class="task__item">
                             <select name="assignedTo" id="task__assigned-to"  multiple multiselect-search="true" multiselect-select-all="true" multiple-select-hide-x="true">
@@ -265,7 +270,7 @@
                                 <div class="task__item task__status--completed">${task.status}</div>
                             </c:when>
                         </c:choose>
-                        <input type="date" class="task__item" value="${task.dueDate}">
+                        <input class="task__item time-picker" type="text" value="${task.dueDate}" required>
                         <div class="task__controls">
                             <button class="task__control task__control--edit">Lưu</button>
                             <button class="task__control task__control--delete">Xóa</button>
@@ -284,7 +289,7 @@
                             </select>
                         </div>
                         <div class="task__item task__status--in-progress">Đang làm</div>
-                        <input type="date" class="task__item">
+                        <input class="task__item time-picker" type="text" required>
                         <div class="task__controls">
                             <button class="task__control">Thêm</button>
                         </div>
@@ -293,5 +298,15 @@
             </div>
         </div>
         <script src="${pageContext.request.contextPath}/assets/js/multiselect-dropdown/multiselect-dropdown.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            // Kích hoạt Flatpickr cho trường nhập ngày giờ
+            flatpickr(".time-picker", {
+                enableTime: true,
+                enableSeconds: true,
+                dateFormat: "H:i:S d-m-Y",
+                time_24hr: true,
+            });
+        </script>
     </body>
 </html>

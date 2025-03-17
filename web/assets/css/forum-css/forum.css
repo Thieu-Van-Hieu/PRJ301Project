@@ -1,7 +1,6 @@
 
 /* Nội dung chính */
 .content-container {
-    grid-area: cont;
     background: #eaf8f2;
     overflow-y: auto;
 

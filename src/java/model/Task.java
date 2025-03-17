@@ -19,7 +19,7 @@ public class Task {
             Date dueDate) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.description = description; 
         this.assignedBy = assignedBy;
         this.assignedTo = assignedTo;
         this.status = status;
@@ -30,56 +30,63 @@ public class Task {
         return id;
     }
 
-    public void setId(int id) {
+    public Task setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Task setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Task setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public String getAssignedBy() {
         return assignedBy;
     }
 
-    public void setAssignedBy(String assignedBy) {
+    public Task setAssignedBy(String assignedBy) {
         this.assignedBy = assignedBy;
+        return this;
     }
 
     public String getAssignedTo() {
         return assignedTo;
     }
 
-    public void setAssignedTo(String assignedTo) {
+    public Task setAssignedTo(String assignedTo) {
         this.assignedTo = assignedTo;
+        return this;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public Task setStatus(String status) {
         this.status = status;
+        return this;
     }
 
     public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public Task setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+        return this;
     }
 
     public boolean isOverdue() {

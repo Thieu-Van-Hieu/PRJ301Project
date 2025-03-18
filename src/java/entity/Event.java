@@ -13,6 +13,14 @@ public class Event {
     public Event() {
     }
 
+    public Event(EventBuilder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+    }
+
     public int getId() {
         return id;
     }
@@ -53,40 +61,43 @@ public class Event {
         return end.get(Calendar.HOUR_OF_DAY) - start.get(Calendar.HOUR_OF_DAY);
     }
 
-    public static class Builder {
-        private Event event;
+    public static class EventBuilder {
+        private int id;
+        private String name;
+        private String description;
+        private Timestamp startDate;
+        private Timestamp endDate;
 
-        public Builder() {
-            event = new Event();
+        public EventBuilder() {
         }
 
-        public Builder setId(int id) {
-            event.id = id;
+        public EventBuilder setId(int id) {
+            this.id = id;
             return this;
         }
 
-        public Builder setName(String name) {
-            event.name = name;
+        public EventBuilder setName(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder setDescription(String description) {
-            event.description = description;
+        public EventBuilder setDescription(String description) {
+            this.description = description;
             return this;
         }
 
-        public Builder setStartDate(Timestamp startDate) {
-            event.startDate = startDate;
+        public EventBuilder setStartDate(Timestamp startDate) {
+            this.startDate = startDate;
             return this;
         }
 
-        public Builder setEndDate(Timestamp endDate) {
-            event.endDate = endDate;
+        public EventBuilder setEndDate(Timestamp endDate) {
+            this.endDate = endDate;
             return this;
         }
 
         public Event build() {
-            return event;
+            return new Event(this);
         }
     }
 }

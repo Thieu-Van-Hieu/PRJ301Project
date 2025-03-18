@@ -8,6 +8,12 @@ public class Message {
     public Message() {
     }
 
+    public Message(MessageBuilder builder) {
+        this.id = builder.id;
+        this.memberId = builder.memberId;
+        this.content = builder.content;
+    }
+
     public int getId() {
         return id;
     }
@@ -20,30 +26,31 @@ public class Message {
         return content;
     }
 
-    public static class Builder {
-        private Message message;
+    public static class MessageBuilder {
+        private int id;
+        private int memberId;
+        private String content;
 
-        public Builder() {
-            message = new Message();
+        public MessageBuilder() {
         }
 
-        public Builder setId(int id) {
-            message.id = id;
+        public MessageBuilder setId(int id) {
+            this.id = id;
             return this;
         }
 
-        public Builder setMemberId(int memberId) {
-            message.memberId = memberId;
+        public MessageBuilder setMemberId(int memberId) {
+            this.memberId = memberId;
             return this;
         }
 
-        public Builder setContent(String content) {
-            message.content = content;
+        public MessageBuilder setContent(String content) {
+            this.content = content;
             return this;
         }
 
         public Message build() {
-            return message;
+            return new Message(this);
         }
     }
 }

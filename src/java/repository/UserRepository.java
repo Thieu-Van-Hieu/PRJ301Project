@@ -4,7 +4,7 @@
  */
 package repository;
 
-import model.User;
+import entity.User;
 
 /**
  *

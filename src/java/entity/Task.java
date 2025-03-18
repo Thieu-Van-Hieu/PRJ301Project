@@ -1,4 +1,4 @@
-package model;
+package entity;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -7,8 +7,8 @@ public class Task {
     private int id;
     private String name;
     private String description;
-    private Member assignedBy;
-    private Member assignedTo;
+    private int assignedBy;
+    private int assignedTo;
     private String status;
     private Date dueDate;
 
@@ -27,12 +27,12 @@ public class Task {
         return description;
     }
 
-    public String getAssignedBy() {
-        return assignedBy.getName();
+    public int getAssignedBy() {
+        return assignedBy;
     }
 
-    public String getAssignedTo() {
-        return assignedTo.getName();
+    public int getAssignedTo() {
+        return assignedTo;
     }
 
     public String getStatus() {
@@ -69,12 +69,12 @@ public class Task {
             return this;
         }
 
-        public Builder setAssignedBy(Member assignedBy) {
+        public Builder setAssignedBy(int assignedBy) {
             task.assignedBy = assignedBy;
             return this;
         }
 
-        public Builder setAssignedTo(Member assignedTo) {
+        public Builder setAssignedTo(int assignedTo) {
             task.assignedTo = assignedTo;
             return this;
         }

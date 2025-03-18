@@ -12,7 +12,7 @@ import util.DBContext;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import repository.UserRepository;
-import model.User;
+import entity.User;
 
 public class UserRepositoryImpl implements UserRepository {
 

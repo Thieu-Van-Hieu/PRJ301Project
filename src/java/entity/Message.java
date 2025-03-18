@@ -1,8 +1,8 @@
-package model;
+package entity;
 
 public class Message {
     private int id;
-    private Member member;
+    private int memberId;
     private String content;
 
     public Message() {
@@ -12,8 +12,8 @@ public class Message {
         return id;
     }
 
-    public String getUsername() {
-        return member.getName();
+    public int getMemberId() {
+        return memberId;
     }
 
     public String getContent() {
@@ -32,8 +32,8 @@ public class Message {
             return this;
         }
 
-        public Builder setMember(Member member) {
-            message.member = member;
+        public Builder setMemberId(int memberId) {
+            message.memberId = memberId;
             return this;
         }
 

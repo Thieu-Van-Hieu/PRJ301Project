@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
-import model.Event;
+import entity.Event;
 
 /**
  * @author quann

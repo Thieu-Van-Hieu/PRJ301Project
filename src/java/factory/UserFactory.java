@@ -16,6 +16,7 @@ import repository.impl.UserRepositoryImpl;
 public class UserFactory {
 
     private static final UserRepository userRepository = new UserRepositoryImpl();
+    
     private static final UserInformationRepository userInformationRepository = new UserInformationRepositoryImpl();
 
     public static UserRepository getUserRepository() {
@@ -24,4 +25,6 @@ public class UserFactory {
     public static UserInformationRepository getUserInformationRepository() {
         return userInformationRepository;
     }
+    
+    
 }

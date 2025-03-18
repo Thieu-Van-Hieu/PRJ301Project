@@ -11,6 +11,12 @@ import entity.User;
  * @author ngoct
  */
 public interface UserRepository {
-      public boolean isLogin(String username, String password);
-      public User getUsername(String username);
+
+    public boolean isLogin(String username, String password);
+
+    public User getUsername(String username);
+
+    public void addUserRoleMember(String username, String password);
+
+    public int getUserId(String username);
 }

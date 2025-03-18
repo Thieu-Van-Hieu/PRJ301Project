@@ -57,7 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
                 user = new User.Builder()
                         .id(rs.getInt("id"))
                         .userName(rs.getString("username"))
-                        .password(rs.getString("password")) 
+                        .password(rs.getString("password"))
                         .role("role")
                         .build();
             }
@@ -66,6 +66,49 @@ public class UserRepositoryImpl implements UserRepository {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public void addUserRoleMember(String username, String password) {
+        DBContext db = DBContext.getInstance();
+        int rs = 0;
+        try {
+            String sql = """
+                          insert into users values(?, ?, ?)
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setString(1, username);
+            st.setString(2, password);
+            st.setString(3, "member");
+            rs = st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getUserId(String username) {
+        DBContext db = DBContext.getInstance();
+        int result = 0;
+        try {
+            String sql = """
+                     SELECT TOP (1000) [id]
+                           ,[username]
+                           ,[password]
+                           ,[role]
+                       FROM [PRJ301Project].[dbo].[users]
+                       where username = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 }

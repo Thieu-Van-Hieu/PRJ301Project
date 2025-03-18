@@ -79,7 +79,7 @@ public class RegisterServlet extends HttpServlet {
 
         UserService userService = new UserService();
         
-        User user = userService.getUsername(username);
+        User user = userService.getUsername(username, password);
 
         boolean isExistEmail = userService.isExistEmail(email);
 

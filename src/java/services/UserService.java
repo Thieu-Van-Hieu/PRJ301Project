@@ -4,6 +4,7 @@
  */
 package services;
 
+import dto.UserInformationResponse;
 import factory.UserFactory;
 import repository.UserRepository;
 import entity.User;
@@ -16,7 +17,10 @@ import repository.UserInformationRepository;
 public class UserService {
 
     private final UserRepository userRepository;
+
     private final UserInformationRepository userInformationRepository;
+
+    private static UserInformationResponse response = new UserInformationResponse();
 
     public UserService() {
         this.userRepository = UserFactory.getUserRepository();
@@ -27,12 +31,43 @@ public class UserService {
         return userRepository.isLogin(username, password);
     }
 
-    public User getUsername(String username) {
+    public User getUsername(String username, String password) {
+        response.setUserName(username);
+        response.setPassword(password);
         return userRepository.getUsername(username);
     }
 
     public boolean isExistEmail(String email) {
+        response.setEmail(email);
         return userInformationRepository.isExistEmail(email);
     }
+
+    public int getUserId() {
+        return userRepository.getUserId(response.getUserName());
+    }
+
+    public void addUserRoleMember() {
+        userRepository.addUserRoleMember(response.getUserName(), response.getPassword());
+    }
+
+    public void addInformationOfUser() {
+        userInformationRepository.addInformationOfUser(getUserId(), response);
+    }
+
+    public void addByParamIntoResponse(UserInformationResponse infor) {
+        response.setFirstName(infor.getFirstName());
+        response.setLastName(infor.getLastName());
+        response.setGender(infor.getGender());
+        response.setStudentId(infor.getStudentId());
+        response.setAddress(infor.getAddress());
+        response.setBirthday(infor.getBirthday());
+    }
     
+    
+    public boolean isExistStudentId(String studentId){
+        return userInformationRepository.isExistStudentId(studentId);
+    }
+    public UserInformationResponse getResults() {
+        return response;
+    }
 }

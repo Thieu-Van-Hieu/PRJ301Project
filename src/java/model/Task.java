@@ -19,66 +19,78 @@ public class Task {
         return id;
     }
 
-    public Task setId(int id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public Task setName(String name) {
-        this.name = name;
-        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public Task setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
     public String getAssignedBy() {
         return assignedBy.getName();
-    }
-
-    public Task setAssignedBy(String assignedBy) {
-        this.assignedBy.setName(assignedBy);
-        return this;
     }
 
     public String getAssignedTo() {
         return assignedTo.getName();
     }
 
-    public Task setAssignedTo(String assignedTo) {
-        this.assignedTo.setName(assignedTo);
-        return this;
-    }
-
     public String getStatus() {
         return status;
-    }
-
-    public Task setStatus(String status) {
-        this.status = status;
-        return this;
     }
 
     public Date getDueDate() {
         return dueDate;
     }
 
-    public Task setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-        return this;
-    }
-
     public boolean isOverdue() {
         return this.status.equals("In Progress") && this.dueDate.before(Date.valueOf(LocalDate.now()));
+    }
+
+    public static class Builder {
+        private Task task;
+
+        public Builder() {
+            task = new Task();
+        }
+
+        public Builder setId(int id) {
+            task.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            task.name = name;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            task.description = description;
+            return this;
+        }
+
+        public Builder setAssignedBy(Member assignedBy) {
+            task.assignedBy = assignedBy;
+            return this;
+        }
+
+        public Builder setAssignedTo(Member assignedTo) {
+            task.assignedTo = assignedTo;
+            return this;
+        }
+
+        public Builder setStatus(String status) {
+            task.status = status;
+            return this;
+        }
+
+        public Builder setDueDate(Date dueDate) {
+            task.dueDate = dueDate;
+            return this;
+        }
+
+        public Task build() {
+            return task;
+        }
     }
 }

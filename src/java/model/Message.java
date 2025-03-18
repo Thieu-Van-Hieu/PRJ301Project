@@ -12,26 +12,38 @@ public class Message {
         return id;
     }
 
-    public Message setId(int id) {
-        this.id = id;
-        return this;
-    }
-
     public String getUsername() {
         return member.getName();
-    }
-
-    public Message setUsername(String username) {
-        this.member.setName(username);
-        return this;
     }
 
     public String getContent() {
         return content;
     }
 
-    public Message setContent(String content) {
-        this.content = content;
-        return this;
+    public static class Builder {
+        private Message message;
+
+        public Builder() {
+            message = new Message();
+        }
+
+        public Builder setId(int id) {
+            message.id = id;
+            return this;
+        }
+
+        public Builder setMember(Member member) {
+            message.member = member;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            message.content = content;
+            return this;
+        }
+
+        public Message build() {
+            return message;
+        }
     }
 }

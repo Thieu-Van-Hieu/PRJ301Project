@@ -17,27 +17,12 @@ public class Event {
         return id;
     }
 
-    public Event setId(int id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
 
-    public Event setName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public Event setDescription(String description) {
-        this.description = description;
-        return this;
     }
 
     public Timestamp getStartDate() {
@@ -50,11 +35,6 @@ public class Event {
         return cal;
     }
 
-    public Event setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-        return this;
-    }
-
     public Timestamp getEndDate() {
         return endDate;
     }
@@ -65,16 +45,48 @@ public class Event {
         return cal;
     }
 
-    public Event setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
-        return this;
-    }
-
     public int getNumberOfSlots() {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
         Calendar end = Calendar.getInstance();
         end.setTime(endDate);
         return end.get(Calendar.HOUR_OF_DAY) - start.get(Calendar.HOUR_OF_DAY);
+    }
+
+    public static class Builder {
+        private Event event;
+
+        public Builder() {
+            event = new Event();
+        }
+
+        public Builder setId(int id) {
+            event.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            event.name = name;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            event.description = description;
+            return this;
+        }
+
+        public Builder setStartDate(Timestamp startDate) {
+            event.startDate = startDate;
+            return this;
+        }
+
+        public Builder setEndDate(Timestamp endDate) {
+            event.endDate = endDate;
+            return this;
+        }
+
+        public Event build() {
+            return event;
+        }
     }
 }

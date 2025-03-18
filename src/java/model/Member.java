@@ -11,17 +11,29 @@ public class Member {
         return id;
     }
 
-    public Member setId(int id) {
-        this.id = id;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
 
-    public Member setName(String name) {
-        this.name = name;
-        return this;
+    public static class Builder {
+        private Member member;
+
+        public Builder() {
+            member = new Member();
+        }
+
+        public Builder setId(int id) {
+            member.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            member.name = name;
+            return this;
+        }
+
+        public Member build() {
+            return member;
+        }
     }
 }

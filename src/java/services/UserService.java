@@ -4,21 +4,35 @@
  */
 package services;
 
+import factory.RepositoryFactory;
 import repository.UserRepository;
+import model.User;
+import repository.UserInformationRepository;
 
 /**
  *
  * @author ngoct
  */
 public class UserService {
-    
+
     private final UserRepository userRepository;
-    
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
+    private final UserInformationRepository userInformationRepository;
+
+    public UserService() {
+        this.userRepository = RepositoryFactory.getUserRepository();
+        this.userInformationRepository = RepositoryFactory.getUserInformationRepository();
     }
-    
-    public boolean checkLogin(String username, String password){
+
+    public boolean checkLogin(String username, String password) {
         return userRepository.isLogin(username, password);
     }
+
+    public User getUsername(String username) {
+        return userRepository.getUsername(username);
+    }
+
+    public boolean isExistEmail(String email) {
+        return userInformationRepository.isExistEmail(email);
+    }
+    
 }

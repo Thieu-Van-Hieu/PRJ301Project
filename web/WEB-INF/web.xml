@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
@@ -38,6 +36,18 @@
         <servlet-name>ResendOTPServlet</servlet-name>
         <servlet-class>controller.ResendOTPServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InformationServlet</servlet-name>
+        <servlet-class>controller.InformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EventServlet</servlet-name>
+        <servlet-class>controller.EventServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForumServlet</servlet-name>
+        <servlet-class>controller.ForumServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -57,5 +67,17 @@
     <servlet-mapping>
         <servlet-name>ResendOTPServlet</servlet-name>
         <url-pattern>/ResendOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InformationServlet</servlet-name>
+        <url-pattern>/InformationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EventServlet</servlet-name>
+        <url-pattern>/EventServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForumServlet</servlet-name>
+        <url-pattern>/ForumServlet</url-pattern>
     </servlet-mapping>
 </web-app>

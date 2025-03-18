@@ -106,37 +106,37 @@ public class Event {
             event.startDate = startDate;
             return this;
         }
-        
+
         public Builder setEndDate(Timestamp endDate) {
             event.endDate = endDate;
             return this;
         }
-        
-        public Builder setType(int typeID){
+
+        public Builder setType(int typeID) {
             event.typeId = typeID;
             return this;
         }
-        
-        public Builder setUserId(int userId){
+
+        public Builder setUserId(int userId) {
             event.userId = userId;
             return this;
         }
-        
-        public Builder setClubId(int clubId){
+
+        public Builder setClubId(int clubId) {
             event.clubId = clubId;
             return this;
         }
-        
-        public Builder setLocationId(int locationId){
+
+        public Builder setLocationId(int locationId) {
             event.locationId = locationId;
             return this;
         }
 
-        public Builder setImg(String img){
+        public Builder setImg(String img) {
             event.img = img;
             return this;
         }
-        
+
         public Event build() {
             return event;
         }

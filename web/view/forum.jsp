@@ -25,6 +25,7 @@
             <div class="modal-container js-modal-container">
                 <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                 <div class="modal-header">Tạo Bài Viết</div>
+                <input type="hidden" name="createTime" id="createTime" value="">
                 <div class="modal-body">
                     <div class="modal-body-header">
                         <div class="modal-body-avatar"><img
@@ -279,5 +280,13 @@
                 menu.style.display = 'none';
             }
         });
+    });
+    document.querySelector(".btn-submit").addEventListener("click", function () {
+        // Lấy thời gian hiện tại
+        let now = new Date();
+        let formattedTime = now.toISOString(); // Định dạng: YYYY-MM-DDTHH:mm:ss.sssZ
+
+        // Gán vào input ẩn
+        document.getElementById("createTime").value = formattedTime;
     });
 </script>

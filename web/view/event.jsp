@@ -1,23 +1,27 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="entity.*" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <div class="content-container">
     <%
             request.setAttribute("contentHeader", "Sự kiện");
-        %>
+    %>
     <jsp:include page="contentHeader.jsp" />
 
     <div class="content-body">
         <div class="content-filter">
             <form action="#" method="GET">
+                <input type="hidden" value="filter" name="action">
                 <table>
                     <tr>
                         <td class="filter-time">Ngày Đăng <input type="date"></td>
-                        <td><select name="type" id="">
-                                <option value="0">Loại sự kiện</option>
-                                <option value="1">ABC</option>
-                                <option value="2">CDF</option>
+                        <td>
+                            <select name="type" id="id">
+                                <c:forEach var="eventType" items="${sessionScope.eventTypes}">
+                                    <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
+                                </c:forEach>
                             </select>
-                        </td>                       
+                        </td>
                         <td class="filter-search"><input type="text" placeholder="Name, id, location"></td>
                     </tr>
                     <tr>
@@ -45,31 +49,22 @@
             <button class="js-open-modal">Tạo sự kiện</button>
         </div>
         <div class="contentListEvent">
-            <div class="event-item">
-                <div class="event-img">IMG</div>
-                <div class="event-info">
-                    <h3>Title of event</h3>
-                    <p><strong>Câu lạc bộ:</strong> ABC</p>
-                    <p><strong>Thời gian:</strong> 12 / 03 / 2025</p>
-                    <p><strong>Mô tả:</strong></p>
+            <c:forEach var="eventDescription" items="${sessionScope.eventDescriptions}">
+                <div class="event-item">
+                    <div class="event-img"><img src="${pageContext.request.contextPath}/assets/img/img-download/${eventDescription.getImg()}" alt="Event Image"></div>
+                    <div class="event-info">
+                        <h3>${eventDescription.getEventName()}</h3>
+                        <p><strong>Câu lạc bộ:</strong> ${eventDescription.getClubName()}</p>
+                        <p><strong>Thời gian:</strong>${eventDescription.getStartDate()} - ${eventDescription.getEndDate()}</p>
+                    </div>
+                    <div class="event-options">...</div>
                 </div>
-                <div class="event-options">...</div>
-            </div>
+            </c:forEach>>           
 
-            <div class="event-item">
-                <div class="event-img">IMG</div>
-                <div class="event-info">
-                    <h3>Title of event</h3>
-                    <p><strong>Câu lạc bộ:</strong> ABC</p>
-                    <p><strong>Thời gian:</strong> 12 / 03 / 2025</p>
-                    <p><strong>Mô tả:</strong></p>
-                </div>
-                <div class="event-options">...</div>
-            </div>
         </div>
 
         <div class="modal js-modal" id="modal">
-            <form id="uploadForm" enctype="multipart/form-data">
+            <form action="EventServlet" method="POST" enctype="multipart/form-data">
                 <div class="modal-container js-modal-container">
                     <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                     <div class="modal-header">Tạo sự kiện</div>
@@ -79,27 +74,27 @@
                                     src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
                             </div>
                             <p>Chong cua Bo</p>
-                            <input type="hidden" name="userId" value="${userId}" id="">
-                            <input type="hidden" name="clubId" value="${clubId}">
-                            <input type="hidden" name="createTime" id="createTime" value="">
+                            <input type="hidden" name="userId" value="1">
+                            <input type="hidden" name="clubId" value="2">
                             <input type="hidden" name="province" value="" id="provinceText">
                             <input type="hidden" name="district" value="" id="districtText">
                             <input type="hidden" name="ward" value="" id="wardText">
+                            <input type="hidden" name="action" value="add">
                         </div>
                         <table>
                             <tr>
                                 <td><input type="text" name="name" placeholder="Tên Sự Kiện"></td>
                                 <td>
-                                    <select name="type">
-                                        <option value="1">Hội Thảo</option>
-                                        <option value="2">Cuộc Thi</option>
-                                        <option value="3">Gặp Gỡ</option>
+                                    <select name="type" id="id">
+                                        <c:forEach var="eventType" items="${sessionScope.eventTypes}">
+                                            <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
+                                        </c:forEach>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                        placeholder="Chọn ngày giờ bắt đầu"></td>
+                                           placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -148,25 +143,25 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-    flatpickr("#startDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-    });
+                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+                                        flatpickr("#startDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+                                        });
 
-    flatpickr("#endDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below"
-    });
+                                        flatpickr("#endDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below"
+                                        });
 
-    // Xử lý chọn file ảnh
-    document.getElementById("customFileUpload").addEventListener("click", function () {
-        document.getElementById("fileInput").click();
-    });
+                                        // Xử lý chọn file ảnh
+                                        document.getElementById("customFileUpload").addEventListener("click", function () {
+                                            document.getElementById("fileInput").click();
+                                        });
 </script>
 
 <script>
@@ -285,32 +280,6 @@
     window.onload = loadProvinces;
 </script>
 <script>
-    document.querySelector(".btn-submit").addEventListener("click", function () {
-        // Lấy thời gian hiện tại
-        let now = new Date();
-        let formattedTime = now.toISOString(); // Định dạng: YYYY-MM-DDTHH:mm:ss.sssZ
-
-        // Gán vào input ẩn
-        document.getElementById("createTime").value = formattedTime;
-    });
-
-    document.getElementById("uploadForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        let formData = new FormData();
-
-        formData.append("file", document.getElementById("fileInput").files[0]);
-
-        fetch("${pageContext.request.contextPath}/EventServlet", {
-                method: "POST",
-                body: formData
-            })
-
-            .then(response => response.text())
-            .then(data => alert(data))
-            .catch(error => console.error("Error:", error));
-    });
-
     // Hàm cập nhật giá trị vào input hidden
     function updateHiddenInput(selectElement, hiddenInputId) {
         const selectedOption = selectElement.options[selectElement.selectedIndex];

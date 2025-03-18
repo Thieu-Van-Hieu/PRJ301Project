@@ -34,6 +34,6 @@ public class DBContext {
     }
 
     public DBContext(){
-        this("jdbc:sqlserver://DEVHOA:1433;databaseName=PRJ301Project;TrustServerCertificate=true;", "sa","sa");
+        this("jdbc:sqlserver://localhost:1433;databaseName=PRJ301Project;TrustServerCertificate=true;", "sa","sa");
     }
 }

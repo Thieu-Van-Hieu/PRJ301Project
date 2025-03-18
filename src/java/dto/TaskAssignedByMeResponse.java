@@ -14,82 +14,61 @@ public class TaskAssignedByMeResponse {
     public TaskAssignedByMeResponse() {
     }
 
-    public TaskAssignedByMeResponse(Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
-        this.description = builder.description;
-        this.assignedMembers = builder.assignedMembers;
-        this.status = builder.status;
-        this.dueDate = builder.dueDate;
+    public TaskAssignedByMeResponse(int id, String name, String description, ArrayList<Member> assignedMembers,
+            String status, String dueDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.assignedMembers = assignedMembers;
+        this.status = status;
+        this.dueDate = dueDate;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public ArrayList<Member> getAssignedMembers() {
         return assignedMembers;
+    }
+
+    public void setAssignedMembers(ArrayList<Member> assignedMembers) {
+        this.assignedMembers = assignedMembers;
     }
 
     public String getStatus() {
         return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getDueDate() {
         return dueDate;
     }
 
-    public static class Builder {
-        private int id;
-        private String name;
-        private String description;
-        private ArrayList<Member> assignedMembers;
-        private String status;
-        private String dueDate;
-
-        public Builder() {
-        }
-
-        public Builder setId(int id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public Builder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public Builder setAssignedMembers(ArrayList<Member> assignedMembers) {
-            this.assignedMembers = assignedMembers;
-            return this;
-        }
-
-        public Builder setStatus(String status) {
-            this.status = status;
-            return this;
-        }
-
-        public Builder setDueDate(String dueDate) {
-            this.dueDate = dueDate;
-            return this;
-        }
-
-        public TaskAssignedByMeResponse build() {
-            return new TaskAssignedByMeResponse(this);
-        }
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
     }
 }

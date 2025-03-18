@@ -6,8 +6,8 @@ package factory;
 
 import repository.UserInformationRepository;
 import repository.UserRepository;
-import repository.repositoryImpl.UserInformationRepositoryImpl;
-import repository.repositoryImpl.UserRepositoryImpl;
+import repository.impl.UserInformationRepositoryImpl;
+import repository.impl.UserRepositoryImpl;
 
 /**
  *

@@ -6,7 +6,7 @@ package services;
 
 import factory.RepositoryFactory;
 import repository.UserRepository;
-import model.User;
+import entity.User;
 import repository.UserInformationRepository;
 
 /**

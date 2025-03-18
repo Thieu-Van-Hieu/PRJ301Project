@@ -10,7 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.User;
+import entity.User;
 import services.UserService;
 import util.EmailService;
 import util.ForwardWithError;
@@ -78,6 +78,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         UserService userService = new UserService();
+        
         User user = userService.getUsername(username);
 
         boolean isExistEmail = userService.isExistEmail(email);

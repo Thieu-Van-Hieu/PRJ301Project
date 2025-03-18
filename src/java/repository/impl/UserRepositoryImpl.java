@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package repository.repositoryImpl;
+package repository.impl;
 
 /**
  *
@@ -12,7 +12,7 @@ import util.DBContext;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import repository.UserRepository;
-import model.User;
+import entity.User;
 
 public class UserRepositoryImpl implements UserRepository {
 

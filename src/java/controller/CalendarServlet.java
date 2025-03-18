@@ -16,7 +16,7 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.Arrays;
-import model.Event;
+import entity.Event;
 
 /**
  * @author quann
@@ -142,16 +142,6 @@ public class CalendarServlet extends HttpServlet {
             ArrayList<String> colorAreas = new ArrayList<>();
 
             ArrayList<Event> events = new ArrayList<>();
-            events.add(new Event(1, "Meeting", "Team meeting for project", Timestamp.valueOf("2025-03-10 10:00:00"),
-                    Timestamp.valueOf("2025-03-12 11:00:00")));
-            events.add(new Event(2, "Workshop", "Java Web Development workshop",
-                    Timestamp.valueOf("2025-03-14 14:00:00"), Timestamp.valueOf("2025-03-14 17:00:00")));
-            events.add(new Event(3, "Conference", "Annual tech conference", Timestamp.valueOf("2025-03-15 09:00:00"),
-                    Timestamp.valueOf("2025-03-16 18:00:00")));
-            events.add(new Event(4, "Deadline", "Submit project report", Timestamp.valueOf("2025-03-25 22:00:00"),
-                    Timestamp.valueOf("2025-03-26 00:00:00")));
-            events.add(new Event(5, "Hackathon", "Coding competition", Timestamp.valueOf("2025-04-10 08:00:00"),
-                    Timestamp.valueOf("2025-04-11 20:00:00")));
 
             // Đặt tuần làm việc bắt đầu từ thứ 2
             calendar.setFirstDayOfWeek(Calendar.MONDAY);

@@ -8,7 +8,7 @@ package dto;
  *
  * @author ngoct
  */
-public class UserInformationRegister {
+public class UserInformationResponse {
 
     private String userName;
     private String password;
@@ -21,7 +21,7 @@ public class UserInformationRegister {
     private String gender;
     private String birthday;
 
-    public UserInformationRegister(UserInfor user) {
+    public UserInformationResponse(UserInfor user) {
         this.userName = user.userName;
         this.password = user.password;
         this.role = user.role;
@@ -140,8 +140,8 @@ public class UserInformationRegister {
             return this;
         }
 
-        public UserInformationRegister build() {
-            return new UserInformationRegister(this);
+        public UserInformationResponse build() {
+            return new UserInformationResponse(this);
         }
     }
 }

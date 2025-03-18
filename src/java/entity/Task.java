@@ -1,6 +1,6 @@
 package entity;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class Task {
@@ -10,9 +10,19 @@ public class Task {
     private int assignedBy;
     private int assignedTo;
     private String status;
-    private Date dueDate;
+    private Timestamp dueDate;
 
     public Task() {
+    }
+
+    public Task(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.assignedBy = builder.assignedBy;
+        this.assignedTo = builder.assignedTo;
+        this.status = builder.status;
+        this.dueDate = builder.dueDate;
     }
 
     public int getId() {
@@ -39,58 +49,64 @@ public class Task {
         return status;
     }
 
-    public Date getDueDate() {
+    public Timestamp getDueDate() {
         return dueDate;
     }
 
     public boolean isOverdue() {
-        return this.status.equals("In Progress") && this.dueDate.before(Date.valueOf(LocalDate.now()));
+        return this.status.equals("In Progress")
+                && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
     }
 
-    public static class Builder {
-        private Task task;
+    public static class TaskBuilder {
+        private int id;
+        private String name;
+        private String description;
+        private int assignedBy;
+        private int assignedTo;
+        private String status;
+        private Timestamp dueDate;
 
-        public Builder() {
-            task = new Task();
+        public TaskBuilder() {
         }
 
-        public Builder setId(int id) {
-            task.id = id;
+        public TaskBuilder setId(int id) {
+            this.id = id;
             return this;
         }
 
-        public Builder setName(String name) {
-            task.name = name;
+        public TaskBuilder setName(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder setDescription(String description) {
-            task.description = description;
+        public TaskBuilder setDescription(String description) {
+            this.description = description;
             return this;
         }
 
-        public Builder setAssignedBy(int assignedBy) {
-            task.assignedBy = assignedBy;
+        public TaskBuilder setAssignedBy(int assignedBy) {
+            this.assignedBy = assignedBy;
             return this;
         }
 
-        public Builder setAssignedTo(int assignedTo) {
-            task.assignedTo = assignedTo;
+        public TaskBuilder setAssignedTo(int assignedTo) {
+            this.assignedTo = assignedTo;
             return this;
         }
 
-        public Builder setStatus(String status) {
-            task.status = status;
+        public TaskBuilder setStatus(String status) {
+            this.status = status;
             return this;
         }
 
-        public Builder setDueDate(Date dueDate) {
-            task.dueDate = dueDate;
+        public TaskBuilder setDueDate(Timestamp dueDate) {
+            this.dueDate = dueDate;
             return this;
         }
 
         public Task build() {
-            return task;
+            return new Task(this);
         }
     }
 }

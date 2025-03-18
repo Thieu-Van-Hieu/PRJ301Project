@@ -245,7 +245,6 @@
                 overflow: hidden;
             }
 
-
         </style>
         <jsp:include page="/view/background.jsp" />
         <div class="container">
@@ -262,7 +261,6 @@
                 </div>
             </div>
 
-            <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
             <div class="left-toolbar">
                 <ul>
                     <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>

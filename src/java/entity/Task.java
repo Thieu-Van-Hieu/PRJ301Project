@@ -15,7 +15,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(TaskBuilder builder) {
+    public Task(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
@@ -57,7 +57,7 @@ public class Task {
         return this.status.equals("In Progress") && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
     }
 
-    public static class TaskBuilder {
+    public static class Builder {
         private int id;
         private String name;
         private String description;
@@ -66,40 +66,40 @@ public class Task {
         private String status;
         private Timestamp dueDate;
 
-        public TaskBuilder() {
+        public Builder() {
         }
 
-        public TaskBuilder setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public TaskBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public TaskBuilder setDescription(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public TaskBuilder setAssignedBy(int assignedBy) {
+        public Builder setAssignedBy(int assignedBy) {
             this.assignedBy = assignedBy;
             return this;
         }
 
-        public TaskBuilder setAssignedTo(int assignedTo) {
+        public Builder setAssignedTo(int assignedTo) {
             this.assignedTo = assignedTo;
             return this;
         }
 
-        public TaskBuilder setStatus(String status) {
+        public Builder setStatus(String status) {
             this.status = status;
             return this;
         }
 
-        public TaskBuilder setDueDate(Timestamp dueDate) {
+        public Builder setDueDate(Timestamp dueDate) {
             this.dueDate = dueDate;
             return this;
         }

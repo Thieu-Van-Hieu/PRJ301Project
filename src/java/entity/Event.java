@@ -13,7 +13,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(EventBuilder builder) {
+    public Event(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
@@ -61,37 +61,37 @@ public class Event {
         return end.get(Calendar.HOUR_OF_DAY) - start.get(Calendar.HOUR_OF_DAY);
     }
 
-    public static class EventBuilder {
+    public static class Builder {
         private int id;
         private String name;
         private String description;
         private Timestamp startDate;
         private Timestamp endDate;
 
-        public EventBuilder() {
+        public Builder() {
         }
 
-        public EventBuilder setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public EventBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public EventBuilder setDescription(String description) {
+        public Builder setDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public EventBuilder setStartDate(Timestamp startDate) {
+        public Builder setStartDate(Timestamp startDate) {
             this.startDate = startDate;
             return this;
         }
 
-        public EventBuilder setEndDate(Timestamp endDate) {
+        public Builder setEndDate(Timestamp endDate) {
             this.endDate = endDate;
             return this;
         }

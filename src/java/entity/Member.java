@@ -7,7 +7,7 @@ public class Member {
     public Member() {
     }
 
-    public Member(MemberBuilder builder) {
+    public Member(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
     }
@@ -20,19 +20,19 @@ public class Member {
         return name;
     }
 
-    public static class MemberBuilder {
+    public static class Builder {
         private int id;
         private String name;
 
-        public MemberBuilder() {
+        public Builder() {
         }
 
-        public MemberBuilder setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public MemberBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }

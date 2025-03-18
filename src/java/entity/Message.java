@@ -8,7 +8,7 @@ public class Message {
     public Message() {
     }
 
-    public Message(MessageBuilder builder) {
+    public Message(Builder builder) {
         this.id = builder.id;
         this.memberId = builder.memberId;
         this.content = builder.content;
@@ -26,25 +26,25 @@ public class Message {
         return content;
     }
 
-    public static class MessageBuilder {
+    public static class Builder {
         private int id;
         private int memberId;
         private String content;
 
-        public MessageBuilder() {
+        public Builder() {
         }
 
-        public MessageBuilder setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public MessageBuilder setMemberId(int memberId) {
+        public Builder setMemberId(int memberId) {
             this.memberId = memberId;
             return this;
         }
 
-        public MessageBuilder setContent(String content) {
+        public Builder setContent(String content) {
             this.content = content;
             return this;
         }

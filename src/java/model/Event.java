@@ -13,36 +13,31 @@ public class Event {
     public Event() {
     }
 
-    public Event(int id, String name, String description, Timestamp startDate, Timestamp endDate) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Event setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Event setName(String name) {
         this.name = name;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public Event setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     public Timestamp getStartDate() {
@@ -55,8 +50,9 @@ public class Event {
         return cal;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public Event setStartDate(Timestamp startDate) {
         this.startDate = startDate;
+        return this;
     }
 
     public Timestamp getEndDate() {
@@ -69,8 +65,9 @@ public class Event {
         return cal;
     }
 
-    public void setEndDate(Timestamp endDate) {
+    public Event setEndDate(Timestamp endDate) {
         this.endDate = endDate;
+        return this;
     }
 
     public int getNumberOfSlots() {

@@ -8,7 +8,7 @@ public class Message {
     public Message() {
     }
 
-    public getId() {
+    public int getId() {
         return id;
     }
 

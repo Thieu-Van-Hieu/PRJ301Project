@@ -1,3 +1,5 @@
+package model;
+
 public class Member {
     private int id;
     private String name;
@@ -5,7 +7,7 @@ public class Member {
     public Member() {
     }
 
-    public getId() {
+    public int getId() {
         return id;
     }
 

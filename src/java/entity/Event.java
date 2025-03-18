@@ -4,13 +4,18 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class Event {
+
     private int id;
     private String name;
     private String description;
+    private int typeId;
     private Timestamp startDate;
     private Timestamp endDate;
-    
-    
+    private int userId;
+    private int clubId;
+    private int locationId;
+    private String img;
+
     public Event() {
     }
 
@@ -24,6 +29,10 @@ public class Event {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getTypeId() {
+        return typeId;
     }
 
     public Timestamp getStartDate() {
@@ -54,7 +63,24 @@ public class Event {
         return end.get(Calendar.HOUR_OF_DAY) - start.get(Calendar.HOUR_OF_DAY);
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
     public static class Builder {
+
         private Event event;
 
         public Builder() {
@@ -80,12 +106,37 @@ public class Event {
             event.startDate = startDate;
             return this;
         }
-
+        
         public Builder setEndDate(Timestamp endDate) {
             event.endDate = endDate;
             return this;
         }
+        
+        public Builder setType(int typeID){
+            event.typeId = typeID;
+            return this;
+        }
+        
+        public Builder setUserId(int userId){
+            event.userId = userId;
+            return this;
+        }
+        
+        public Builder setClubId(int clubId){
+            event.clubId = clubId;
+            return this;
+        }
+        
+        public Builder setLocationId(int locationId){
+            event.locationId = locationId;
+            return this;
+        }
 
+        public Builder setImg(String img){
+            event.img = img;
+            return this;
+        }
+        
         public Event build() {
             return event;
         }

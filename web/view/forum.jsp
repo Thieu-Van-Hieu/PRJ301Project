@@ -4,13 +4,11 @@
         <h2>Diễn đàn</h2>
         <div class="content-header_util">
             <i class="fa-solid fa-scroll"></i>
-            <i class="fa-solid fa-user-group"></i>
+            <i class="fa-solid fa-user-group" onclick="location.href='?includeWeb=member.jsp'"></i>
             <input type="text" name="" id="" placeholder="Tìm kiếm">
             <i class="fa-solid fa-magnifying-glass content-search"></i>
         </div>
     </header>
-
-
     <div class="content-create js-open-modal">
         <div class="content-text">
             <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">

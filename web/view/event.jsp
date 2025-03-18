@@ -299,6 +299,6 @@
     </script>
 
 </body>
-<script src="${pageContext.request.contextPath}/assets/js/effect-js/roihoa.js"></script>
+
 
 </html>

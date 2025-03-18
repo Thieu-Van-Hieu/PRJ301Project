@@ -4,13 +4,11 @@
  */
 package repository;
 
-import model.User;
-
 /**
  *
  * @author ngoct
  */
-public interface UserRepository {
-      public boolean isLogin(String username, String password);
-      public User getUsername(String username);
+public interface UserInformationRepository {
+
+    public boolean isExistEmail(String email);
 }

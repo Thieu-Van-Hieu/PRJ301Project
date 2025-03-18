@@ -203,7 +203,7 @@
                     </div>
                     <h2 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${error}</h2>
                     <div class="inputGroup inputGroup4">
-                        <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
+                        <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="view/register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
                     </div>
                 </form>
             </div>

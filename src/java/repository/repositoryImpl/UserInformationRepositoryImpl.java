@@ -6,7 +6,7 @@ package repository.repositoryImpl;
 
 import java.sql.*;
 import repository.UserInformationRepository;
-import singleton.DBContext;
+import util.DBContext;
 
 /**
  *

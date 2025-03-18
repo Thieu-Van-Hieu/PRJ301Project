@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-<!--    <filter>
+    <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
@@ -15,26 +15,26 @@
         <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
         <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
         <url-pattern>/view/otp.jsp</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>
-        <servlet-class>controler.CalendarServlet</servlet-class>
+        <servlet-class>controller.CalendarServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>controler.LoginServlet</servlet-class>
+        <servlet-class>controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MessengerServlet</servlet-name>
-        <servlet-class>controler.MessengerServlet</servlet-class>
+        <servlet-class>controller.MessengerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>controler.RegisterServlet</servlet-class>
+        <servlet-class>controller.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResendOTPServlet</servlet-name>
-        <servlet-class>controler.ResendOTPServlet</servlet-class>
+        <servlet-class>controller.ResendOTPServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>

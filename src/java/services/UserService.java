@@ -4,7 +4,7 @@
  */
 package services;
 
-import factory.RepositoryFactory;
+import factory.UserFactory;
 import repository.UserRepository;
 import entity.User;
 import repository.UserInformationRepository;
@@ -19,8 +19,8 @@ public class UserService {
     private final UserInformationRepository userInformationRepository;
 
     public UserService() {
-        this.userRepository = RepositoryFactory.getUserRepository();
-        this.userInformationRepository = RepositoryFactory.getUserInformationRepository();
+        this.userRepository = UserFactory.getUserRepository();
+        this.userInformationRepository = UserFactory.getUserInformationRepository();
     }
 
     public boolean checkLogin(String username, String password) {

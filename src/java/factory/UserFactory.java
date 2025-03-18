@@ -13,7 +13,7 @@ import repository.impl.UserRepositoryImpl;
  *
  * @author ngoct
  */
-public class RepositoryFactory {
+public class UserFactory {
 
     private static final UserRepository userRepository = new UserRepositoryImpl();
     private static final UserInformationRepository userInformationRepository = new UserInformationRepositoryImpl();

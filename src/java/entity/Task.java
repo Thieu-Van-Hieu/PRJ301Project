@@ -15,7 +15,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Builder builder) {
+    public Task(TaskBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.description = builder.description;
@@ -54,8 +54,7 @@ public class Task {
     }
 
     public boolean isOverdue() {
-        return this.status.equals("In Progress")
-                && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+        return this.status.equals("In Progress") && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
     }
 
     public static class TaskBuilder {
@@ -105,8 +104,5 @@ public class Task {
             return this;
         }
 
-        public Task build() {
-            return new Task(this);
-        }
     }
 }

@@ -78,6 +78,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         UserService userService = new UserService();
+        
         User user = userService.getUsername(username);
 
         boolean isExistEmail = userService.isExistEmail(email);

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import entity.User;
+import jakarta.servlet.http.HttpSession;
 import services.UserService;
 import util.EmailService;
 import util.ForwardWithError;
@@ -78,9 +79,8 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         UserService userService = new UserService();
-        
-        User user = userService.getUsername(username, password);
 
+        User user = userService.getUsername(username, password);
         boolean isExistEmail = userService.isExistEmail(email);
 
         if (user != null) {
@@ -91,6 +91,7 @@ public class RegisterServlet extends HttpServlet {
             ForwardWithError.forwardWithError(request, response, "Email đã tồn tại vui lòng đăng ký tài khoản khác!", "erroremail");
             return;
         }
+
         String otp = EmailService.generateOTP();
         String subject = "Xác nhận đăng ký tài khoản - 4Club";
         String body = "<html>"
@@ -124,10 +125,15 @@ public class RegisterServlet extends HttpServlet {
                 + "  </div>"
                 + "</body>"
                 + "</html>";
+
         EmailService.sendEmail(email, subject, body);
 
-        request.getSession().setAttribute("generatedOTP", otp);
-        request.getSession().setAttribute("email", email);
+        // Lưu thông tin đăng ký vào session
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username); // Lưu username để filter không chặn
+        session.setAttribute("generatedOTP", otp);
+        session.setAttribute("email", email);
+
         request.getRequestDispatcher("view/otp.jsp").forward(request, response);
     }
 

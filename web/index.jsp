@@ -2,20 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <title>4Club - Welcome</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta
-            name="description"
-            content="Welcome to 4Club, the best place to connect and share."
-            />
+        <meta name="description" content="Welcome to 4Club, the best place to connect and share." />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap"
-            rel="stylesheet"
-            />
+        <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css" />
         <style>
             #background {
@@ -88,41 +83,50 @@
             /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
             @media (max-width: 768px) {
                 .app__heading h1 {
-                    font-size: 8rem; /* Giảm kích thước tiêu đề */
+                    font-size: 8rem;
+                    /* Giảm kích thước tiêu đề */
                 }
 
                 .app__btn {
-                    flex-direction: column; /* Sắp xếp các nút theo cột */
+                    flex-direction: column;
+                    /* Sắp xếp các nút theo cột */
                     align-items: center;
                     gap: 1rem;
                 }
 
                 .btn {
-                    font-size: 4rem; /* Giảm kích thước chữ trong nút */
-                    width: 80%; /* Đặt chiều rộng nút phù hợp với màn hình nhỏ */
+                    font-size: 4rem;
+                    /* Giảm kích thước chữ trong nút */
+                    width: 80%;
+                    /* Đặt chiều rộng nút phù hợp với màn hình nhỏ */
                 }
 
                 .btn a {
-                    padding: 1.5rem 2rem; /* Giảm padding trong nút */
+                    padding: 1.5rem 2rem;
+                    /* Giảm padding trong nút */
                 }
             }
 
             /* Responsive cho màn hình nhỏ hơn 1024px (máy tính bảng) */
             @media (max-width: 1024px) {
                 .app__heading h1 {
-                    font-size: 12rem; /* Điều chỉnh kích thước tiêu đề */
+                    font-size: 12rem;
+                    /* Điều chỉnh kích thước tiêu đề */
                 }
 
                 .btn {
-                    font-size: 4.5rem; /* Điều chỉnh kích thước chữ trong nút */
+                    font-size: 4.5rem;
+                    /* Điều chỉnh kích thước chữ trong nút */
                 }
 
                 .btn a {
-                    padding: 1.8rem 2.8rem; /* Điều chỉnh padding trong nút */
+                    padding: 1.8rem 2.8rem;
+                    /* Điều chỉnh padding trong nút */
                 }
             }
         </style>
     </head>
+
     <body>
         <jsp:include page="view/sakura.jsp" />
         <div class="app">
@@ -142,7 +146,6 @@
         <div id="background"></div>
         <div id="preload-background"></div>
         <script>
-
             let index = 0;
 
             function updateBackground() {
@@ -150,14 +153,18 @@
                 let background = document.getElementById("background");
                 let preloadBackground = document.getElementById("preload-background");
 
-                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index / 6)) + "_" + (index % 6) + ".png')";
-                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor((index + 1) / 6)) + "_" + ((index + 1) % 6) + ".png')";
+                let backgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor(index /
+                        6)) + "_" + (index % 6) + ".png')";
+                let preloadBackgroundUrl = "url('${pageContext.request.contextPath}/assets/img/background/" + (Math.floor((
+                        index + 1) / 6)) + "_" + ((index + 1) % 6) + ".png')";
                 background.style.backgroundImage = backgroundUrl;
                 preloadBackground.style.backgroundImage = preloadBackgroundUrl;
             }
 
             setInterval(updateBackground, 3000);
         </script>
+        <jsp:include page="view/noticeError.jsp"/>
         <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
     </body>
+
 </html>

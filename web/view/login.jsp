@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-       
-    
+
+
     <head>
         <meta charset="UTF-8" />
         <title>Login Page with Animation</title>
@@ -15,6 +15,7 @@
     </head>
 
     <body>
+        <jsp:include page="noticeError.jsp"/>
         <jsp:include page="sakura.jsp" />
         <div class="container">
             <div class="left-intro">
@@ -201,10 +202,10 @@
                     <div class="inputGroup inputGroup3">
                         <button id="login" style="color: #B3BBBD; cursor: pointer">Đăng nhập</button>
                     </div>
-                    <h2 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${error}</h2>
                     <div class="inputGroup inputGroup4">
-                        <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="view/register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
+                        <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="${pageContext.request.contextPath}/view/register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
                     </div>
+                    <p style="padding-top: 10px; cursor: pointer"><a href="${pageContext.request.contextPath}/view/forgot.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;" >Quên Mật Khẩu</a> </p>
                 </form>
             </div>
         </div>
@@ -214,11 +215,11 @@
         <script src="${pageContext.request.contextPath}/assets/js/login-js/loginmoney.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/valiate/formlogin.js"></script>
         <script>
-             document.getElementById('login').addEventListener('click', function() {
-             document.getElementById('myForm').submit();
-     });
-      </script>
-     <jsp:include page="background.jsp" />
-      </body >
-      
-      </html>
+            document.getElementById('login').addEventListener('click', function () {
+                document.getElementById('myForm').submit();
+            });
+        </script>
+        <jsp:include page="background.jsp" />
+    </body >
+
+</html>

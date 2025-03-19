@@ -4,7 +4,7 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
-    <!-- <filter-mapping>
+    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/view/calendar.jsp</url-pattern>
         <url-pattern>/view/event.jsp</url-pattern>
@@ -15,7 +15,8 @@
         <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
         <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
         <url-pattern>/view/otp.jsp</url-pattern>
-    </filter-mapping> -->
+        <url-pattern>/view/discovery.jsp</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>
         <servlet-class>controller.CalendarServlet</servlet-class>
@@ -39,6 +40,14 @@
     <servlet>
         <servlet-name>InformationServlet</servlet-name>
         <servlet-class>controller.InformationServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>controller.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReserPasswordServlet</servlet-name>
+        <servlet-class>controller.ResetPasswordServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
@@ -64,4 +73,17 @@
         <servlet-name>InformationServlet</servlet-name>
         <url-pattern>/InformationServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/ForgotPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

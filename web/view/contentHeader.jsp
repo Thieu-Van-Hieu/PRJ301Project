@@ -49,7 +49,7 @@
             <h2>${contentHeader}</h2>
             <div class="content-header_util">
                 <i class="fa-solid fa-scroll"></i>
-                <i class="fa-solid fa-user-group"></i>
+                <i class="fa-solid fa-user-group" onclick="location.href='?includeWeb=member.jsp'"></i>
             </div>
         </header>
     </body>

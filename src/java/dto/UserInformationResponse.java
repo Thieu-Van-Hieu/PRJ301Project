@@ -21,127 +21,109 @@ public class UserInformationResponse {
     private String gender;
     private String birthday;
 
-    public UserInformationResponse(UserInfor user) {
-        this.userName = user.userName;
-        this.password = user.password;
-        this.role = user.role;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
-        this.email = user.email;
-        this.studentId = user.studentId;
-        this.address = user.address;
-        this.gender = user.gender;
-        this.birthday = user.birthday;
+    public UserInformationResponse() {
+    }
+
+    public UserInformationResponse(String firstName, String lastName, String studentId, String address, String gender, String birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.studentId = studentId;
+        this.address = address;
+        this.gender = gender;
+        this.birthday = birthday;
+    }
+
+    public UserInformationResponse(String userName, String password, String role, String firstName, String lastName, String email, String studentId, String address, String gender, String birthday) {
+        this.userName = userName;
+        this.password = password;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.studentId = studentId;
+        this.address = address;
+        this.gender = gender;
+        this.birthday = birthday;
     }
 
     public String getUserName() {
         return userName;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getRole() {
         return role;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getFirstName() {
         return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
         return lastName;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGender() {
         return gender;
     }
 
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public String getBirthday() {
         return birthday;
     }
 
-    public static class UserInfor {
-
-        private String userName;
-        private String password;
-        private String role;
-        private String firstName;
-        private String lastName;
-        private String email;
-        private String studentId;
-        private String address;
-        private String gender;
-        private String birthday;
-
-        public UserInfor() {
-        }
-
-        public UserInfor setUserName(String userName) {
-            this.userName = userName;
-            return this;
-        }
-
-        public UserInfor setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public UserInfor setRole(String role) {
-            this.role = role;
-            return this;
-        }
-
-        public UserInfor setFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-
-        public UserInfor setLastName(String lastName) {
-            this.lastName = lastName;
-            return this;
-        }
-
-        public UserInfor setEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public UserInfor setStudentId(String studentId) {
-            this.studentId = studentId;
-            return this;
-        }
-
-        public UserInfor setAddress(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public UserInfor setGender(String gender) {
-            this.gender = gender;
-            return this;
-        }
-
-        public UserInfor setBirthday(String birthday) {
-            this.birthday = birthday;
-            return this;
-        }
-
-        public UserInformationResponse build() {
-            return new UserInformationResponse(this);
-        }
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
+
 }

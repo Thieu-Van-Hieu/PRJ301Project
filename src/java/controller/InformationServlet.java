@@ -4,20 +4,23 @@
  */
 package controller;
 
+import dto.UserInformationResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import services.UserService;
+import util.ForwardWithError;
 
 /**
  *
  * @author ngoct
  */
-public class LoginServlet extends HttpServlet {
+public class InformationServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet InformationServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet InformationServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,22 +71,47 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-         String password = request.getParameter("password");
-    UserService userService = new UserService();
-    boolean isCheck = userService.checkLogin(username, password);
-    if (isCheck) {
-        HttpSession session = request.getSession();
-        session.setAttribute("username", username);
-        response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
-    } else {
-        request.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");
-        request.getRequestDispatcher("view/login.jsp").forward(request, response);
+            UserService service = new UserService();
+        String hoTen = request.getParameter("hoTen");
+        String lastName = request.getParameter("ten");
+        String studentId = request.getParameter("maSV");
+        String gender = request.getParameter("gioiTinh");
+        boolean isExistStudentId = service.isExistStudentId(studentId);
+        if(isExistStudentId){
+            request.setAttribute("error", "Mã sinh viên đã tồn tại");
+            request.getRequestDispatcher("view/information.jsp").forward(request, response);
+        }
+        String temp[] = hoTen.split(" ");
+        
+        String firstName = temp[0];
+        int ngay = Integer.valueOf(request.getParameter("ngaySinh"));
+        int thang = Integer.valueOf(request.getParameter("thangSinh"));
+        int nam = Integer.valueOf(request.getParameter("namSinh"));
+        
+        String city = request.getParameter("province");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        
+        LocalDate ngaySinh = LocalDate.of(nam, thang, ngay);
+        String formattedDate = ngaySinh.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String address = ward + ", " + district + ", " + city;
+
+        UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate);
+
+    
+        service.addByParamIntoResponse(infor);
+        service.addUserRoleMember();
+        service.addInformationOfUser();
+        
+        UserInformationResponse result = service.getResults();
+        
+        request.setAttribute("user", result);
+        
+        request.getRequestDispatcher("view/discovery.jsp").forward(request, response);
     }
-}
 
     /**
      * Returns a short description of the servlet.
@@ -91,7 +119,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

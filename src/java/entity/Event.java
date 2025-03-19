@@ -4,11 +4,17 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 
 public class Event {
+
     private int id;
     private String name;
     private String description;
+    private int typeId;
     private Timestamp startDate;
     private Timestamp endDate;
+    private int userId;
+    private int clubId;
+    private int locationId;
+    private String img;
 
     public Event() {
     }
@@ -31,6 +37,10 @@ public class Event {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getTypeId() {
+        return typeId;
     }
 
     public Timestamp getStartDate() {
@@ -97,7 +107,7 @@ public class Event {
         }
 
         public Event build() {
-            return new Event(this);
+            return event;
         }
     }
 }

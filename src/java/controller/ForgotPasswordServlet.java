@@ -11,13 +11,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import services.UserService;
+import util.ResetPasswordService;
 
 /**
  *
  * @author ngoct
  */
-public class LoginServlet extends HttpServlet {
+public class ForgotPasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +36,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ForgotPasswordServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ForgotPasswordServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,30 +68,37 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+     @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-         String password = request.getParameter("password");
-    UserService userService = new UserService();
-    boolean isCheck = userService.checkLogin(username, password);
-    if (isCheck) {
-        HttpSession session = request.getSession();
-        session.setAttribute("username", username);
-        response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
-    } else {
-        request.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");
-        request.getRequestDispatcher("view/login.jsp").forward(request, response);
+        // Lấy email từ form
+        String email = request.getParameter("email");
+        if (email == null || email.trim().isEmpty()) {
+            response.getWriter().println("Email không được để trống.");
+            return;
+        }
+        
+        // Tạo token reset mật khẩu
+        String token = ResetPasswordService.generateResetToken();
+        
+        // Gửi email reset mật khẩu chứa token
+        ResetPasswordService.sendResetPasswordEmail(email, token);
+        
+        // (Tùy chọn) Lưu token và email vào session để kiểm tra khi reset password
+         HttpSession session = request.getSession();
+        session.setAttribute("resetToken", token);
+        session.setAttribute("resetEmail", email);
+        
+        // Điều hướng đến trang thông báo "forgot_success.jsp"
+        response.sendRedirect(request.getContextPath() + "/view/forgot_success.jsp");
     }
-}
-
     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

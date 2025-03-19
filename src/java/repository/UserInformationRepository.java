@@ -4,6 +4,8 @@
  */
 package repository;
 
+import dto.UserInformationResponse;
+
 /**
  *
  * @author ngoct
@@ -11,4 +13,8 @@ package repository;
 public interface UserInformationRepository {
 
     public boolean isExistEmail(String email);
+    
+    public void addInformationOfUser(int userid, UserInformationResponse user);
+    
+    public boolean isExistStudentId(String studentId);
 }

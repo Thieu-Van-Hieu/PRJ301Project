@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 public class Task {
     private int id;
+    private int clubId;
     private String name;
     private String description;
     private int assignedBy;
@@ -17,6 +18,7 @@ public class Task {
 
     public Task(Builder builder) {
         this.id = builder.id;
+        this.clubId = builder.clubId;
         this.name = builder.name;
         this.description = builder.description;
         this.assignedBy = builder.assignedBy;
@@ -27,6 +29,10 @@ public class Task {
 
     public int getId() {
         return id;
+    }
+
+    public int getClubId() {
+        return clubId;
     }
 
     public String getName() {
@@ -54,11 +60,13 @@ public class Task {
     }
 
     public boolean isOverdue() {
-        return this.status.equals("In Progress") && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+        return this.status.equals("In Progress")
+                && this.dueDate.before(Timestamp.valueOf(LocalDate.now().atStartOfDay()));
     }
 
     public static class Builder {
         private int id;
+        private int clubId;
         private String name;
         private String description;
         private int assignedBy;
@@ -71,6 +79,11 @@ public class Task {
 
         public Builder setId(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder setClubId(int clubId) {
+            this.clubId = clubId;
             return this;
         }
 

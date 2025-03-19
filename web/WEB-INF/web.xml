@@ -2,6 +2,9 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
@@ -48,6 +51,14 @@
         <servlet-class>controller.TaskAssignedToMeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TaskAssignedByMeServlet</servlet-name>
+        <servlet-class>controller.TaskAssignedByMeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TaskAssignedToMeServlet</servlet-name>
+        <servlet-class>controller.TaskAssignedToMeServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>InformationServlet</servlet-name>
         <servlet-class>controller.InformationServlet</servlet-class>
     </servlet>
@@ -62,6 +73,10 @@
     <servlet>
         <servlet-name>MemberServlet</servlet-name>
         <servlet-class>controller.MemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomePageServlet</servlet-name>
+        <servlet-class>controller.HomePageServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HomePageServlet</servlet-name>
@@ -86,6 +101,14 @@
     <servlet-mapping>
         <servlet-name>ResendOTPServlet</servlet-name>
         <url-pattern>/ResendOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaskAssignedByMeServlet</servlet-name>
+        <url-pattern>/TaskAssignedByMeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TaskAssignedToMeServlet</servlet-name>
+        <url-pattern>/TaskAssignedToMeServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TaskAssignedByMeServlet</servlet-name>

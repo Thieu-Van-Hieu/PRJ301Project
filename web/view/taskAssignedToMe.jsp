@@ -1,8 +1,9 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.*"%>
-<%@page import="java.sql.Date"%>
-<%@page import="model.*"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="dto.*"%>
+<%@page import="entity.*"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -353,17 +354,129 @@
                 }
             }
         </style>
+
+        <%
+            // Tạo các biến session
+            session.setAttribute("clubId", 1);
+            Member member = new Member.Builder().setId(0).setName("Hùng").build();
+            session.setAttribute("member", member);
+        %>
+
+        <script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedToMe.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedByMe.js"></script>
+        <script>
+            // Kết nối WebSocket đến Server
+            var socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/task");
+
+            // Khi kết nối thành công
+            socket.onopen = function () {
+                console.log("Kết nối WebSocket thành công!");
+            };
+
+            function getTaskNode(taskAssignedToMe) {
+                // Tạo phần tử div chính
+                let taskNode = document.createElement("div");
+                taskNode.className = "task";
+                taskNode.setAttribute("data-task-id", taskAssignedToMe.taskId);
+                taskNode.onclick = function () {
+                    location.href = "'?taskId=" + taskAssignedToMe.taskId - 1 + "'";
+                };
+
+                // Tạo các phần tử con bên trong div
+                taskNode.innerHTML = `
+                    <div class="task__item">` + taskAssignedToMe.taskName + `</div>
+                    <div class="task__item">` + taskAssignedToMe.taskDescription + `</div>
+                    <div class="task__item">` + taskAssignedToMe.taskAssignedBy + `</div>
+                    <div class="task__item task__status--in-progress">
+                        <div class="task__controls">
+                            <button class="task__control task__control--canceled" onclick="sendMessage(this)" data-task-id="` + taskAssignedToMe.taskId + `">❌</button>
+                            <button class="task__control task__control--completed" onclick="sendMessage(this)" data-task-id="` + taskAssignedToMe.taskId + `">✔️</button>
+                        </div>
+                    </div>
+                    <div class="task__item">` + taskAssignedToMe.taskDueDate + `</div>
+                `;
+
+                return taskNode;
+            }
+
+            function createTask(taskAssignedToMe) {
+                let taskContainer = $(".tasks__body");
+                taskContainer.appendChild(getTaskNode(taskAssignedToMe));
+            }
+
+            function editTask(taskAssignedToMe) {
+                let taskContainer = $(".tasks__body");
+                let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
+                console.log(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
+                taskContainer.replaceChild(getTaskNode(taskAssignedToMe), task);
+            }
+
+            function deleteTask(taskAssignedToMe) {
+                let taskContainer = $(".tasks__body");
+                let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
+                taskContainer.removeChild(task);
+            }
+
+            function isTaskAssignedToMe(taskAssignedToMe) {
+                console.log(taskAssignedToMe);
+                console.log("${member.id}");
+                return taskAssignedToMe.taskAssignedTo.includes("${member.id}") && taskAssignedToMe.clubId == "${clubId}";
+            }
+
+            // Khi nhận tin nhắn từ server
+            socket.onmessage = function (event) {
+                let message = JSON.parse(event.data);
+
+                if (!isTaskAssignedToMe(message.data)) {
+                    return;
+                }
+
+                console.log("Nhận tin nhắn từ Server: ", message);
+
+                let actionHandlers = new Map([
+                    ["createTask", createTask],
+                    ["editTask", editTask],
+                    ["deleteTask", deleteTask]
+                ]);
+
+                actionHandlers.get(message.action)(message.data);
+            };
+
+            // Khi xảy ra lỗi
+            socket.onerror = function (error) {
+                console.log("Lỗi WebSocket: " + error);
+            };
+
+            // Khi WebSocket bị đóng
+            socket.onclose = function () {
+                console.log("WebSocket bị đóng!");
+            };
+
+            // Gửi tin nhắn lên Server
+            function sendMessage(element) {
+                event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+                let id = element.getAttribute("data-task-id");
+                let status = element.textContent == "❌" ? "Hủy bỏ" : "Đã xong";
+                let taskAssignedToMe = new TaskAssignedByMe(id, status);
+                let message = {
+                    action: "updateStatus",
+                    data: taskAssignedToMe
+                }
+                socket.send(JSON.stringify(message));
+            }
+        </script>
     </head>
     <body>
         <%
             // Tạo danh sách task
-            ArrayList<Task> tasks = new ArrayList<>();
+            ArrayList<TaskAssignedToMeResponse> tasks = new ArrayList<>();
 
             // Thêm các task mẫu vào danh sách
-            tasks.add(new Task(1, "Fix Bug #101", "Sửa lỗi đăng nhập", "Alice", "Bob", "Đang làm", Date.valueOf("2025-03-20")));
-            tasks.add(new Task(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", "Charlie", "Dave", "Hủy bỏ", Date.valueOf("2025-03-25")));
-            tasks.add(new Task(3, "Code Review", "Kiểm tra lại code module Y", "Eve", "Frank", "Đã xong", Date.valueOf("2025-03-10")));
-            tasks.add(new Task(4, "Write Unit Tests", "Viết unit test cho module Z", "Grace", "Hannah", "Đang làm", Date.valueOf("2025-03-18")));
+            tasks.add(new TaskAssignedToMeResponse(1, "Fix Bug #101", "Sửa lỗi đăng nhập", new Member.Builder().setName("Alice").build(), "Đang làm", Timestamp.valueOf("2025-03-20 00:00:00")));
+            tasks.add(new TaskAssignedToMeResponse(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", new Member.Builder().setName("Charlie").build(), "Hủy bỏ", Timestamp.valueOf("2025-03-25 00:00:00")));
+            tasks.add(new TaskAssignedToMeResponse(3, "Code Review", "Kiểm tra lại code module Y", new Member.Builder().setName("Eve").build(), "Đã xong", Timestamp.valueOf("2025-03-10 00:00:00")));
+            tasks.add(new TaskAssignedToMeResponse(4, "Write Unit Tests", "Viết unit test cho module Z", new Member.Builder().setName("Grace").build(), "Đang làm", Timestamp.valueOf("2025-03-18 00:00:00")));
         
             pageContext.setAttribute("tasks", tasks);
             request.setAttribute("contentHeader", "Nhiệm vụ của tôi");
@@ -380,16 +493,16 @@
                 </div>
                 <div class="tasks__body">
                     <c:forEach items="${tasks}" var="task">
-                    <div class="task" onclick="location.href='?taskId=${task.id - 1}'">
+                    <div class="task" onclick="location.href='?taskId=${task.id - 1}'" data-task-id="${task.id}">
                         <div class="task__item">${task.name}</div>
                         <div class="task__item">${task.description}</div>
-                        <div class="task__item">${task.assignedBy}</div>
+                        <div class="task__item">${task.assignedByMember.name}</div>
                         <c:choose>
                             <c:when test="${task.status == 'Đang làm'}">
                                 <div class="task__item task__status--in-progress">
                                     <div class="task__controls">
-                                        <button class="task__control task__control--canceled">❌</button>
-                                        <button class="task__control task__control--completed">✔️</button>
+                                        <button class="task__control task__control--canceled" onclick="sendMessage(this)" data-task-id="${task.id}">❌</button>
+                                        <button class="task__control task__control--completed" onclick="sendMessage(this)" data-task-id="${task.id}">✔️</button>
                                     </div>
                                 </div>
                             </c:when>
@@ -409,13 +522,13 @@
                     <div class="modal" onclick="event.stopPropagation()">
                         <div class="modal__heading">${currentTask.name}</div>
                         <div class="modal__description">Nội dung: ${currentTask.description}</div>
-                        <div class="modal__assigned-by">Giao bởi: ${currentTask.assignedBy}</div>
+                        <div class="modal__assigned-by">Giao bởi: ${currentTask.assignedByMember.name}</div>
                         <div class="modal__due-date">Hạn chót: ${currentTask.dueDate}</div>
                         <div class="modal__controls">
                             <c:choose>
                                 <c:when test="${currentTask.status == 'Đang làm'}">
-                                    <button class="modal__control modal__control--canceled">❌</button>
-                                    <button class="modal__control modal__control--completed">✔️</button>
+                                    <button class="modal__control modal__control--canceled" onclick="sendMessage(this)" data-task-id="${task.id}">❌</button>
+                                    <button class="modal__control modal__control--completed" onclick="sendMessage(this)" data-task-id="${task.id}">✔️</button>
                                 </c:when>
                                 <c:when test="${currentTask.status == 'Hủy bỏ'}">
                                     <button class="modal__status modal__status--canceled">${currentTask.status}</button>

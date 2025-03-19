@@ -1,8 +1,9 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.*"%>
-<%@page import="java.sql.Date"%>
-<%@page import="model.*"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="dto.*"%>
+<%@page import="entity.*"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,6 +11,7 @@
         <title>Task Assigned By Me Page</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/library/multi-select-dropdown/MultiSelect.css">
         <style>
             /* Căn giữa trang */
             .box {
@@ -96,11 +98,6 @@
 
             .time-picker {
                 text-align: center;
-            }
-
-            .multiselect-dropdown .optexts {
-                height: 60px;
-                overflow: auto;
             }
 
             /* Trạng thái task */
@@ -219,22 +216,155 @@
                     font-size: 1.4rem;
                 }
             }
+
+            .multi-select-header {
+                height: 6.4rem;
+                width: 100%;
+                overflow: auto;
+            }
+
+            .multi-select-header::after {
+                display: none;
+            }
+
+            .multi-select-header-option {
+                font-size: 1.6rem !important;
+            }
         </style>
-    </head>
-    <body>
+
+        
         <%
+            // Tạo các biến session
+            Member hung = new Member.Builder().setId(0).setName("Hùng").build();
+            Member hieu = new Member.Builder().setId(1).setName("Hiếu").build();
+            Member hoa = new Member.Builder().setId(2).setName("Hòa").build();
+            Member minh = new Member.Builder().setId(3).setName("Minh").build();
+            Member trang = new Member.Builder().setId(4).setName("Trang").build();
+            Member linh = new Member.Builder().setId(5).setName("Linh").build();
+            Member quang = new Member.Builder().setId(6).setName("Quang").build();
+            Member thao = new Member.Builder().setId(7).setName("Thảo").build();
+            Member tuan = new Member.Builder().setId(8).setName("Tuấn").build();
+            Member anh = new Member.Builder().setId(9).setName("Anh").build();
+            Member bao = new Member.Builder().setId(10).setName("Bảo").build();
+            Member chi = new Member.Builder().setId(11).setName("Chi").build();
+            Member dung = new Member.Builder().setId(12).setName("Dũng").build();
+            Member giang = new Member.Builder().setId(13).setName("Giang").build();
+            Member khanh = new Member.Builder().setId(14).setName("Khánh").build();
+            Member phuong = new Member.Builder().setId(15).setName("Phương").build();
+
+            session.setAttribute("member", hieu);
+
+            // Tạo danh sách member
+            ArrayList<Member> members = new ArrayList<>();
+            members.add(hung);
+            members.add(hieu);
+            members.add(hoa);
+            members.add(minh);
+            members.add(trang);
+            members.add(linh);
+            members.add(quang);
+            members.add(thao);
+            members.add(tuan);
+            members.add(anh);
+            members.add(bao);
+            members.add(chi);
+            members.add(dung);
+            members.add(giang);
+            members.add(khanh);
+            members.add(phuong);
+
+            pageContext.setAttribute("members", members);
+
+            // Tạo danh danh sách thành viên được giao việc
+            ArrayList<Member> assignedTos = new ArrayList<>();
+            assignedTos.add(hung);
+
             // Tạo danh sách task
-            ArrayList<Task> tasks = new ArrayList<>();
+            ArrayList<TaskAssignedByMeResponse> tasks = new ArrayList<>();
 
             // Thêm các task mẫu vào danh sách
-            tasks.add(new Task(1, "Fix Bug #101", "Sửa lỗi đăng nhập", "Alice", "Bob", "Đang làm", Date.valueOf("2025-03-20")));
-            tasks.add(new Task(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", "Charlie", "Dave", "Hủy bỏ", Date.valueOf("2025-03-25")));
-            tasks.add(new Task(3, "Code Review", "Kiểm tra lại code module Y", "Eve", "Frank", "Đã xong", Date.valueOf("2025-03-10")));
-            tasks.add(new Task(4, "Write Unit Tests", "Viết unit test cho module Z", "Grace", "Hannah", "Đang làm", Date.valueOf("2025-03-18")));
+            tasks.add(new TaskAssignedByMeResponse(1, "Fix Bug #101", "Sửa lỗi đăng nhập", assignedTos, "Đang làm", Timestamp.valueOf("2025-03-20 00:00:00")));
+            tasks.add(new TaskAssignedByMeResponse(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", assignedTos, "Hủy bỏ", Timestamp.valueOf("2025-03-25 00:00:00")));
+            tasks.add(new TaskAssignedByMeResponse(3, "Code Review", "Kiểm tra lại code module Y", assignedTos, "Đã xong", Timestamp.valueOf("2025-03-10 00:00:00")));
+            tasks.add(new TaskAssignedByMeResponse(4, "Write Unit Tests", "Viết unit test cho module Z", assignedTos, "Đang làm", Timestamp.valueOf("2025-03-18 00:00:00")));
         
             pageContext.setAttribute("tasks", tasks);
             request.setAttribute("contentHeader", "Giao việc");
         %>
+
+        <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedByMe.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedToMe.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
+        <script>
+            // Kết nối WebSocket đến Server
+            var socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/task");
+
+            // Khi kết nối thành công
+            socket.onopen = function () {
+                console.log("Kết nối WebSocket thành công!");
+            };
+
+            function updateStatus(taskAssignedByMe) {
+                let task = $(".task__item.task__status[data-task-id='" + taskAssignedByMe.taskId + "']");
+
+                if (task) {
+                    task.textContent = taskAssignedByMe.status;
+                    task.classList.remove("task__status--in-progress");
+                    task.classList.remove("task__status--canceled");
+                    task.classList.remove("task__status--completed");
+
+                    if (taskAssignedByMe.status === "Đang làm") {
+                        task.classList.add("task__status--in-progress");
+                    } else if (taskAssignedByMe.status === "Hủy bỏ") {
+                        task.classList.add("task__status--canceled");
+                    } else if (taskAssignedByMe.status === "Đã xong") {
+                        task.classList.add("task__status--completed");
+                    }
+                }
+            }
+
+            // Khi nhận tin nhắn từ server
+            socket.onmessage = function (event) {
+                let message = JSON.parse(event.data);
+                console.log("Nhận tin nhắn từ Server: ", message);
+                if (message.action === "updateStatus") {
+                    updateStatus(message.data);
+                }
+            };
+
+            // Khi xảy ra lỗi
+            socket.onerror = function (error) {
+                console.log("Lỗi WebSocket: " + error);
+            };
+
+            // Khi WebSocket bị đóng
+            socket.onclose = function () {
+                console.log("WebSocket bị đóng!");
+            };
+
+            // Gửi tin nhắn lên Server
+            function sendMessage(element, action) {
+                let task = element.closest(".task");
+                let taskAttributes = task.querySelectorAll(".task__item");
+                let taskId = task.getAttribute("data-task-id");
+                let taskName = taskAttributes[0].value;
+                let taskDescription = taskAttributes[1].value;
+                let taskAssignedTo = [...taskAttributes[2].querySelectorAll('input[type="hidden"]')].map(option => option.value);
+                let taskStatus = taskAttributes[3].textContent;
+                let taskDueDate = taskAttributes[4].value;
+
+                let taskAssignedToMe = new TaskAssignedToMe(taskId, taskName, taskDescription, "${member.name}", taskAssignedTo, taskStatus, taskDueDate, ${clubId});
+
+                let message = {
+                    action: action,
+                    data: taskAssignedToMe,
+                };
+
+                socket.send(JSON.stringify(message));
+            }
+        </script>
+    </head>
+    <body>
         <jsp:include page="contentHeader.jsp" />
         <div class="box">
             <div class="tasks">
@@ -248,56 +378,56 @@
                 </div>
                 <div class="tasks__body">
                     <c:forEach items="${tasks}" var="task">
-                    <div class="task">
+                    <div class="task" data-task-id="${task.id}">
                         <input type="text" class="task__item" value="${task.name}" required>
                         <textarea class="task__item">${task.description}</textarea>
                         <div class="task__item">
-                            <select name="assignedTo" id="task__assigned-to"  multiple multiselect-search="true" multiselect-select-all="true" multiple-select-hide-x="true">
-                                <option value="0" ${task.assignedTo == "Bob" ? "selected" : ""}>Bob</option>
-                                <option value="1" ${task.assignedTo == "Dave" ? "selected" : ""}>Dave</option>
-                                <option value="2" ${task.assignedTo == "Frank" ? "selected" : ""}>Frank</option>
-                                <option value="3" ${task.assignedTo == "Hannah" ? "selected" : ""}>Hannah</option>
+                            <select id="task__assigned-to" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select>
+                                <c:forEach items="${members}" var="member">
+                                    <option value="${member.id}" ${task.isMemberInAssignedMembers(member.id) ? "selected" : ""}>${member.name}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <c:choose>
                             <c:when test="${task.status == 'Đang làm'}">
-                                <div class="task__item task__status--in-progress">${task.status}</div>
+                                <div class="task__item task__status task__status--in-progress" data-task-id="${task.id}">${task.status}</div>
                             </c:when>
                             <c:when test="${task.status == 'Hủy bỏ'}">
-                                <div class="task__item task__status--canceled">${task.status}</div>
+                                <div class="task__item task__status task__status--canceled" data-task-id="${task.id}">${task.status}</div>
                             </c:when>
                             <c:when test="${task.status == 'Đã xong'}">
-                                <div class="task__item task__status--completed">${task.status}</div>
+                                <div class="task__item task__status task__status--completed" data-task-id="${task.id}">${task.status}</div>
                             </c:when>
                         </c:choose>
                         <input class="task__item time-picker" type="text" value="${task.dueDate}" required>
                         <div class="task__controls">
-                            <button class="task__control task__control--edit">Lưu</button>
-                            <button class="task__control task__control--delete">Xóa</button>
+                            <button class="task__control task__control--edit" onclick="sendMessage(this, 'editTask')">Lưu</button>
+                            <button class="task__control task__control--delete" onclick="sendMessage(this, 'deleteTask')">Xóa</button>
                         </div>
                     </div>
                     </c:forEach>
-                    <div class="task">
-                        <input type="text" class="task__item" placeholder="Tên công việc">
-                        <textarea class="task__item" placeholder="Mô tả công việc"></textarea>
-                        <div class="task__item task__assigned-to">
-                            <select name="assignedTo" id="task__assigned-to" multiple multiselect-search="true" multiselect-select-all="true">
-                                <option value="0">Bob</option>
-                                <option value="1">Dave</option>
-                                <option value="2">Frank</option>
-                                <option value="3">Hannah</option>
-                            </select>
+                    <form action="${pageContext.request.contextPath}/TaskAssignedByMeServlet" method="post">
+                        <div class="task">
+                            <input type="text" class="task__item" placeholder="Tên công việc" name="taskName" required>
+                            <textarea class="task__item" placeholder="Mô tả công việc" name="taskDescription"></textarea>
+                            <div class="task__item task__assigned-to">
+                                <select name="taskAssignedTo" id="task__assigned-to" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select required>
+                                    <c:forEach items="${members}" var="member">
+                                        <option value="${member.id}">${member.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="task__item task__status task__status--in-progress" name="taskStatus">Đang làm</div>
+                            <input class="task__item time-picker" type="text" name="taskDueDate" required>
+                            <div class="task__controls">
+                                <button class="task__control" onclick="sendMessage(this, 'createTask')">Thêm</button>
+                            </div>
                         </div>
-                        <div class="task__item task__status--in-progress">Đang làm</div>
-                        <input class="task__item time-picker" type="text" required>
-                        <div class="task__controls">
-                            <button class="task__control">Thêm</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <script src="${pageContext.request.contextPath}/assets/js/multiselect-dropdown/multiselect-dropdown.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/library/multi-select-dropdown/MultiSelect.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
             // Kích hoạt Flatpickr cho trường nhập ngày giờ
@@ -308,5 +438,18 @@
                 time_24hr: true,
             });
         </script>
+
+        <script>
+            // Kiểm tra xem có phải ở chế độ tạo nhiệm hay không
+            let action = "${action}";
+            if (action === "createTask") {
+                let task = document.querySelector(".messages .task:last-child");
+                sendMessage(task, action);
+            }
+        </script>
+
+        <c:if test="${action != null}">
+            <c:set var="action" value="${''}"/>
+        </c:if>
     </body>
 </html>

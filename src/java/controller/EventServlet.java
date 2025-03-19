@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dto.ClubResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -25,6 +26,7 @@ import util.FileService;
 import services.EventService;
 import dto.EventResponse;
 import dto.SearchEventDTO;
+import services.ClubService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
         maxFileSize = 1024 * 1024 * 10, //10MB
@@ -64,11 +66,11 @@ public class EventServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         EventService eventService = new EventService();
+        ClubService clubService = new ClubService();
         HttpSession session = request.getSession();
-        ArrayList<EventType> eventTypes = null;
+        ArrayList<EventType> eventTypes = eventService.selectAllEventType();
         ArrayList<EventResponse> eventDescriptions = null;
-        eventTypes = eventService.selectAllEventType();
-
+        ArrayList<ClubResponse> clubIdAndNames = clubService.selectAllClubIdAndClubName();
         if (action == null) {
             eventDescriptions = eventService.getAllEventDescription();
         } else if (action.equals("filter")) {
@@ -78,7 +80,7 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
-               
+        session.setAttribute("clubDescriptions", clubIdAndNames);
         session.setAttribute("eventDescriptions", eventDescriptions);
         session.setAttribute("eventTypes", eventTypes);
         request.setAttribute("includeWeb", "event.jsp");

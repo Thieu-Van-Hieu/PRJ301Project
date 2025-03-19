@@ -21,6 +21,16 @@ public class Club {
     public Club() {
     }
 
+    public Club(ClubBuilder clubBuilder) {
+        this.id = clubBuilder.id;
+        this.name = clubBuilder.name;
+        this.description = clubBuilder.description;
+        this.type = clubBuilder.type;
+        this.date = clubBuilder.date;
+        this.avatarClub = clubBuilder.avatarClub;
+        this.coverImage = clubBuilder.coverImage;
+    }
+     
     public int getId() {
         return id;
     }
@@ -52,7 +62,6 @@ public class Club {
     public static class ClubBuilder {
 
         private Club club;
-
         private int id;
         private String name;
         private String description;
@@ -60,12 +69,15 @@ public class Club {
         private String date;
         private String avatarClub;
         private String coverImage;
+        
+        public ClubBuilder(){        
+        }
 
         public ClubBuilder setClub(Club club) {
             this.club = club;
             return this;
         }
-
+        
         public ClubBuilder setId(int id) {
             this.id = id;
             return this;
@@ -101,8 +113,9 @@ public class Club {
             return this;
         }
 
-        
-        
+        public Club build (){
+            return new Club(this);
+        }     
     }
 
 }

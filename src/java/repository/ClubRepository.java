@@ -12,5 +12,5 @@ import java.util.ArrayList;
  * @author hunggt1572004
  */
 public interface ClubRepository {
-    
+    public ArrayList<Club> getAllClubIdAndName();
 }

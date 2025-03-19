@@ -16,22 +16,20 @@ import repository.impl.EventTypeRepositoryImpl;
  * @author hunggt1572004
  */
 public class EventFactory {
-    
+
     private static final EventRepository eventRepository = new EventRepositoryImpl();
-    
-    public static EventRepository getEventRepository(){
+    private static final EventLocationRepository eventLocationRepository = new EventLocationRepositoryImpl();
+    private static final EventTypeRepository eventTypeRepository = new EventTypeRepositoryImpl();
+
+    public static EventRepository getEventRepository() {
         return eventRepository;
     }
-    
-    private static final EventLocationRepository eventLocationRepository = new EventLocationRepositoryImpl();
 
     public static EventLocationRepository getEventLocationRepository() {
         return eventLocationRepository;
     }
-    
-    private static final EventTypeRepository eventTypeRepository = new EventTypeRepositoryImpl();
 
     public static EventTypeRepository getEventTypeRepository() {
         return eventTypeRepository;
-    } 
+    }
 }

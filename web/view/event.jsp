@@ -27,9 +27,9 @@
                     <tr>
                         <td>
                             <select name="clubName">
-                                <option value="0">Câu Lạc Bộ Tổ Chức</option>
-                                <option value="1">ABC</option>
-                                <option value="2">CDF</option>
+                                <c:forEach var="clubDiscription" items="${sessionScope.clubDescriptions}">
+                                    <option value="${clubDiscription.getId()}">${clubDiscription.getName()}</option>
+                                </c:forEach>
                             </select>
                         </td>
                         <td>

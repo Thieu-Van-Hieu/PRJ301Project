@@ -9,7 +9,7 @@
         <url-pattern>/view/calendar.jsp</url-pattern>
         <url-pattern>/view/event.jsp</url-pattern>
         <url-pattern>/view/forum.jsp</url-pattern>
-        <url-pattern>/view/homePage.jsp</url-pattern>
+        <!--        <url-pattern>/view/homePage.jsp</url-pattern>-->
         <url-pattern>/view/information.jsp</url-pattern>
         <url-pattern>/view/member.jsp</url-pattern>
         <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
@@ -53,6 +53,10 @@
         <servlet-name>MemberServlet</servlet-name>
         <servlet-class>controller.MemberServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HomePageServlet</servlet-name>
+        <servlet-class>controller.HomePageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -88,5 +92,9 @@
     <servlet-mapping>
         <servlet-name>MemberServlet</servlet-name>
         <url-pattern>/MemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomePageServlet</servlet-name>
+        <url-pattern>/HomePageServlet</url-pattern>
     </servlet-mapping>
 </web-app>

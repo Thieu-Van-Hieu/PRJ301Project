@@ -26,13 +26,14 @@ import util.FileService;
 import services.EventLocationService;
 import services.EventService;
 import dto.EventResponse;
+import dto.SearchEventDTO;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
         maxFileSize = 1024 * 1024 * 10, //10MB
         maxRequestSize = 1024 * 1024 * 50)    //50MB
 public class EventServlet extends HttpServlet {
 
-    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+    private static final String IMG_DIR = "D:\\PRJ\\ProjectPRJ\\PRJ301Project\\web\\assets\\img\\img-download";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -65,19 +66,35 @@ public class EventServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        EventTypeService eventTypeService = new EventTypeService();
-        EventService eventService = new EventService();
-        ArrayList<EventType> eventTypes = null;
-        ArrayList<EventResponse> eventDescriptions = null;
+        if (action == null) {
+            EventTypeService eventTypeService = new EventTypeService();
+            EventService eventService = new EventService();
+            ArrayList<EventType> eventTypes = null;
+            ArrayList<EventResponse> eventDescriptions = null;
 
-        eventTypes = eventTypeService.selectAllEventType();
-        eventDescriptions = eventService.getAllEventDescription();
-        session.setAttribute("eventDescriptions", eventDescriptions);
-        session.setAttribute("eventTypes", eventTypes);
+            eventTypes = eventTypeService.selectAllEventType();
+            eventDescriptions = eventService.getAllEventDescription();
+            session.setAttribute("eventDescriptions", eventDescriptions);
+            session.setAttribute("eventTypes", eventTypes);
 
-        request.setAttribute("includeWeb", "event.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
-        dispatcher.forward(request, response);
+            request.setAttribute("includeWeb", "event.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
+            dispatcher.forward(request, response);
+        }
+        if (action.equals("filter")) {
+            String nameEvent = request.getParameter("search");
+            String typeId = request.getParameter("type");
+            String dateStr = request.getParameter("date");
+            
+            SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent);
+            
+            EventService eventService = new EventService();
+            
+            ArrayList<EventResponse> results = eventService.getSearchEvent(searchEventDTO);
+            
+            int i = 0;
+        }
+
     }
 
     /**
@@ -108,7 +125,6 @@ public class EventServlet extends HttpServlet {
                 String startDateStr = request.getParameter("startDate");
                 String endDateStr = request.getParameter("endDate");
                 String description = request.getParameter("description");
-
                 Timestamp startDate = null;
                 Timestamp endDate = null;
                 try {

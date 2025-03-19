@@ -5,11 +5,13 @@
 package repository.impl;
 
 import dto.EventResponse;
+import dto.SearchEventDTO;
 import java.sql.Timestamp;
 import repository.EventRepository;
 import java.util.*;
 import java.sql.*;
 import util.DBContext;
+import entity.Event;
 
 /**
  *
@@ -81,4 +83,60 @@ public class EventRepositoryImpl implements EventRepository {
         return eventList;
     }
 
+    @Override
+    public ArrayList<Event> searchEvent(SearchEventDTO event) {
+        DBContext db = DBContext.getInstance();
+        ArrayList<Event> result = new ArrayList<>();
+        try {
+            String sql = """
+                        select * from events e
+                         """;
+            sql += joinSearchEvent(event);
+            sql += whereSearchEvent(event);
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Event searchEntity = new Event(rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getInt("typeId"),
+                        rs.getTimestamp("startTimestamp"),
+                        rs.getTimestamp("endTimestamp"),
+                        rs.getInt("userId"),
+                        rs.getInt("clubId"),
+                        rs.getInt("locationId"),
+                        rs.getString("img"));
+                result.add(searchEntity);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private String joinSearchEvent(SearchEventDTO event) {
+        StringBuilder sql = new StringBuilder();
+
+        if (event.getSearch() != null && !event.getSearch().isBlank()) {
+            sql.append(" JOIN clubs  c ON c.id = e.clubId ");
+        }
+
+        return sql.toString();
+    }
+
+    private String whereSearchEvent(SearchEventDTO event) {
+        StringBuilder sql = new StringBuilder(" Where 1 = 1 ");
+
+        if (event.getSearch() != null && !event.getSearch().isEmpty()) {
+            sql.append(" and [name] like '").append(event.getSearch()).append("' ");
+        }
+        if (event.getDate() != null && !event.getDate().isEmpty()) {
+            sql.append(" and CAST(startTimestamp AS DATE) = '").append(event.getDate()).append("' ");
+        }
+        if (event.getType() != null && !event.getType().isEmpty()) {
+            sql.append(" and typeId = '").append(event.getType()).append("' ");
+        }
+
+        return sql.toString();
+    }
 }

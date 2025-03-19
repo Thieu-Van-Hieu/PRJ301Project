@@ -21,7 +21,7 @@ public class UserFactory {
 
     public static UserRepository getUserRepository() {
         return userRepository;
-    }
+    }   
     public static UserInformationRepository getUserInformationRepository() {
         return userInformationRepository;
     }

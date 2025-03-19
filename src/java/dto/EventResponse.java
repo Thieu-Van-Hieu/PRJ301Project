@@ -27,6 +27,9 @@ public class EventResponse {
         this.img = img;            
     }
 
+    public EventResponse() {
+    }
+
     public int getEventId() {
         return eventId;
     }

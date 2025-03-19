@@ -10,11 +10,11 @@
 
     <div class="content-body">
         <div class="content-filter">
-            <form action="#" method="GET">
+            <form action="EventServlet" method="GET">
                 <input type="hidden" value="filter" name="action">
                 <table>
                     <tr>
-                        <td class="filter-time">Ngày Đăng <input type="date"></td>
+                        <td class="filter-time">Ngày Đăng <input type="date" name="date"></td>
                         <td>
                             <select name="type" id="id">
                                 <c:forEach var="eventType" items="${sessionScope.eventTypes}">
@@ -22,18 +22,18 @@
                                 </c:forEach>
                             </select>
                         </td>
-                        <td class="filter-search"><input type="text" placeholder="Name, id, location"></td>
+                        <td class="filter-search"><input type="text" placeholder="Name, id, location" name="search"></td>
                     </tr>
                     <tr>
                         <td>
-                            <select name="clubName" id="">
+                            <select name="clubName">
                                 <option value="0">Câu Lạc Bộ Tổ Chức</option>
                                 <option value="1">ABC</option>
                                 <option value="2">CDF</option>
                             </select>
                         </td>
-                        <td>
-                            <select name="status" id="">
+                        <td>s
+                            <select name="status">
                                 <option value="0">Trạng Thái</option>
                                 <option value="1">Đang diễn ra</option>
                                 <option value="2">Sắp ra mắt</option>
@@ -86,7 +86,7 @@
                         </div>
                         <table>
                             <tr>
-                                <td><input type="text" name="name" placeholder="Tên Sự Kiện"></td>
+                                <td><input type="text" name="nameEvent" placeholder="Tên Sự Kiện"></td>
                                 <td>
                                     <select name="type" id="id">
                                         <c:forEach var="eventType" items="${sessionScope.eventTypes}">

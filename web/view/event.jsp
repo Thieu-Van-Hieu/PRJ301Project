@@ -32,7 +32,7 @@
                                 <option value="2">CDF</option>
                             </select>
                         </td>
-                        <td>s
+                        <td>
                             <select name="status">
                                 <option value="0">Trạng Thái</option>
                                 <option value="1">Đang diễn ra</option>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="event-options">...</div>
                 </div>
-            </c:forEach>>
+            </c:forEach>
 
         </div>
 

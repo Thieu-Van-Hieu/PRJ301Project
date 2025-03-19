@@ -21,9 +21,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import services.EventTypeService;
 import util.FileService;
-import services.EventLocationService;
 import services.EventService;
 import dto.EventResponse;
 import dto.SearchEventDTO;
@@ -64,37 +62,28 @@ public class EventServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        EventService eventService = new EventService();
+        HttpSession session = request.getSession();
+        ArrayList<EventType> eventTypes = null;
+        ArrayList<EventResponse> eventDescriptions = null;
+        eventTypes = eventService.selectAllEventType();
+
         if (action == null) {
-            EventTypeService eventTypeService = new EventTypeService();
-            EventService eventService = new EventService();
-            ArrayList<EventType> eventTypes = null;
-            ArrayList<EventResponse> eventDescriptions = null;
-
-            eventTypes = eventTypeService.selectAllEventType();
             eventDescriptions = eventService.getAllEventDescription();
-            session.setAttribute("eventDescriptions", eventDescriptions);
-            session.setAttribute("eventTypes", eventTypes);
-
-            request.setAttribute("includeWeb", "event.jsp");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
-            dispatcher.forward(request, response);
-        }
-        if (action.equals("filter")) {
+        } else if (action.equals("filter")) {
             String nameEvent = request.getParameter("search");
             String typeId = request.getParameter("type");
             String dateStr = request.getParameter("date");
-            
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent);
-            
-            EventService eventService = new EventService();
-            
-            ArrayList<EventResponse> results = eventService.getSearchEvent(searchEventDTO);
-            
-            int i = 0;
+            eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
-
+               
+        session.setAttribute("eventDescriptions", eventDescriptions);
+        session.setAttribute("eventTypes", eventTypes);
+        request.setAttribute("includeWeb", "event.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -110,7 +99,6 @@ public class EventServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        EventLocationService eventLocationService = new EventLocationService();
         EventService eventService = new EventService();
         if (action.equals("add")) {
             try {
@@ -157,9 +145,9 @@ public class EventServlet extends HttpServlet {
                 String filePath = uploadDir + File.separator + normalized;
                 filePart.write(filePath);
 
-                eventLocationService.addEventLocation(province, district, ward, address);
+                eventService.addEventLocation(province, district, ward, address);
 
-                int locationId = eventLocationService.getLocationId(province, district, ward, address);
+                int locationId = eventService.getLocationId(province, district, ward, address);
 
                 eventService.addEvent(clubId, userId, name, description, typeId, startDate, endDate, locationId, normalized);
                 request.setAttribute("action", null);

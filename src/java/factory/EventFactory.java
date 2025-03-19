@@ -4,8 +4,12 @@
  */
 package factory;
 
+import repository.EventLocationRepository;
 import repository.EventRepository;
+import repository.EventTypeRepository;
+import repository.impl.EventLocationRepositoryImpl;
 import repository.impl.EventRepositoryImpl;
+import repository.impl.EventTypeRepositoryImpl;
 
 /**
  *
@@ -18,4 +22,16 @@ public class EventFactory {
     public static EventRepository getEventRepository(){
         return eventRepository;
     }
+    
+    private static final EventLocationRepository eventLocationRepository = new EventLocationRepositoryImpl();
+
+    public static EventLocationRepository getEventLocationRepository() {
+        return eventLocationRepository;
+    }
+    
+    private static final EventTypeRepository eventTypeRepository = new EventTypeRepositoryImpl();
+
+    public static EventTypeRepository getEventTypeRepository() {
+        return eventTypeRepository;
+    } 
 }

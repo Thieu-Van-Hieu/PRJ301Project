@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint("/task")
-public class TaskWebSocket {
+public class EventWebSocket {
     private static final Set<Session> clients = new CopyOnWriteArraySet<>();
 
     @OnOpen

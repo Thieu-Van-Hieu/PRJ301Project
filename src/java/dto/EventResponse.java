@@ -17,14 +17,14 @@ public class EventResponse {
     private Timestamp startDate;
     private Timestamp endDate;
     private String img;
-
+    
     public EventResponse(int eventId, String eventName, String clubName, Timestamp startDate, Timestamp endDate, String img) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.clubName = clubName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.img = img;
+        this.img = img;            
     }
 
     public int getEventId() {

@@ -48,6 +48,10 @@
         <servlet-name>ForumServlet</servlet-name>
         <servlet-class>controller.ForumServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MemberServlet</servlet-name>
+        <servlet-class>controller.MemberServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -79,5 +83,9 @@
     <servlet-mapping>
         <servlet-name>ForumServlet</servlet-name>
         <url-pattern>/ForumServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberServlet</servlet-name>
+        <url-pattern>/MemberServlet</url-pattern>
     </servlet-mapping>
 </web-app>

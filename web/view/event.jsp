@@ -50,16 +50,19 @@
         </div>
         <div class="contentListEvent">
             <c:forEach var="eventDescription" items="${sessionScope.eventDescriptions}">
-                <div class="event-item">
-                    <div class="event-img"><img src="${pageContext.request.contextPath}/assets/img/img-download/${eventDescription.getImg()}" alt="Event Image"></div>
+                <div class="event-item" id="${eventDescription.getEventId()}">
+                    <div class="event-img"><img
+                            src="${pageContext.request.contextPath}/assets/img/img-download/${eventDescription.getImg()}"
+                            alt="Event Image"></div>
                     <div class="event-info">
                         <h3>${eventDescription.getEventName()}</h3>
                         <p><strong>Câu lạc bộ:</strong> ${eventDescription.getClubName()}</p>
-                        <p><strong>Thời gian:</strong>${eventDescription.getStartDate()} - ${eventDescription.getEndDate()}</p>
+                        <p>Start Date: ${eventDescription.getStartDate()}</p>
+                        <p>End Date: ${eventDescription.getEndDate()}</p>
                     </div>
                     <div class="event-options">...</div>
                 </div>
-            </c:forEach>>           
+            </c:forEach>>
 
         </div>
 
@@ -94,7 +97,7 @@
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                           placeholder="Chọn ngày giờ bắt đầu"></td>
+                                        placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -143,25 +146,25 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-                                        flatpickr("#startDate", {
-                                            enableTime: true,
-                                            dateFormat: "Y-m-d H:i",
-                                            time_24hr: true,
-                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-                                        });
+    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+    flatpickr("#startDate", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+    });
 
-                                        flatpickr("#endDate", {
-                                            enableTime: true,
-                                            dateFormat: "Y-m-d H:i",
-                                            time_24hr: true,
-                                            position: "below"
-                                        });
+    flatpickr("#endDate", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        position: "below"
+    });
 
-                                        // Xử lý chọn file ảnh
-                                        document.getElementById("customFileUpload").addEventListener("click", function () {
-                                            document.getElementById("fileInput").click();
-                                        });
+    // Xử lý chọn file ảnh
+    document.getElementById("customFileUpload").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
+    });
 </script>
 
 <script>
@@ -315,8 +318,5 @@
         updateHiddenInput(this, "wardText");
     });
 </script>
-
 </body>
-
-
 </html>

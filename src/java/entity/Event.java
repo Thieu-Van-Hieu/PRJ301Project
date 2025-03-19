@@ -19,6 +19,7 @@ public class Event {
     public Event() {
     }
 
+<<<<<<< HEAD
     public Event(int id, String name, String description, int typeId, Timestamp startDate, Timestamp endDate, int userId, int clubId, int locationId, String img) {
         this.id = id;
         this.name = name;
@@ -30,6 +31,19 @@ public class Event {
         this.clubId = clubId;
         this.locationId = locationId;
         this.img = img;
+=======
+    public Event(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.description = builder.description;
+        this.typeId = builder.typeId;
+        this.startDate = builder.startDate;
+        this.endDate = builder.endDate;
+        this.userId = builder.userId;
+        this.clubId = builder.clubId;
+        this.locationId = builder.locationId;
+        this.img = builder.img;
+>>>>>>> origin/main
     }
 
     public int getId() {
@@ -76,82 +90,73 @@ public class Event {
         return end.get(Calendar.HOUR_OF_DAY) - start.get(Calendar.HOUR_OF_DAY);
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getClubId() {
-        return clubId;
-    }
-
-    public int getLocationId() {
-        return locationId;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
     public static class Builder {
-
-        private Event event;
+        private int id;
+        private String name;
+        private String description;
+        private int typeId;
+        private Timestamp startDate;
+        private Timestamp endDate;
+        private int userId;
+        private int clubId;
+        private int locationId;
+        private String img;
 
         public Builder() {
-            event = new Event();
         }
 
         public Builder setId(int id) {
-            event.id = id;
+            this.id = id;
             return this;
         }
 
         public Builder setName(String name) {
-            event.name = name;
+            this.name = name;
             return this;
         }
 
         public Builder setDescription(String description) {
-            event.description = description;
+            this.description = description;
+            return this;
+        }
+
+        public Builder setTypeId(int typeId) {
+            this.typeId = typeId;
             return this;
         }
 
         public Builder setStartDate(Timestamp startDate) {
-            event.startDate = startDate;
+            this.startDate = startDate;
             return this;
         }
 
         public Builder setEndDate(Timestamp endDate) {
-            event.endDate = endDate;
-            return this;
-        }
-
-        public Builder setType(int typeID) {
-            event.typeId = typeID;
+            this.endDate = endDate;
             return this;
         }
 
         public Builder setUserId(int userId) {
-            event.userId = userId;
+            this.userId = userId;
             return this;
         }
 
         public Builder setClubId(int clubId) {
-            event.clubId = clubId;
+            this.clubId = clubId;
             return this;
         }
 
         public Builder setLocationId(int locationId) {
-            event.locationId = locationId;
+            this.locationId = locationId;
             return this;
         }
 
         public Builder setImg(String img) {
-            event.img = img;
+            this.img = img;
             return this;
         }
 
         public Event build() {
-            return event;
+            return new Event(this);
         }
     }
 }

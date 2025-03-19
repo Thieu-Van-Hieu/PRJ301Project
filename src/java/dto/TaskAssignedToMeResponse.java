@@ -1,26 +1,25 @@
 package dto;
 
-import java.util.ArrayList;
 import java.sql.Timestamp;
 import entity.Member;
 
-public class TaskAssignedByMeResponse {
+public class TaskAssignedToMeResponse {
     private int id;
     private String name;
     private String description;
-    private ArrayList<Integer> assignedMembersId;
+    private Member assignedByMember;
     private String status;
     private Timestamp dueDate;
 
-    public TaskAssignedByMeResponse() {
+    public TaskAssignedToMeResponse() {
     }
 
-    public TaskAssignedByMeResponse(int id, String name, String description, ArrayList<Integer> assignedMembersId,
-            String status, Timestamp dueDate) {
+    public TaskAssignedToMeResponse(int id, String name, String description, Member assignedByMember, String status,
+            Timestamp dueDate) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.assignedMembersId = assignedMembersId;
+        this.assignedByMember = assignedByMember;
         this.status = status;
         this.dueDate = dueDate;
     }
@@ -49,12 +48,12 @@ public class TaskAssignedByMeResponse {
         this.description = description;
     }
 
-    public ArrayList<Integer> getAssignedMembers() {
-        return assignedMembersId;
+    public Member getAssignedByMember() {
+        return assignedByMember;
     }
 
-    public void setAssignedMembers(ArrayList<Integer> assignedMembersId) {
-        this.assignedMembersId = assignedMembersId;
+    public void setAssignedByMember(Member assignedByMember) {
+        this.assignedByMember = assignedByMember;
     }
 
     public String getStatus() {
@@ -71,14 +70,5 @@ public class TaskAssignedByMeResponse {
 
     public void setDueDate(Timestamp dueDate) {
         this.dueDate = dueDate;
-    }
-
-    public boolean isMemberInAssignedMembers(int memberId) {
-        for (Integer assignedMember : assignedMembersId) {
-            if (assignedMember == memberId) {
-                return true;
-            }
-        }
-        return false;
     }
 }

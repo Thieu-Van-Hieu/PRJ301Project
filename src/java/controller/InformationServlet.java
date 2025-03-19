@@ -81,7 +81,7 @@ public class InformationServlet extends HttpServlet {
         String gender = request.getParameter("gioiTinh");
         boolean isExistStudentId = service.isExistStudentId(studentId);
         if(isExistStudentId){
-            request.setAttribute("error", "Mã sinh viên đã tổn tại địt con mẹ thằng lồn hùng");
+            request.setAttribute("error", "Mã sinh viên đã tồn tại");
             request.getRequestDispatcher("view/information.jsp").forward(request, response);
         }
         String temp[] = hoTen.split(" ");

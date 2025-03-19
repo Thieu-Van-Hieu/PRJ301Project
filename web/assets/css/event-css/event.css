@@ -163,7 +163,6 @@
 
 .event-img {
     width: 120px;
-    /* Điều chỉnh kích thước ảnh */
     background-color: #90ee90;
     display: flex;
     align-items: center;
@@ -174,6 +173,10 @@
     border-bottom-left-radius: 12px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.event-img img {
+    width: 100%;
 }
 
 .event-info {
@@ -238,6 +241,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
+    
 }
 
 .modal-header {

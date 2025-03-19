@@ -18,18 +18,7 @@ public class Event {
 
     public Event() {
     }
-    public Event(int id, String name, String description, int typeId, Timestamp startDate, Timestamp endDate, int userId, int clubId, int locationId, String img) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.typeId = typeId;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.userId = userId;
-        this.clubId = clubId;
-        this.locationId = locationId;
-        this.img = img;
-    }
+
     public Event(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -118,7 +107,7 @@ public class Event {
         }
 
         public Builder setTypeId(int typeId) {
-            this.typeId = typeId;      
+            this.typeId = typeId;
             return this;
         }
 

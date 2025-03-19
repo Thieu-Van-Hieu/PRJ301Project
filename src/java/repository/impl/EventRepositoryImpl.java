@@ -96,16 +96,18 @@ public class EventRepositoryImpl implements EventRepository {
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Event searchEntity = new Event(rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("description"),
-                        rs.getInt("typeId"),
-                        rs.getTimestamp("startTimestamp"),
-                        rs.getTimestamp("endTimestamp"),
-                        rs.getInt("userId"),
-                        rs.getInt("clubId"),
-                        rs.getInt("locationId"),
-                        rs.getString("img"));
+                Event searchEntity = new Event.Builder()
+                        .setId(rs.getInt("id"))
+                        .setName(rs.getString("name"))
+                        .setDescription(rs.getString("description"))
+                        .setTypeId(rs.getInt("typeId"))
+                        .setStartDate(rs.getTimestamp("startTimestamp"))
+                        .setEndDate(rs.getTimestamp("endTimestamp"))
+                        .setUserId(rs.getInt("userId"))
+                        .setClubId(rs.getInt("clubId"))
+                        .setLocationId(rs.getInt("locationId"))
+                        .setImg(rs.getString("img"))
+                        .build();
                 result.add(searchEntity);
             }
         } catch (Exception e) {

@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import services.UserService;
-import util.ForwardWithError;
 
 /**
  *
@@ -82,7 +81,8 @@ public class InformationServlet extends HttpServlet {
         boolean isExistStudentId = service.isExistStudentId(studentId);
         if(isExistStudentId){
             request.setAttribute("error", "Mã sinh viên đã tồn tại");
-            request.getRequestDispatcher("view/information.jsp").forward(request, response);
+            request.getRequestDispatcher("view/login.jsp").forward(request, response);
+            return;
         }
         String temp[] = hoTen.split(" ");
         

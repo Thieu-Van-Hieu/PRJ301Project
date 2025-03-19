@@ -12,6 +12,7 @@
 
 <body>
     <jsp:include page="sakura.jsp" />
+    <jsp:include page="noticeError.jsp"/>
     <div class="container">
         <div class="form-register">
             <h2>Đăng ký tài khoản</h2>
@@ -20,7 +21,6 @@
                     <label for="username">Tài khoản:</label>
                     <input type="text" id="username" name="username" autocomplete="off" value="${username}" required>
                 </div>
-                  <h4 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${errorusername}</h4>
                 <div class="form-row">
                     <label for="matKhau">Mật khẩu:</label>
                     <input type="password" id="matKhau" name="password" value="password" required>
@@ -38,7 +38,6 @@
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-                  <h4 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${erroremail}</h4>
                 <button type="submit" style="color: white; font-weight: 700;">Đăng ký</button>
             </form>
         </div>

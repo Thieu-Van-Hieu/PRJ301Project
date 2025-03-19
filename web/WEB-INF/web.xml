@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
@@ -11,7 +9,7 @@
         <url-pattern>/view/calendar.jsp</url-pattern>
         <url-pattern>/view/event.jsp</url-pattern>
         <url-pattern>/view/forum.jsp</url-pattern>
-        <!--        <url-pattern>/view/homePage.jsp</url-pattern>-->
+        <url-pattern>/view/homePage.jsp</url-pattern>
         <url-pattern>/view/information.jsp</url-pattern>
         <url-pattern>/view/member.jsp</url-pattern>
         <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
@@ -67,6 +65,22 @@
         <servlet-name>HomePageServlet</servlet-name>
         <servlet-class>controller.HomePageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OTPService</servlet-name>
+        <servlet-class>controller.OTPService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>controller.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <servlet-class>controller.VerifyOTPServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OTPVerificationServlet</servlet-name>
+        <servlet-class>controller.OTPVerificationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -114,5 +128,29 @@
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>
         <url-pattern>/HomePageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OTPService</servlet-name>
+        <url-pattern>/OTPService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/ForgotPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <url-pattern>/VerifyOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OTPVerificationServlet</servlet-name>
+        <url-pattern>/OTPVerificationServlet</url-pattern>
     </servlet-mapping>
 </web-app>

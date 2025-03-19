@@ -164,7 +164,7 @@
             setInterval(updateBackground, 3000);
         </script>
         <jsp:include page="view/noticeError.jsp"/>
-        <script src="${pageContext.request.contextPath}/assets/js/troll/randomPosition.js"></script>
+<!--        <script src="/assets/js/troll/randomPosition.js"></script>-->
     </body>
 
 </html>

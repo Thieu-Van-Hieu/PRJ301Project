@@ -13,11 +13,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Thông báo lỗi</title>
         <style>
-            /* Container thông báo */
             .notification {
                 position: fixed;
                 top: 20px;
-                right: -300px; /* Ẩn ngoài màn hình */
+                right: -300px;
                 width: 280px;
                 padding: 15px;
                 background-color: #ff4d4d;
@@ -30,14 +29,11 @@
                 justify-content: space-between;
                 align-items: center;
                 transition: right 0.5s ease-in-out;
+                z-index: 9999;
             }
-
-            /* Khi hiển thị, dịch sang trái */
             .show {
                 right: 20px;
             }
-
-            /* Nút đóng thông báo */
             .close-btn {
                 background: none;
                 border: none;

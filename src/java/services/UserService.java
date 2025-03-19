@@ -4,6 +4,7 @@
  */
 package services;
 
+import dto.ForgotPasswordResponse;
 import dto.UserInformationResponse;
 import factory.UserFactory;
 import repository.UserRepository;
@@ -62,12 +63,21 @@ public class UserService {
         response.setAddress(infor.getAddress());
         response.setBirthday(infor.getBirthday());
     }
-    
-    
-    public boolean isExistStudentId(String studentId){
+
+    public boolean isExistStudentId(String studentId) {
         return userInformationRepository.isExistStudentId(studentId);
     }
+
     public UserInformationResponse getResults() {
         return response;
+    }
+
+    public String getUsernameByEmail() {
+        response.setUserName(userInformationRepository.getUsernameByEmail(response.getEmail()));
+        return userInformationRepository.getUsernameByEmail(response.getEmail());
+    }
+
+    public void resetPassword(String newPassword) {
+        userRepository.resetPassword(response.getUserName(), newPassword);
     }
 }

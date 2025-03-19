@@ -19,4 +19,6 @@ public interface UserRepository {
     public void addUserRoleMember(String username, String password);
 
     public int getUserId(String username);
+    
+    public void resetPassword(String username, String password);
 }

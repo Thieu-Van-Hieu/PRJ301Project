@@ -84,11 +84,13 @@ public class RegisterServlet extends HttpServlet {
         boolean isExistEmail = userService.isExistEmail(email);
 
         if (user != null) {
-            ForwardWithError.forwardWithError(request, response, "Tài khoản đã tồn tại vui lòng đăng ký tài khoản khác!", "errorusername");
+            request.setAttribute("error", " Tài Khoản đã tồn tại");
+            request.getRequestDispatcher("view/register.jsp").forward(request, response);
             return;
         }
         if (isExistEmail) {
-            ForwardWithError.forwardWithError(request, response, "Email đã tồn tại vui lòng đăng ký tài khoản khác!", "erroremail");
+            request.setAttribute("error", "Email đã tồn tại");
+            request.getRequestDispatcher("view/register.jsp").forward(request, response);
             return;
         }
 
@@ -127,10 +129,9 @@ public class RegisterServlet extends HttpServlet {
                 + "</html>";
 
         EmailService.sendEmail(email, subject, body);
-
-        // Lưu thông tin đăng ký vào session
         HttpSession session = request.getSession();
-        session.setAttribute("username", username); // Lưu username để filter không chặn
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
         session.setAttribute("generatedOTP", otp);
         session.setAttribute("email", email);
 
@@ -146,5 +147,4 @@ public class RegisterServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-//hahahaha
 }

@@ -10,11 +10,13 @@ public class User {
     private String userName;
     private String password;
     private String role;
+    private String email;
 
     private User(Builder builder) {
         this.id = builder.id;
         this.userName = builder.userName;
         this.password = builder.password;
+        this.email = email;
         this.role = builder.role;
     }
 

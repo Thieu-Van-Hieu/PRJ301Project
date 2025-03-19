@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@ServerEndpoint("/task")
+@ServerEndpoint("/event")
 public class EventWebSocket {
     private static final Set<Session> clients = new CopyOnWriteArraySet<>();
 

@@ -16,7 +16,7 @@
             <% if (message != null) { %>
             <div class="message"><%= message %></div>
             <% } %>
-            <form action="OTPVerificationServlet" method="post">
+            <form action="<%= request.getContextPath() %>/OTPVerificationServlet" method="post">
                 <input type="hidden" name="username">
                 <label for="otp">Mã OTP:</label>
                 <input type="text" name="otp" id="otp" required>

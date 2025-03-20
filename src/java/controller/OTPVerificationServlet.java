@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import services.UserService;
 import entity.User;
+
 /**
  *
  * @author ngoct
@@ -80,11 +81,10 @@ public class OTPVerificationServlet extends HttpServlet {
 
         if (generatedOTP != null && enteredOTP.equals(generatedOTP)) {
             session.removeAttribute("generatedOTP");
-            request.setAttribute("message", "Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
-            request.getRequestDispatcher("view/information.jsp").forward(request, response);
+            response.sendRedirect("view/information.jsp");
         } else {
-            request.setAttribute("error", "Mã OTP không chính xác. Vui lòng nhập lại.");
-            request.getRequestDispatcher("view/otp.jsp").forward(request, response);
+            session.setAttribute("error", "Mã OTP không chính xác. Vui lòng nhập lại.");
+            response.sendRedirect(request.getContextPath() + "/view/otp.jsp");
         }
     }
 

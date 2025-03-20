@@ -63,6 +63,7 @@
                     notification.classList.remove("show");
                 }
             </script>
+            <% session.removeAttribute("error"); %>
         </c:if>
     </body>
 </html>

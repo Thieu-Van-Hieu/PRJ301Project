@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/member-css/member.css" />
 <div class="content-container">
     <header class="content-header">
         <h2>Thành Viên</h2>

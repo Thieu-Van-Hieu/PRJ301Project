@@ -276,13 +276,13 @@
             pageContext.setAttribute("members", members);
 
             // Tạo danh danh sách thành viên được giao việc
-            ArrayList<Member> assignedTos = new ArrayList<>();
-            assignedTos.add(hung);
+            ArrayList<Integer> assignedTos = new ArrayList<>();
+            assignedTos.add(0);
 
             // Tạo danh sách task
             ArrayList<TaskAssignedByMeResponse> tasks = new ArrayList<>();
 
-            // Thêm các task mẫu vào danh sách
+            // Thêm các task mẫu vào danh sácsh
             tasks.add(new TaskAssignedByMeResponse(1, "Fix Bug #101", "Sửa lỗi đăng nhập", assignedTos, "Đang làm", Timestamp.valueOf("2025-03-20 00:00:00")));
             tasks.add(new TaskAssignedByMeResponse(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", assignedTos, "Hủy bỏ", Timestamp.valueOf("2025-03-25 00:00:00")));
             tasks.add(new TaskAssignedByMeResponse(3, "Code Review", "Kiểm tra lại code module Y", assignedTos, "Đã xong", Timestamp.valueOf("2025-03-10 00:00:00")));

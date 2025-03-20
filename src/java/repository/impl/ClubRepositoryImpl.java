@@ -42,6 +42,5 @@ public class ClubRepositoryImpl implements ClubRepository{
             e.printStackTrace();
         }
         return clubs;
-    }
-    
+    }   
 }

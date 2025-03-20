@@ -41,8 +41,8 @@ public class FileService {
 
     public static String normalizeFileName(String fileName) {
         return Normalizer.normalize(fileName, Normalizer.Form.NFD)
-                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "") // Bỏ dấu
-                .replaceAll(" ", "_") // Thay khoảng trắng bằng dấu "_"
-                .toLowerCase(); // Đổi thành chữ thường
+                .replaceAll("[\\p{InCombiningDiacriticalMarks}]", "") 
+                .replaceAll(" ", "_") //
+                .toLowerCase(); 
     }
 }

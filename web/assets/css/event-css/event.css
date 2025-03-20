@@ -221,6 +221,7 @@
     width: 900px;
     max-width: calc(100% - 32px);
     min-height: 200px;
+    overflow-y: auto;
     position: relative;
     animation: modalFadeIn ease 0.5s;
     border-radius: 12px;

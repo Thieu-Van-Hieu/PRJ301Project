@@ -55,10 +55,10 @@ public class UserRepositoryImpl implements UserRepository {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 user = new User.Builder()
-                        .id(rs.getInt("id"))
-                        .userName(rs.getString("username"))
-                        .password(rs.getString("password"))
-                        .role("role")
+                        .setId(rs.getInt("id"))
+                        .setUserName(rs.getString("username"))
+                        .setPassword(rs.getString("password"))
+                        .setRole("role")
                         .build();
             }
         } catch (Exception e) {

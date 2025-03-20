@@ -20,7 +20,7 @@ public class UserInformation {
     private String gender;
     private String birthday;
 
-    public UserInformation(userInformation user) {
+    public UserInformation(Builder user) {
         this.id = user.id;
         this.userId = user.userId;
         this.firstName = user.firstName;
@@ -68,7 +68,7 @@ public class UserInformation {
         return birthday;
     }
 
-    public static class userInformation {
+    public static class Builder {
 
         private int id;
         private int userId;
@@ -80,55 +80,55 @@ public class UserInformation {
         private String gender;
         private String birthday;
 
-        public userInformation() {
+        public Builder() {
         }
 
-        public userInformation setId(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public userInformation setUserId(int userId) {
+        public Builder setUserId(int userId) {
             this.userId = userId;
             return this;
         }
 
-        public userInformation setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public userInformation setLaseName(String lastName) {
+        public Builder setLaseName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public userInformation setEmail(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public userInformation setStudentId(String StudentId) {
+        public Builder setStudentId(String StudentId) {
             this.StudentId = StudentId;
             return this;
         }
 
-        public userInformation setAddress(String address) {
+        public Builder setAddress(String address) {
             this.address = address;
             return this;
         }
 
-        public userInformation setGender(String gender) {
+        public Builder setGender(String gender) {
             this.gender = gender;
             return this;
         }
 
-        public userInformation setBirthday(String birthday) {
+        public Builder setBirthday(String birthday) {
             this.birthday = birthday;
             return this;
         }
 
-        public UserInformation user() {
+        public UserInformation build() {
             return new UserInformation(this);
         }
     }

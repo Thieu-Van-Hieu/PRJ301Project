@@ -5,17 +5,17 @@ public class MessageResponse {
     private int clubId;
     private int memberId;
     private String memberName;
-    private String content;
+    private String message;
 
     public MessageResponse() {
     }
 
-    public MessageResponse(int id, int clubId, int memberId, String memberName, String content) {
+    public MessageResponse(int id, int clubId, int memberId, String memberName, String message) {
         this.id = id;
         this.clubId = clubId;
         this.memberId = memberId;
         this.memberName = memberName;
-        this.content = content;
+        this.message = message;
     }
 
     public int getId() {
@@ -50,12 +50,12 @@ public class MessageResponse {
         this.memberName = memberName;
     }
 
-    public String getContent() {
-        return content;
+    public String getMessage() {
+        return message;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

@@ -79,4 +79,33 @@ public class ClubRepositoryImpl implements ClubRepository {
         }
         return clubResponses;
     }
+
+    @Override
+    public ArrayList<ClubResponse> getClubIcons(int userId) {
+        DBContext db = DBContext.getInstance();
+        ArrayList<ClubResponse> clubResponses = new ArrayList<>();
+
+        try {
+            String sql = """
+                         select 
+                         c.id, c.avatarClub
+                         from clubs as c
+                         join members as m on m.clubId = c.id
+                         where m.userId = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String avatarClub = rs.getString("avatarClub");               
+                ClubResponse clubResponse = new ClubResponse(id,avatarClub);
+                clubResponses.add(clubResponse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return clubResponses;
+    }
 }

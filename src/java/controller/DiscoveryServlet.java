@@ -60,8 +60,11 @@ public class DiscoveryServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
+        int userId = (Integer)session.getAttribute("userId");
         
+        ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
         ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
+        session.setAttribute("clubListItems", clubListItems);
         session.setAttribute("clubList", clubList);
         response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
     } 

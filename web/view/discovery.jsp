@@ -38,7 +38,11 @@
         <div class="left-toolbar">
             <ul>
                 <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
-                <li>1</li>
+                <c:forEach var="clubItem" items="${clubListItems}">
+                    <li id="${clubItem.id}"><img
+                            src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}"
+                            alt="alt" /></li>
+                </c:forEach>
                 <li><i class="fa-solid fa-plus"></i></li>
                 <li><i class="fa-regular fa-compass"></i></li>
                 <li><i class="fa-solid fa-gear"></i></li>
@@ -49,12 +53,17 @@
         <div class="sidebar">
             <h2>Khám Phá Câu Lạc Bộ</h2>
             <ul>
-                <li><a href="#">Trang Chủ</a></li>
-                <li><a href="#">Gaming</a></li>
-                <li><a href="#">Âm Nhạc</a></li>
-                <li><a href="#">Khoa học & Công Nghệ</a></li>
-                <li><a href="#">Thể Thao</a></li>
-                <li><a href="#">Giáo Dục</a></li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet">Trang Chủ</a></li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=gaming">Gaming</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=music">Âm Nhạc</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=science">Khoa học &
+                        Công Nghệ</a></li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=sport">Thể Thao</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=education">Giáo
+                        Dục</a></li>
             </ul>
         </div>
 
@@ -83,41 +92,262 @@
                                     <h3>${club.name}</h3>
                                     <h4>Chủ Nhiệm: ${club.clubPresidentName}</h4>
                                     <h4>Loại: ${club.type}</h4>
-                                    <p>${club.description}</p>
+                                    <p style="display: none;">${club.description}</p>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
             </section>
+
+
+            <style>
+                .modal {
+                    position: fixed;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    background-color: rgba(0, 0, 0, 0.4);
+                    align-items: center;
+                    justify-content: center;
+                    display: none;
+                    overflow-y: auto;
+                    z-index: 10000;
+                }
+
+                .modal.open {
+                    display: flex;
+                }
+
+                .modal-container {
+                    background-color: #fff;
+                    width: 500px;
+                    max-width: calc(100% - 32px);
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    position: relative;
+                    animation: modalFadeIn ease 0.5s;
+                    border-radius: 12px;
+                }
+
+                .modal-close {
+                    position: absolute;
+                    right: 24px;
+                    top: 16px;
+                    color: #000;
+                    cursor: pointer;
+                    opacity: 0.8;
+                    font-size: 24px;
+                    background-color: #ccc;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 50%;
+                }
+
+                .modal-header {
+                    height: 200px;
+                    border-bottom: 1px solid #ccc;
+                }
+
+                .modal-header img {
+                    width: 100%;
+                }
+
+                .modal-body {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 12px 18px;
+                    gap: 24px;
+                    overflow-y: auto;
+                }
+
+                .modal-body-header {}
+
+                .modal-club-avatar {
+                    position: absolute;
+                    top: 140px;
+                    left: 12px;
+                    width: 100px;
+                    height: 100px;
+                    border: 4px solid #fff;
+                    border-radius: 12px;
+                    background-color: #fff;
+                }
+
+                .modal-header img,
+                .modal-club-avatar img {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .modal-club-avatar img {
+                    border-radius: 12px;
+                }
+
+                .modal-club-infor {
+                    display: flex;
+                    flex-direction: column;
+                    margin-top: 30px;
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                }
+
+                .modal-club-infor h3 {
+                    color: #E44D26;
+                    font-size: 24px;
+                    margin-left: 12px;
+                    margin-bottom: 4px;
+                }
+
+                .modal-club-infor h4 {
+                    font-size: 16px;
+                    margin-left: 12px;
+                    margin-bottom: 2px;
+                }
+
+                .modal-club-infor p {
+                    font-size: 12px;
+                    margin-left: 12px;
+                    word-break: break-word;
+                    max-width: 100%;
+                }
+
+                .modal .btn-submit {
+                    width: 100%;
+                    border: none;
+                    padding: 12px 0;
+                    font-size: 18px;
+                    font-weight: 600;
+                    color: #fff;
+                    background-color: #064273;
+                    border-radius: 16px;
+                    margin-top: 24px;
+                    cursor: pointer;
+                }
+
+                @keyframes sidebarFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-50px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                @keyframes modalFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-150px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            </style>
+            <div class="modal js-modal" id="modal">
+                <form action="${pageContext.request.contextPath}/DiscoveryServlet" method="POST">
+                    <input type="hidden" name="action" value="joinClub">
+                    <div class="modal-container js-modal-container">
+                        <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
+                        <div class="modal-header">
+                            <img src="" alt="coverImage">
+                        </div>
+                        <input type="hidden" name="createTime" id="createTime" value="">
+                        <input type="hidden" name="userId" value="1">
+                        <div class="modal-body">
+                            <div class="modal-body-header">
+                                <div class="modal-club-avatar">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="modal-club-infor">
+                                    <h3 id="clubName"></h3>
+                                    <h4 id="clubPresidentName"></h4>
+                                    <h4 id="type"></h4>
+                                    <p id="description"></p>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn-submit" name="name" value="Xin Gia Nhập">
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const content = document.querySelector(".content");
-    const sidebar = document.querySelector(".sidebar");
+        const content = document.querySelector(".content");
+        const sidebar = document.querySelector(".sidebar");
 
-    function checkScroll(element) {
-        if (element.scrollTop > 0) {
-            element.style.overflowY = "auto";
-        } else {
-            setTimeout(() => {
-                element.style.overflowY = "hidden";
-            }, 300); // Delay tránh lỗi flickering
+        function checkScroll(element) {
+            if (element.scrollTop > 0) {
+                element.style.overflowY = "auto";
+            } else {
+                setTimeout(() => {
+                    element.style.overflowY = "hidden";
+                }, 300);
+            }
         }
-    }
 
-    function enableScroll(element) {
-        element.style.overflowY = "auto";
-    }
+        function enableScroll(element) {
+            element.style.overflowY = "auto";
+        }
 
-    // Áp dụng cho cả `.content` và `.sidebar`
-    [content, sidebar].forEach(element => {
-        if (element) {
-            element.addEventListener("wheel", () => enableScroll(element));
-            element.addEventListener("touchmove", () => enableScroll(element));
-            element.addEventListener("scroll", () => checkScroll(element));
+        [content, sidebar].forEach(element => {
+            if (element) {
+                element.addEventListener("wheel", () => enableScroll(element));
+                element.addEventListener("touchmove", () => enableScroll(element));
+                element.addEventListener("scroll", () => checkScroll(element));
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.querySelector('.js-modal');
+    const modalClose = document.querySelector('.js-modal-close');
+    const modalContainer = document.querySelector('.js-modal-container');
+
+   
+    const clubItems = document.querySelectorAll('.club-item');
+
+    clubItems.forEach(item => {
+        item.addEventListener('click', function () {          
+            const clubName = this.querySelector(".club-infor h3").innerText;
+            const clubPresidentName = this.querySelector(".club-infor h4:nth-of-type(1)").innerText;
+            const clubType = this.querySelector(".club-infor h4:nth-of-type(2)").innerText;
+            const coverImageSrc = this.querySelector(".club-item-header img").src;
+            const avatarImageSrc = this.querySelector(".club-avatar img").src;
+            const clubDiscription = this.querySelector(".club-infor p").innerText;
+            
+            document.getElementById("clubName").innerText = clubName;
+            document.getElementById("clubPresidentName").innerText = "Chủ Nhiệm: " + clubPresidentName;
+            document.getElementById("type").innerText ="Loại: " + clubType;
+            document.querySelector(".modal-header img").src = coverImageSrc;
+            document.querySelector(".modal-club-avatar img").src = avatarImageSrc;
+            document.getElementById("description").innerText = clubDiscription;
+            
+            modal.classList.add('open');
+        });
+    });
+
+    // Đóng modal khi click vào nút đóng
+    modalClose.addEventListener('click', function () {
+        modal.classList.remove('open');
+    });
+
+    // Đóng modal khi click ra ngoài modal-container
+    modal.addEventListener('click', function (event) {
+        if (!modalContainer.contains(event.target)) {
+            modal.classList.remove('open');
         }
     });
 });

@@ -18,6 +18,7 @@ public class ClubResponse {
     private String avatarClub;
     private String coverImage;
     private String clubPresidentName;
+    private int memberId;
     
     public ClubResponse() {
     }
@@ -25,7 +26,7 @@ public class ClubResponse {
     public ClubResponse(int id, String name) {
         this.id = id;
         this.name = name;
-    }
+    }   
 
     public ClubResponse(int id, String name, String description, String type, String avatarClub, String coverImage, String clubPresidentName) {
         this.id = id;
@@ -36,7 +37,15 @@ public class ClubResponse {
         this.coverImage = coverImage;
         this.clubPresidentName = clubPresidentName;
     }
-    
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+       
     
     public int getId() {
         return id;

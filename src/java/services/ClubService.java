@@ -37,4 +37,8 @@ public class ClubService {
     public ArrayList<ClubResponse> selectAllClubInformations(){
         return clubRepository.getAllClubInformations();
     }
+    
+    public ArrayList<ClubResponse> selectAllClubItems(int userId){
+        return clubRepository.getClubIcons(userId);
+    }
 }

@@ -33,7 +33,7 @@ import services.ClubService;
         maxRequestSize = 1024 * 1024 * 50)    //50MB
 public class EventServlet extends HttpServlet {
 
-    private static final String IMG_DIR = "D:\\PRJ\\ProjectPRJ\\PRJ301Project\\web\\assets\\img\\img-download";
+    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -85,9 +85,9 @@ public class EventServlet extends HttpServlet {
         session.setAttribute("clubDescriptions", clubIdAndNames);
         session.setAttribute("eventDescriptions", eventDescriptions);
         session.setAttribute("eventTypes", eventTypes);
-        request.setAttribute("includeWeb", "event.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
-        dispatcher.forward(request, response);
+        session.setAttribute("includeWeb", "event.jsp");
+        
+        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 
     /**
@@ -106,7 +106,7 @@ public class EventServlet extends HttpServlet {
         EventService eventService = new EventService();
         if (action.equals("add")) {
             try {
-                String name = request.getParameter("name");
+                String name = request.getParameter("nameEvent");
                 int userId = Integer.parseInt(request.getParameter("userId"));
                 int clubId = Integer.parseInt(request.getParameter("clubId"));
                 int typeId = Integer.parseInt(request.getParameter("type"));

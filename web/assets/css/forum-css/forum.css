@@ -331,6 +331,8 @@
     align-items: center;
     justify-content: center;
     display: none;
+    overflow-y: auto;
+    z-index: 10000;
 }
 
 .modal.open {
@@ -341,10 +343,12 @@
     background-color: #fff;
     width: 900px;
     max-width: calc(100% - 32px);
-    min-height: 200px;
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
     animation: modalFadeIn ease 0.5s;
     border-radius: 12px;
+    
 }
 
 .modal-close {
@@ -424,6 +428,14 @@
     font-size: 18px;
     gap: 8px;
     cursor: pointer;
+}
+
+.img-create {
+    width: 100%;
+}
+
+.img-create img {
+    width: 100%;
 }
 
 .modal .btn-submit {

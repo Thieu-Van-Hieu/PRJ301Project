@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/member-css/member.css" />
 <div class="content-container">
     <header class="content-header">
         <h2>Thành Viên</h2>
@@ -73,16 +74,18 @@
                     <th>Chức vụ</th>
                     <th></th>
                 </tr>
-                <tr>
-                    <td>HE120204</td>
-                    <td>Hầu</td>
-                    <td>Hoà Inu</td>
-                    <td>12/12/2004</td>
-                    <td>Bê Đê</td>
-                    <td>Kinh tế</td>
-                    <td>Sai vặt</td>
-                    <td><button value="Delete">Xoá</button></td>
-                </tr>
+                <c:forEach var="member" items="${memberResponses}">
+                    <tr>
+                        <td>${member.rollNumber}</td> 
+                        <td>${member.lastName}</td> 
+                        <td>${member.firstName}</td> 
+                        <td>${member.birthday}</td> 
+                        <td>${member.gender}</td> 
+                        <td>${member.del}</td> 
+                        <td>${member.role}</td> 
+                        <td><button value="Delete" onclick="location.href='${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${member.rollNumber}'">Xoá</button></td> 
+                    </tr>
+                </c:forEach>
             </table>
         </div>
     </div>

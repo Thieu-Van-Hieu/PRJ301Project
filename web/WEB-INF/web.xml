@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <filter>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+        <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
@@ -68,25 +66,13 @@
         <servlet-class>controller.HomePageServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OTPService</servlet-name>
-        <servlet-class>controller.OTPService</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <servlet-class>controller.ForgotPasswordServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VerifyOTPServlet</servlet-name>
-        <servlet-class>controller.VerifyOTPServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>OTPVerificationServlet</servlet-name>
-        <servlet-class>controller.OTPVerificationServlet</servlet-class>
+        <servlet-name>DiscoveryServlet</servlet-name>
+        <servlet-class>controller.DiscoveryServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
-</servlet-mapping>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -132,27 +118,7 @@
         <url-pattern>/HomePageServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OTPService</servlet-name>
-        <url-pattern>/OTPService</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <url-pattern>/ForgotPasswordServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VerifyOTPServlet</servlet-name>
-        <url-pattern>/VerifyOTPServlet</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <servlet-class>controller.ResetPasswordServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordServlet</servlet-name>
-        <url-pattern>/ResetPasswordServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>OTPVerificationServlet</servlet-name>
-        <url-pattern>/OTPVerificationServlet</url-pattern>
+        <servlet-name>DiscoveryServlet</servlet-name>
+        <url-pattern>/DiscoveryServlet</url-pattern>
     </servlet-mapping>
 </web-app>

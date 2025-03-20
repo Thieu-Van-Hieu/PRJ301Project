@@ -61,7 +61,7 @@ public class ForumServlet extends HttpServlet {
             
         }
         
-        request.setAttribute("includeWeb", "forum.jsp");
+        session.setAttribute("includeWeb", "forum.jsp");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
         dispatcher.forward(request, response);
     } 

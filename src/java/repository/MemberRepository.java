@@ -4,16 +4,15 @@
  */
 package repository;
 
-import dto.ClubResponse;
-import entity.Club;
+import dto.MemberDTO;
+import dto.MemberResponse;
 import java.util.ArrayList;
 
 /**
  *
  * @author hunggt1572004
  */
-public interface ClubRepository {
-    public ArrayList<Club> getAllClubIdAndName();
-    
-    public ArrayList<ClubResponse> getAllClubInformations();
+public interface MemberRepository {
+    public ArrayList<MemberResponse> getAllMemberOfClub(int clubId);
+    public void deleteMemberOfClub(MemberDTO memberDTO);
 }

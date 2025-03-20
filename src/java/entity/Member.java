@@ -1,9 +1,12 @@
 package entity;
+import java.sql.Timestamp;
+
 
 public class Member {
     private int id;
     private String name;
-
+    
+    
     public Member() {
     }
 

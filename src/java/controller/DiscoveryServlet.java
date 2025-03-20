@@ -5,12 +5,16 @@
 
 package controller;
 
+import dto.ClubResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import services.ClubService;
 
 /**
  *
@@ -53,7 +57,13 @@ public class DiscoveryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+        ClubService clubService = new ClubService();
         
+        ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
+        session.setAttribute("clubList", clubList);
+        response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
     } 
 
     /** 

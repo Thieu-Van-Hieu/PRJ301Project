@@ -110,7 +110,7 @@ public class InformationServlet extends HttpServlet {
         UserInformationResponse result = service.getResults();
 
         session.setAttribute("user", result);
-        response.sendRedirect(request.getContextPath() + "view/discovery.jsp");
+        response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
     }
 
     /**

@@ -93,6 +93,10 @@ public class ClubResponse {
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
     }
+
+    public String getClubPresidentName() {
+        return clubPresidentName;
+    }
     
     
 

@@ -114,7 +114,8 @@ body {
     grid-area: sidebar;
     background: #b2d8d8;
     border-top-left-radius: 10px;
-
+    overflow-y: hidden; 
+    transition: overflow 0.3s ease-in-out;
 }
 
 .sidebar h2 {
@@ -132,6 +133,8 @@ body {
     gap: 10px;
 }
 
+.sidebar ul li {
+}
 
 .sidebar ul li a {
     text-decoration: none;
@@ -153,8 +156,7 @@ body {
 .content {
     grid-area: cont;
     background: #eaf8f2;
-    overflow-y: auto;
-
+    overflow-y: hidden;
     height: calc(100vh - 60px);
 }
 
@@ -186,40 +188,80 @@ body {
     font-size: 20px;
 }
 
-/* Danh sách câu lạc bộ */
-.club-section {
-    margin-top: 20px;
+.club-section h2{
+    padding: 24px 0 12px 24px;
+    color: orange;
+}
+.club-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 24px;
+    padding: 24px;
 }
 
-.club-section h3 {
+.club-item {
+    width: 250px;
+    height: 250px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: relative;
+}
+
+.club-item-header {
+    height: 120px;
+}
+
+.club-item-header img {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.club-item-header img,
+.club-avatar img {
+    width: 100%;
+    height: 100%;
+}
+
+.club-item-body {
+}
+
+.club-avatar {
+    position: absolute;
+    top: 86px;
+    left: 15px;
+    width: 60px;
+    height: 60px;
+    border: 4px solid #fff;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.club-avatar img {
+    border-radius: 12px;
+}
+
+.club-infor {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.club-infor h3 {
     color: #E44D26;
     font-size: 18px;
     margin-left: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 4px;
 }
 
-.club-list {
-    display: flex;
-    gap: 15px;
+.club-infor h4 {
+    font-size: 14px;
+    margin-left: 20px;
+    margin-bottom: 2px;
 }
 
-.club-card {
-    background: #F4A261;
-    padding: 15px;
-    border-radius: 10px;
-    width: 30%;
-    text-align: center;
-    color: white;
-}
-
-.club-icon {
-    width: 40px;
-    height: 40px;
-    background: blue;
-    border-radius: 5px;
-    margin: 0 auto 10px;
-}
-.content-header {
-    position: relative;
-    overflow: hidden;
+.club-infor p {
+    font-size: 10px;
+    margin-left: 20px;
 }

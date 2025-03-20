@@ -2,8 +2,6 @@
 /* Nội dung chính */
 .content-container {
     background: #eaf8f2;
-    overflow-y: auto;
-
     height: calc(100vh - 60px);
 }
 .content-list {

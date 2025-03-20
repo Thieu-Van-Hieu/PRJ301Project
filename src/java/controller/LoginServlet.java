@@ -75,11 +75,12 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         UserService userService = new UserService();
         boolean isCheck = userService.checkLogin(username, password);
+        int userId = userService.getUsername(username, password).getId();
         HttpSession session = request.getSession();
-
+        
         if (isCheck) {
-            session.setAttribute("username", username);
-            response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
+            session.setAttribute("userId", userId);
+            response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
         } else {
             session.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");

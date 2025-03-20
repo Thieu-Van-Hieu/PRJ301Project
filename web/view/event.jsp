@@ -2,6 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="entity.*" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/event-css/event.css">
+
 <div class="content-container">
     <%
             request.setAttribute("contentHeader", "Sự kiện");
@@ -98,7 +100,7 @@
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                        placeholder="Chọn ngày giờ bắt đầu"></td>
+                                           placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -148,25 +150,25 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-    flatpickr("#startDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-    });
+                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+                                        flatpickr("#startDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+                                        });
 
-    flatpickr("#endDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below"
-    });
+                                        flatpickr("#endDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below"
+                                        });
 
-    // Xử lý chọn file ảnh
-    document.getElementById("customFileUpload").addEventListener("click", function () {
-        document.getElementById("fileInput").click();
-    });
+                                        // Xử lý chọn file ảnh
+                                        document.getElementById("customFileUpload").addEventListener("click", function () {
+                                            document.getElementById("fileInput").click();
+                                        });
 </script>
 
 <script>

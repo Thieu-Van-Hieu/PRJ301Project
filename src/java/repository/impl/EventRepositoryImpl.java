@@ -122,7 +122,6 @@ public class EventRepositoryImpl implements EventRepository {
         if (event.getSearch() != null && !event.getSearch().isBlank()) {
             sql.append(" JOIN clubs  c ON c.id = e.clubId ");
         }
-
         return sql.toString();
     }
 
@@ -130,7 +129,7 @@ public class EventRepositoryImpl implements EventRepository {
         StringBuilder sql = new StringBuilder(" Where 1 = 1 ");
 
         if (event.getSearch() != null && !event.getSearch().isEmpty()) {
-            sql.append(" and [name] like '").append(event.getSearch()).append("' ");
+            sql.append(" and e.[name] like '%").append(event.getSearch()).append("%' ");
         }
         if (event.getDate() != null && !event.getDate().isEmpty()) {
             sql.append(" and CAST(startTimestamp AS DATE) = '").append(event.getDate()).append("' ");
@@ -138,7 +137,9 @@ public class EventRepositoryImpl implements EventRepository {
         if (event.getType() != null && !event.getType().isEmpty()) {
             sql.append(" and typeId = '").append(event.getType()).append("' ");
         }
-
+        if((Integer)event.getClubId() != null){
+            sql.append(" and clubId = ").append(event.getClubId());
+        }
         return sql.toString();
     }
 }

@@ -11,15 +11,22 @@ import dto.EventResponse;
 import dto.SearchEventDTO;
 import java.util.ArrayList;
 import entity.Event;
+import entity.EventType;
+import repository.EventLocationRepository;
+import repository.EventTypeRepository;
 /**
  *
  * @author hunggt1572004
  */
 public class EventService {
     private final EventRepository eventRepository;
+    private final EventLocationRepository eventLocationRepository;
+    private final EventTypeRepository eventTypeRepository;
     
     public EventService(){
         this.eventRepository = EventFactory.getEventRepository();
+        this.eventLocationRepository = EventFactory.getEventLocationRepository();
+        this.eventTypeRepository = EventFactory.getEventTypeRepository();
     }
     
     public void addEvent(int clubId, int userId, String name, String description, int typeId, Timestamp startDate, Timestamp endDate, int locationId, String img){
@@ -44,5 +51,17 @@ public class EventService {
             results.add(temp);
         }
         return results;
+    }
+    
+    public ArrayList<EventType> selectAllEventType(){
+        return eventTypeRepository.getAllEventType();
+    }
+    
+    public void addEventLocation(String province, String district, String ward, String address){
+        eventLocationRepository.addEventLocation(province, district, ward, address);
+    }
+    
+    public int getLocationId(String province, String district, String ward, String address){
+        return eventLocationRepository.getEventLocationId(province, district, ward, address);
     }
 }

@@ -70,7 +70,7 @@
             .error-message {
                 color: red;
                 text-align: center;
-                margin-bottom: 10px;
+                margin-top: 5px;
                 font-weight: bold;
             }
         </style>
@@ -100,4 +100,5 @@
         </div>
     </body>
     <jsp:include page="background.jsp" />
+    <script src="${pageContext.request.contextPath}/assets/js/valiate/passwordright.js"></script>
 </html>

@@ -76,7 +76,7 @@ public class MemberRepositoryImpl implements MemberRepository{
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
-            statement.setInt(1, clubId);
+            statement.setInt(2, clubId);
             ResultSet rs = statement.executeQuery();
             while(rs.next()){
                 return new Member.Builder().setId(rs.getInt("id")).setClubId(rs.getInt("clubId")).setRole(rs.getNString("role")).build();

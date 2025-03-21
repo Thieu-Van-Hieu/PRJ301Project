@@ -3,17 +3,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4Club - Câu Lạc Bộ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>4Club - Câu Lạc Bộ</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Iansui&family=Oi&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+              integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
 
 <body>
 
@@ -181,44 +181,53 @@
             transition: max-height 2s ease-in-out;
         }
 
-        .sidebar ul .show {
-            display: flex;
-            max-height: 300px;
-            margin-left: 16px;
-        }
+            .sidebar__item a, .sidebar__item label {
+                text-decoration: none;
+                color: #064273;
+                font-size: 16px;
+                display: block;
+                padding: 12px 0;
+                padding-left: 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
 
-        .sidebar ul li a {
-            text-decoration: none;
-            color: #064273;
-            font-size: 16px;
-            display: block;
-            padding: 12px 0;
-            padding-left: 20px;
-            transition: all 0.3s ease;
-        }
+            .sidebar__item a:hover, .sidebar__item label:hover {
+                border-left: 2px solid #064273;
+                color: white;
+                padding-left: 18px;
+            }
 
-        .sidebar ul li a:hover {
-            border-left: 2px solid #064273;
-            color: white;
-            padding-left: 18px;
-        }
+            /* Nội dung chính */
+            .content {
+                display: flex;
+                flex-direction: column;
+                grid-area: cont;
+                overflow-y: auto;
+                height: 100%;
+            }
 
-        /* Nội dung chính */
-        .content {
-            display: flex;
-            flex-direction: column;
-            grid-area: cont;
-            overflow-y: hidden;
-            height: 100%;
-        }
-    </style>
-    <jsp:include page="/view/background.jsp" />
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-title">
-                <i class="fa-regular fa-compass"></i>
-                <span>Nhóm 1</span>
+            #task-list {
+                display: none;
+                padding-left: 20px;
+            }
+
+            #task__toggle:checked~#task-list {
+                display: block;
+            }
+        </style>
+        <jsp:include page="/view/background.jsp" />
+        <div class="container">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-title">
+                    <i class="fa-regular fa-compass"></i>
+                    <span>Nhóm 1</span>
+                </div>
+                <div class="header-icons">
+                    <a href="#"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="#">?</a>
+                </div>
             </div>
             <div class="header-icons">
                 <a href="#"><i class="fa-solid fa-envelope"></i></a>
@@ -226,93 +235,37 @@
             </div>
         </div>
 
-        <!-- Thanh cÃ´ng cá»¥ bÃªn trÃ¡i -->
-        <div class="left-toolbar">
-            <ul>
-                <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
-                <li>1</li>
-                <li><i class="fa-solid fa-plus"></i></li>
-                <li><i class="fa-regular fa-compass"></i></li>
-                <li><i class="fa-solid fa-gear"></i></li>
-            </ul>
-        </div>
-
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <div class="sidebar-header__item"><i class="fa-solid fa-house"></i></div>
-                <div class="sidebar-header__name">Câu Lạc Bộ A</div>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <div class="sidebar-header__item"><i class="fa-solid fa-house"></i></div>
+                    <div class="sidebar-header__name">Câu Lạc Bộ A</div>
+                </div>
+                <div class="sidebar-coverImg">
+                    <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">
+                </div>
+                <ul class="sidebar__menu">
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/CalendarServlet">Lịch</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/EventServlet">Sự Kiện</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Đóng tiền</a></li>
+                    <li class="sidebar__item">
+                        <input type="checkbox" id="task__toggle" style="display: none;">
+                        <label for="task__toggle">Nhiệm vụ</label>
+                        <ul id="task-list">
+                            <li><a href="${pageContext.request.contextPath}/TaskAssignedToMeServlet">Nhiệm vụ được
+                                    giao</a></li>
+                            <li><a href="${pageContext.request.contextPath}/TaskAssignedByMeServlet">Giao nhiệm vụ</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Báo Cáo</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/MessengerServlet">Nhóm của bạn</a></li>
+                </ul>
             </div>
             <div class="sidebar-coverImg">
                 <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">
             </div>
-            <ul>
-                <li><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>
-                <li><a href="#" onclick="location.href = '?includeWeb=calendar.jsp'">Lịch</a></li>
-                <li><a href="${pageContext.request.contextPath}/EventServlet">Sự Kiện</a></li>
-                <li><a href="#">Đóng tiền</a></li>
-                <li>
-                    <a href="#" id="toggle-tasks">Nhiệm vụ</a>
-                    <ul id="task-list" class="hidden">
-                        <li><a href="#" onclick="location.href = '?includeWeb=taskAssignedToMe.jsp'">Nhiệm vụ được
-                                giao</a></li>
-                        <li><a href="#" onclick="location.href = '?includeWeb=taskAssignedByMe.jsp'">Giao nhiệm vụ</a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="#">Báo Cáo</a></li>
-                <li><a href="#" onclick="location.href = '?includeWeb=messenger.jsp'">Nhóm của bạn</a></li>
-            </ul>
-        </div>
-
-        <div class="content">
-            <c:set var="pageToInclude" value="${empty includeWeb ? 'forum.jsp' : includeWeb}" />
-            <jsp:include page="${pageToInclude}" />
-        </div>
-
-        <script>
-            document.getElementById('toggle-tasks').addEventListener('click', function (event) {
-                event.preventDefault();
-                let taskList = document.getElementById('task-list');
-
-               
-                if (taskList.classList.contains('hidden')) {
-                    taskList.classList.remove('hidden');
-                    taskList.classList.add('show');
-                } else {
-                    taskList.classList.remove('show');
-                    taskList.classList.add('hidden');
-                }
-            });
-
-            document.addEventListener("DOMContentLoaded", function () {
-                const content = document.querySelector(".content");
-                const sidebar = document.querySelector(".sidebar");
-
-                function checkScroll(element) {
-                    if (element.scrollTop > 0) {
-                        element.style.overflowY = "auto";
-                    } else {
-                        setTimeout(() => {
-                            element.style.overflowY = "hidden";
-                        }, 300); // Delay tránh lỗi flickering
-                    }
-                }
-
-                function enableScroll(element) {
-                    element.style.overflowY = "auto";
-                }
-
-                // Áp dụng cho cả `.content` và `.sidebar`
-                [content, sidebar].forEach(element => {
-                    if (element) {
-                        element.addEventListener("wheel", () => enableScroll(element));
-                        element.addEventListener("touchmove", () => enableScroll(element));
-                        element.addEventListener("scroll", () => checkScroll(element));
-                    }
-                });
-            });
-        </script>
-</body>
+    </body>
 
 </html>

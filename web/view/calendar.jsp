@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.sql.Timestamp"%>
@@ -102,8 +103,15 @@
                 padding: 0.5rem;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                white-space: nowrap;
                 border-radius: 1rem;
+                text-align: center;
+            }
+
+            .calendar__week {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                padding: 0.5rem;
             }
 
             /* Responsive cho màn hình nhỏ hơn 768px (điện thoại) */
@@ -182,16 +190,63 @@
                 }
             }
         </style>
+        <script src="${pageContext.request.contextPath}/assets/js/dto/Calendar.js"></script>
+        <script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
+        <script>
+            // Kết nối WebSocket đến Server
+            var socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/event");
+
+            // Khi kết nối thành công
+            socket.onopen = function () {
+                console.log("Kết nối WebSocket thành công!");
+            };
+
+            function isEventInWeek(calendar) {
+                let isStartInWeek = calendar.startDate >= "${weekStart}" && calendar.endDate <= "${weekEnd}";
+                let isEndInWeek = calendar.startDate <= "${weekStart}" && calendar.endDate >= "${weekEnd}";
+
+                return isStartInWeek || isEndInWeek;
+            }
+
+            function isEventSentToMe(calendar) {
+                return message.clubId == "${member.clubId}" && isEventInWeek(calendar);
+            }
+
+            // Khi nhận tin nhắn từ server
+            socket.onmessage = function (event) {
+                let message = JSON.parse(event.data);
+                console.log("Nhận tin nhắn từ Server: ", message.data);
+
+                if (!isEventSentToMe(message.data)) {
+                    return;
+                }
+
+                location.href = "${pageContext.request.contextPath}/CalendarServlet";
+            };
+
+            // Khi xảy ra lỗi
+            socket.onerror = function (error) {
+                console.log("Lỗi WebSocket: " + error);
+            };
+
+            // Khi WebSocket bị đóng
+            socket.onclose = function () {
+                console.log("WebSocket bị đóng!");
+            };
+        </script>
     </head>
     <body>
-        <jsp:include page="sakura.jsp" />
+        <%
+            request.setAttribute("contentHeader", "Lịch");
+        %>
         <jsp:include page="contentHeader.jsp" />
         <div class="box">
             <div class="calendar">
                 <div class="calendar__header">
                     <div class="calendar__controls">
                         <div class="calendar__week">
-                            ${week}
+                            <div class="calendar__week--start"><fmt:formatDate value="${weekStart}" pattern="dd/MM/yyyy" /></div>
+                            <div class="calendar__week--end"><fmt:formatDate value="${weekEnd}" pattern="dd/MM/yyyy" /></div>
                         </div>
                         <div class="calendar__buttons">
                             <button onclick="location.href='${pageContext.request.contextPath}/CalendarServlet?action=prev'">◀</button>

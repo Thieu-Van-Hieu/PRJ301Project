@@ -117,6 +117,7 @@
             .message__input {
                 flex: 1;
                 padding: 10px 0 10px 10px;
+                color: #fff;
                 border: none;
                 outline: none;
                 font-size: 1.6rem;
@@ -236,23 +237,8 @@
         </style>
         <% 
             // Tạo các biến session
-            pageContext.setAttribute("clubId", 101);
-            Member member = new Member.Builder().setId(1).setName("Hiếu").build();
-            pageContext.setAttribute("member", member);
-            ArrayList<MessageResponse> messages = new ArrayList<>();
-
-            // Sử dụng Builder Pattern để tạo các đối tượng Message và thêm vào danh sách
-            messages.add(new MessageResponse(1, 101, 1, "Hiếu", "Hello World!"));
-            messages.add(new MessageResponse(2, 101, 2, "John", "How are you?"));
-            messages.add(new MessageResponse(3, 101, 1, "Hiếu", "Java is fun!"));
-            messages.add(new MessageResponse(4, 102, 3, "Alice", ""));
-            messages.add(new MessageResponse(5, 102, 2, "John", "Testing messages..."));
-            messages.add(new MessageResponse(6, 101, 1, "Hiếu", ""));
-            messages.add(new MessageResponse(7, 102, 3, "Alice", "Another test message."));
-            messages.add(new MessageResponse(8, 101, 2, "John", "Keep learning!"));
-            messages.add(new MessageResponse(9, 103, 4, "Bob", "Practice makes perfect."));
-            messages.add(new MessageResponse(10, 103, 4, "Bob", "End of test messages."));
-            pageContext.setAttribute("messages", messages);
+            // Member member = new Member.Builder().setId((int)(Math.random() * 2) + 1).build();
+            // pageContext.setAttribute("member", member);
             request.setAttribute("contentHeader", "Messenger");
         %>
 
@@ -265,12 +251,19 @@
             // Khi kết nối thành công
             socket.onopen = function () {
                 console.log("Kết nối WebSocket thành công!");
+                let action = "${action}";
+                console.log("Action: ", action);
+                if (action === "createMessage") {
+                    console.log("Gửi tin nhắn");
+                    let message = document.querySelector(".messages .message:last-child");
+                    sendMessage(message, action);
+                }
             };
 
             function getMessageNode(message) {
                 // Tạo phần tử div chính
                 let messageNode = document.createElement("div");
-                messageNode.className = "message " + (message.memberName === "${member.name}" ? "self" : "other" ) + (message.message === "" ? " message--disabled" : "");
+                messageNode.className = "message " + (message.memberId === "${member.id}" ? "self" : "other" ) + (message.message === "" ? " message--disabled" : "");
                 messageNode.setAttribute("data-message-id", message.id);
 
                 // Tạo các phần tử con bên trong div
@@ -324,7 +317,7 @@
             }
 
             function isMessageSentToMe(message) {
-                return message.clubId == "${clubId}";
+                return message.clubId == "${member.clubId}";
             }
 
             // Khi nhận tin nhắn từ server
@@ -358,22 +351,28 @@
             function sendMessage(element, action) {
                 event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
                 let messageElement = element.closest(".message");
+                console.log("Element:", element);
                 let id = messageElement?.getAttribute("data-message-id");
-                let clubId = "${clubId}";
+                let clubId = "${member.clubId}";
                 let memberId = "${member.id}";
-                let memberName = "${member.name}";
+                let memberName = "${userInfomation.firstName}";
                 let content = "";
                 
                 if (action === "createMessage") {
-                    content = messageElement.querySelector(".message__content").value;
+                    content = messageElement.querySelector(".message__content").textContent;
                 }
 
                 let myMessage = new Message(id, clubId, memberId, memberName, content);
+                console.log(myMessage);
                 let message = {
                     action: action,
                     data: myMessage,
                 }
                 socket.send(JSON.stringify(message));
+
+                if (action === "deleteMessage") {
+                    element.closest("form").submit();
+                }
             }  
         </script>
     </head>
@@ -382,25 +381,30 @@
         <div class="chat-box">
             <div class="messages">
                 <c:forEach var="message" items="${messages}">
-                <div class="message ${message.getMemberName() == member.name ? 'self' : 'other'} ${message.getContent() == '' ? 'message--disabled' : ''}" data-message-id="${message.getId()}">
+                <div class="message ${message.memberId == member.id ? 'self' : 'other'} ${message.message == '' ? 'message--disabled' : ''}" data-message-id="${message.getId()}">
                     <span class="message__controls">
-                        <div class="message__control btn__delete" onclick="sendMessage(this, 'deleteMessage')">Gỡ</div>
+                        <form action="${pageContext.request.contextPath}/MessengerServlet" method="post">
+                            <input type="hidden" name="action" value="deleteMessage">
+                            <input type="hidden" name="messageId" value="${message.getId()}">
+                            <div class="message__control btn__delete" onclick="sendMessage(this, 'deleteMessage')">Gỡ</div>
+                        </form>
                         <div class="message__control btn__more">⋮</div>
                     </span>
                     <div class="message__description">
                         <span class="message__username">${message.getMemberName()}</span>
-                        <span class="message__content">${message.getContent() == "" ? "Đã gỡ" : message.getContent()}</span>
+                        <span class="message__content">${message.message == "" ? "Đã gỡ" : message.message}</span>
                     </div>
                 </div>
                 </c:forEach>
             </div>
 
-            <div class="message-container">
-                <input type="text" class="message__input" placeholder="Nhập tin nhắn...">
-                <button class="message__send" onclick="sendMessage(this, 'createMessage')">➤</button>
-            </div>
-            <%-- <form action="/MessageServlet" method="post">
-            </form> --%>
+            <form action="${pageContext.request.contextPath}/MessengerServlet" method="post">
+                <input type="hidden" name="action" value="createMessage">
+                <div class="message-container">
+                    <input type="text" class="message__input" placeholder="Nhập tin nhắn..." name="content" required autocomplete="off" />
+                    <button class="message__send">➤</button>
+                </div>
+            </form>
         </div>
 
         <script>
@@ -413,7 +417,7 @@
 
             scrollToBottom();
 
-            // Giả lập load thêm tin nhắn khi cuộn lên
+            <%-- // Giả lập load thêm tin nhắn khi cuộn lên
             messagesContainer.addEventListener('scroll', function () {
                 if (messagesContainer.scrollTop === 0) {
                     loadOlderMessages();
@@ -426,15 +430,7 @@
                 newMessage.classList.add('message');
                 newMessage.textContent = 'Old message ' + Math.random().toFixed(2);
                 messagesContainer.prepend(newMessage);
-            }
-
-            // Kiểm tra xem có phải ở chế độ tạo nhiệm hay không
-            let action = "${action}";
-            if (action === "createMessage") {
-                let message = document.querySelector(".messages .message:last-child");
-                sendMessage(message, action);
-            }
-
+            } --%>
         </script>
 
         <c:if test="${action != null}">

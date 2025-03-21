@@ -1,5 +1,6 @@
 <%@page contentType="text/html;charset=UTF-8" language="java"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@page import="java.util.*"%>
 <%@page import="java.sql.Timestamp"%>
 <%@page import="dto.*"%>
@@ -355,23 +356,24 @@
             }
         </style>
 
-        <%
-            // Tạo các biến session
-            session.setAttribute("clubId", 1);
-            Member member = new Member.Builder().setId(0).setName("Hùng").build();
-            session.setAttribute("member", member);
-        %>
-
         <script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedToMe.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedByMe.js"></script>
         <script>
+            if ("${error}" != "") {
+                alert("${error}");
+            }
+
             // Kết nối WebSocket đến Server
             var socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/task");
 
             // Khi kết nối thành công
             socket.onopen = function () {
                 console.log("Kết nối WebSocket thành công!");
+                if ("${action}" == "updateStatus") {
+                    let task = document.querySelector(`.task[data-task-id="${taskId}"]`);
+                    sendMessage(task);
+                }
             };
 
             function getTaskNode(taskAssignedToMe) {
@@ -380,7 +382,7 @@
                 taskNode.className = "task";
                 taskNode.setAttribute("data-task-id", taskAssignedToMe.taskId);
                 taskNode.onclick = function () {
-                    location.href = "'?taskId=" + taskAssignedToMe.taskId - 1 + "'";
+                    location.href = "?taskId=" + (taskAssignedToMe.taskId - 1);
                 };
 
                 // Tạo các phần tử con bên trong div
@@ -389,10 +391,18 @@
                     <div class="task__item">` + taskAssignedToMe.taskDescription + `</div>
                     <div class="task__item">` + taskAssignedToMe.taskAssignedBy + `</div>
                     <div class="task__item task__status--in-progress">
-                        <div class="task__controls">
-                            <button class="task__control task__control--canceled" onclick="sendMessage(this)" data-task-id="` + taskAssignedToMe.taskId + `">❌</button>
-                            <button class="task__control task__control--completed" onclick="sendMessage(this)" data-task-id="` + taskAssignedToMe.taskId + `">✔️</button>
-                        </div>
+                        <form action="${pageContext.request.contextPath}/TaskAssignedToMeServlet" method="post">
+                            <input type="hidden" name="action" value="updateStatus">
+                            <input type="hidden" name="taskId" value="` + taskAssignedToMe.taskId + `">
+                            <input type="hidden" name="taskName" value="` + taskAssignedToMe.taskName + `">
+                            <input type="hidden" name="taskDescription" value="` + taskAssignedToMe.taskDescription + `">
+                            <input type="hidden" name="taskAssignedBy" value="` + taskAssignedToMe.taskAssignedBy + `">
+                            <input type="hidden" name="taskStatus" value="Đã xong">
+                            <input type="hidden" name="taskDueDate" value="` + taskAssignedToMe.taskDueDate + `">
+                            <div class="task__controls">
+                                <button class="task__control task__control--completed" data-task-id="` + taskAssignedToMe.taskId + `">✔️</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="task__item">` + taskAssignedToMe.taskDueDate + `</div>
                 `;
@@ -405,13 +415,6 @@
                 taskContainer.appendChild(getTaskNode(taskAssignedToMe));
             }
 
-            function editTask(taskAssignedToMe) {
-                let taskContainer = $(".tasks__body");
-                let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
-                console.log(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
-                taskContainer.replaceChild(getTaskNode(taskAssignedToMe), task);
-            }
-
             function deleteTask(taskAssignedToMe) {
                 let taskContainer = $(".tasks__body");
                 let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
@@ -421,22 +424,22 @@
             function isTaskAssignedToMe(taskAssignedToMe) {
                 console.log(taskAssignedToMe);
                 console.log("${member.id}");
-                return taskAssignedToMe.taskAssignedTo.includes("${member.id}") && taskAssignedToMe.clubId == "${clubId}";
+                return taskAssignedToMe.taskAssignedTo.includes("${member.id}") && taskAssignedToMe.clubId == "${member.clubId}";
             }
 
             // Khi nhận tin nhắn từ server
             socket.onmessage = function (event) {
                 let message = JSON.parse(event.data);
 
+
+                console.log("Nhận tin nhắn từ Server: ", message);
+
                 if (!isTaskAssignedToMe(message.data)) {
                     return;
                 }
 
-                console.log("Nhận tin nhắn từ Server: ", message);
-
                 let actionHandlers = new Map([
                     ["createTask", createTask],
-                    ["editTask", editTask],
                     ["deleteTask", deleteTask]
                 ]);
 
@@ -457,8 +460,8 @@
             function sendMessage(element) {
                 event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
                 let id = element.getAttribute("data-task-id");
-                let status = element.textContent == "❌" ? "Hủy bỏ" : "Đã xong";
-                let taskAssignedToMe = new TaskAssignedByMe(id, status);
+                let taskAssignedBy = element.querySelector("input[name='taskAssignedBy']").value;
+                let taskAssignedToMe = new TaskAssignedByMe(id, ${member.clubId}, taskAssignedBy, ${member.id}, "Đã xong");
                 let message = {
                     action: "updateStatus",
                     data: taskAssignedToMe
@@ -469,16 +472,6 @@
     </head>
     <body>
         <%
-            // Tạo danh sách task
-            ArrayList<TaskAssignedToMeResponse> tasks = new ArrayList<>();
-
-            // Thêm các task mẫu vào danh sách
-            tasks.add(new TaskAssignedToMeResponse(1, "Fix Bug #101", "Sửa lỗi đăng nhập", new Member.Builder().setName("Alice").build(), "Đang làm", Timestamp.valueOf("2025-03-20 00:00:00")));
-            tasks.add(new TaskAssignedToMeResponse(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", new Member.Builder().setName("Charlie").build(), "Hủy bỏ", Timestamp.valueOf("2025-03-25 00:00:00")));
-            tasks.add(new TaskAssignedToMeResponse(3, "Code Review", "Kiểm tra lại code module Y", new Member.Builder().setName("Eve").build(), "Đã xong", Timestamp.valueOf("2025-03-10 00:00:00")));
-            tasks.add(new TaskAssignedToMeResponse(4, "Write Unit Tests", "Viết unit test cho module Z", new Member.Builder().setName("Grace").build(), "Đang làm", Timestamp.valueOf("2025-03-18 00:00:00")));
-        
-            pageContext.setAttribute("tasks", tasks);
             request.setAttribute("contentHeader", "Nhiệm vụ của tôi");
         %>
         <jsp:include page="contentHeader.jsp" />
@@ -493,44 +486,60 @@
                 </div>
                 <div class="tasks__body">
                     <c:forEach items="${tasks}" var="task">
-                    <div class="task" onclick="location.href='?taskId=${task.id - 1}'" data-task-id="${task.id}">
+                    <div class="task" onclick="location.href='${pageContext.request.contextPath}/TaskAssignedToMeServlet?taskId=${task.id}'" data-task-id="${task.id}">
                         <div class="task__item">${task.name}</div>
                         <div class="task__item">${task.description}</div>
-                        <div class="task__item">${task.assignedByMember.name}</div>
+                        <div class="task__item">${task.assignedByMemberName}</div>
                         <c:choose>
                             <c:when test="${task.status == 'Đang làm'}">
                                 <div class="task__item task__status--in-progress">
-                                    <div class="task__controls">
-                                        <button class="task__control task__control--canceled" onclick="sendMessage(this)" data-task-id="${task.id}">❌</button>
-                                        <button class="task__control task__control--completed" onclick="sendMessage(this)" data-task-id="${task.id}">✔️</button>
-                                    </div>
+                                    <form action="${pageContext.request.contextPath}/TaskAssignedToMeServlet" method="post">
+                                        <input type="hidden" name="action" value="updateStatus">
+                                        <input type="hidden" name="taskId" value="${task.id}">
+                                        <input type="hidden" name="taskName" value="${task.name}">
+                                        <input type="hidden" name="taskDescription" value="${task.description}">
+                                        <input type="hidden" name="taskAssignedBy" value="${task.assignedByMemberId}">
+                                        <input type="hidden" name="taskStatus" value="Đã xong">
+                                        <input type="hidden" name="taskDueDate" value="${task.dueDate}">
+                                        <div class="task__controls">
+                                            <button class="task__control task__control--completed" data-task-id="${task.id}">✔️</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </c:when>
-                            <c:when test="${task.status == 'Hủy bỏ'}">
+                            <c:when test="${task.status == 'Quá hạn'}">
                                 <div class="task__item task__status--canceled">${task.status}</div>
                             </c:when>
                             <c:when test="${task.status == 'Đã xong'}">
                                 <div class="task__item task__status--completed">${task.status}</div>
                             </c:when>
                         </c:choose>
-                        <div class="task__item">${task.dueDate}</div>
+                        <div class="task__item"><fmt:formatDate value="${task.dueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
                     </div>
                     </c:forEach>
                 </div>
-                <div class="tasks__modal ${param.taskId != null ? 'active' : ''}" onclick="location.href='?'">
-                    <c:set var="currentTask" value="${tasks.get(param.taskId)}"/>
+                <div class="tasks__modal ${currentTask != null ? 'active' : ''}" onclick="location.href='${pageContext.request.contextPath}/TaskAssignedToMeServlet'">
                     <div class="modal" onclick="event.stopPropagation()">
                         <div class="modal__heading">${currentTask.name}</div>
                         <div class="modal__description">Nội dung: ${currentTask.description}</div>
-                        <div class="modal__assigned-by">Giao bởi: ${currentTask.assignedByMember.name}</div>
-                        <div class="modal__due-date">Hạn chót: ${currentTask.dueDate}</div>
+                        <div class="modal__assigned-by">Giao bởi: ${currentTask.assignedByMemberName}</div>
+                        <div class="modal__due-date">Hạn chót: <fmt:formatDate value="${currentTask.dueDate}" pattern="yyyy-MM-dd HH:mm:ss" /></div>
                         <div class="modal__controls">
                             <c:choose>
                                 <c:when test="${currentTask.status == 'Đang làm'}">
-                                    <button class="modal__control modal__control--canceled" onclick="sendMessage(this)" data-task-id="${task.id}">❌</button>
-                                    <button class="modal__control modal__control--completed" onclick="sendMessage(this)" data-task-id="${task.id}">✔️</button>
+                                    <form action="${pageContext.request.contextPath}/TaskAssignedToMeServlet" method="post">
+                                        <input type="hidden" name="action" value="updateStatus">
+                                        <input type="hidden" name="taskId" value="${currentTask.id}">
+                                        <input type="hidden" name="taskName" value="${currentTask.name}">
+                                        <input type="hidden" name="taskDescription" value="${currentTask.description}">
+                                        <input type="hidden" name="taskAssignedBy" value="${currentTask.assignedByMemberId}">
+                                        <input type="hidden" name="taskStatus" value="Đã xong">
+                                        <input type="hidden" name="taskDueDate" value="${currentTask.dueDate}">
+                                        <button class="modal__control modal__control--completed">✔️</button>
+                                        <input type="hidden" name="taskDueDate" value="${currentTask.dueDate}">
+                                    </form>
                                 </c:when>
-                                <c:when test="${currentTask.status == 'Hủy bỏ'}">
+                                <c:when test="${currentTask.status == 'Quá hạn'}">
                                     <button class="modal__status modal__status--canceled">${currentTask.status}</button>
                                 </c:when>
                                 <c:when test="${currentTask.status == 'Đã xong'}">
@@ -543,6 +552,29 @@
             </div>
         </div>
         <script>
+            // Kiểm tra xem có task nào hết hạn không
+            function checkDueDate() {
+                let tasks = document.querySelectorAll(".task");
+                tasks.forEach(task => {
+                    let taskDueDateElement = task.querySelector("input[name='taskDueDate']");
+                    if (taskDueDateElement == null) {
+                        return;
+                    }
+
+                    let dueDate = new Date(taskDueDateElement.value);
+                    let currentDate = new Date();
+                    if (dueDate < currentDate) {
+                        task.querySelector("input[name='taskStatus']").value = "Quá hạn";
+                        task.querySelector("form").submit();
+                    }
+                });
+            }
+
+            setInterval(checkDueDate, 1000); // Kiểm tra mỗi giây
         </script>
+
+        <c:if test="${error != null}">
+            <c:set var="error" value="${''}"/>
+        </c:if>
     </body>
 </html>

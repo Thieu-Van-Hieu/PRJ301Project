@@ -63,6 +63,7 @@
 
             /* Task */
             .task {
+                position: relative;
                 flex: 0 0 8.3333333333%;
                 display: grid;
                 grid-template-columns: repeat(6, 1fr);
@@ -70,6 +71,18 @@
                 background: #f9f9f9;
                 border-radius: 8px;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .task--disabled::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 8px;
+                z-index: 9999;
             }
 
             .task__item {
@@ -85,7 +98,7 @@
                 outline: none;
             }
 
-            #task__assigned-to {
+            <%-- #task__assigned-to {
                 width: 100%;
                 padding: 10px;
                 border: none;
@@ -94,7 +107,7 @@
                 background: #f9f9f9;
                 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            }
+            } --%>
 
             .time-picker {
                 text-align: center;
@@ -107,7 +120,7 @@
                 font-weight: bold;
             }
 
-            .task__status--canceled {
+            .task__status--overdue {
                 background: #ff6600;
                 color: white;
                 font-weight: bold;
@@ -235,60 +248,6 @@
         
         <%
             // Tạo các biến session
-            Member hung = new Member.Builder().setId(0).setName("Hùng").build();
-            Member hieu = new Member.Builder().setId(1).setName("Hiếu").build();
-            Member hoa = new Member.Builder().setId(2).setName("Hòa").build();
-            Member minh = new Member.Builder().setId(3).setName("Minh").build();
-            Member trang = new Member.Builder().setId(4).setName("Trang").build();
-            Member linh = new Member.Builder().setId(5).setName("Linh").build();
-            Member quang = new Member.Builder().setId(6).setName("Quang").build();
-            Member thao = new Member.Builder().setId(7).setName("Thảo").build();
-            Member tuan = new Member.Builder().setId(8).setName("Tuấn").build();
-            Member anh = new Member.Builder().setId(9).setName("Anh").build();
-            Member bao = new Member.Builder().setId(10).setName("Bảo").build();
-            Member chi = new Member.Builder().setId(11).setName("Chi").build();
-            Member dung = new Member.Builder().setId(12).setName("Dũng").build();
-            Member giang = new Member.Builder().setId(13).setName("Giang").build();
-            Member khanh = new Member.Builder().setId(14).setName("Khánh").build();
-            Member phuong = new Member.Builder().setId(15).setName("Phương").build();
-
-            session.setAttribute("member", hieu);
-
-            // Tạo danh sách member
-            ArrayList<Member> members = new ArrayList<>();
-            members.add(hung);
-            members.add(hieu);
-            members.add(hoa);
-            members.add(minh);
-            members.add(trang);
-            members.add(linh);
-            members.add(quang);
-            members.add(thao);
-            members.add(tuan);
-            members.add(anh);
-            members.add(bao);
-            members.add(chi);
-            members.add(dung);
-            members.add(giang);
-            members.add(khanh);
-            members.add(phuong);
-
-            pageContext.setAttribute("members", members);
-
-            // Tạo danh danh sách thành viên được giao việc
-            ArrayList<Integer> assignedTos = new ArrayList<>();
-            assignedTos.add(0);
-
-            // Tạo danh sách task
-            ArrayList<TaskAssignedByMeResponse> tasks = new ArrayList<>();
-
-            // Thêm các task mẫu vào danh sácsh
-            tasks.add(new TaskAssignedByMeResponse(1, "Fix Bug #101", "Sửa lỗi đăng nhập", assignedTos, "Đang làm", Timestamp.valueOf("2025-03-20 00:00:00")));
-            tasks.add(new TaskAssignedByMeResponse(2, "Implement Feature X", "Thêm tính năng X vào hệ thống", assignedTos, "Hủy bỏ", Timestamp.valueOf("2025-03-25 00:00:00")));
-            tasks.add(new TaskAssignedByMeResponse(3, "Code Review", "Kiểm tra lại code module Y", assignedTos, "Đã xong", Timestamp.valueOf("2025-03-10 00:00:00")));
-            tasks.add(new TaskAssignedByMeResponse(4, "Write Unit Tests", "Viết unit test cho module Z", assignedTos, "Đang làm", Timestamp.valueOf("2025-03-18 00:00:00")));
-        
-            pageContext.setAttribute("tasks", tasks);
             request.setAttribute("contentHeader", "Giao việc");
         %>
 
@@ -296,12 +255,21 @@
         <script src="${pageContext.request.contextPath}/assets/js/dto/TaskAssignedToMe.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
         <script>
+            if ("${error}" !== "") {
+                alert("${error}");
+            }
+
             // Kết nối WebSocket đến Server
             var socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/task");
 
             // Khi kết nối thành công
             socket.onopen = function () {
                 console.log("Kết nối WebSocket thành công!");
+                let action = "${action}";
+                if (action === "createTask") {
+                    let task = document.querySelector(".tasks__body .task[data-task-id='${taskId}']");
+                    sendMessage(task, action);
+                }
             };
 
             function updateStatus(taskAssignedByMe) {
@@ -310,23 +278,33 @@
                 if (task) {
                     task.textContent = taskAssignedByMe.status;
                     task.classList.remove("task__status--in-progress");
-                    task.classList.remove("task__status--canceled");
+                    task.classList.remove("task__status--overdue");
                     task.classList.remove("task__status--completed");
 
                     if (taskAssignedByMe.status === "Đang làm") {
                         task.classList.add("task__status--in-progress");
-                    } else if (taskAssignedByMe.status === "Hủy bỏ") {
-                        task.classList.add("task__status--canceled");
+                    } else if (taskAssignedByMe.status === "Quá hạn") {
+                        task.classList.add("task__status--overdue");
                     } else if (taskAssignedByMe.status === "Đã xong") {
                         task.classList.add("task__status--completed");
+                        task.classList.add("task--disabled");
                     }
                 }
+            }
+
+            function isSentToMe(taskAssignedByMe) {
+                return taskAssignedByMe.assignedBy == ${member.id} && taskAssignedByMe.clubId == ${member.clubId};
             }
 
             // Khi nhận tin nhắn từ server
             socket.onmessage = function (event) {
                 let message = JSON.parse(event.data);
                 console.log("Nhận tin nhắn từ Server: ", message);
+
+                if (!isSentToMe(message.data)) {
+                    return;
+                }
+
                 if (message.action === "updateStatus") {
                     updateStatus(message.data);
                 }
@@ -344,6 +322,7 @@
 
             // Gửi tin nhắn lên Server
             function sendMessage(element, action) {
+                event.preventDefault();
                 let task = element.closest(".task");
                 let taskAttributes = task.querySelectorAll(".task__item");
                 let taskId = task.getAttribute("data-task-id");
@@ -353,7 +332,7 @@
                 let taskStatus = taskAttributes[3].textContent;
                 let taskDueDate = taskAttributes[4].value;
 
-                let taskAssignedToMe = new TaskAssignedToMe(taskId, taskName, taskDescription, "${member.name}", taskAssignedTo, taskStatus, taskDueDate, ${clubId});
+                let taskAssignedToMe = new TaskAssignedToMe(taskId, taskName, taskDescription, "${userInformation.firstName}", taskAssignedTo, taskStatus, taskDueDate, ${member.clubId});
 
                 let message = {
                     action: action,
@@ -361,6 +340,14 @@
                 };
 
                 socket.send(JSON.stringify(message));
+                
+                if (action === "editTask") {
+                    task.querySelector("input[name='action']").value = "editTask";
+                    task.closest("form").submit();
+                } else if (action === "deleteTask") {
+                    task.querySelector("input[name='action']").value = "deleteTask";
+                    task.closest("form").submit();
+                }
             }
         </script>
     </head>
@@ -378,49 +365,59 @@
                 </div>
                 <div class="tasks__body">
                     <c:forEach items="${tasks}" var="task">
-                    <div class="task" data-task-id="${task.id}">
-                        <input type="text" class="task__item" value="${task.name}" required>
-                        <textarea class="task__item">${task.description}</textarea>
-                        <div class="task__item">
-                            <select id="task__assigned-to" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select>
-                                <c:forEach items="${members}" var="member">
-                                    <option value="${member.id}" ${task.isMemberInAssignedMembers(member.id) ? "selected" : ""}>${member.name}</option>
-                                </c:forEach>
-                            </select>
+                    <form action="${pageContext.request.contextPath}/TaskAssignedByMeServlet" method="post">
+                        <div class="task ${task.status != "Đang làm" ? "task--disabled" : ""}" data-task-id="${task.id}">
+                            <input type="hidden" name="action" value="">
+                            <input type="hidden" name="taskId" value="${task.id}">
+                            <input type="text" class="task__item" value="${task.name}" name="taskName" required>
+                            <textarea class="task__item" name="taskDescription">${task.description}</textarea>
+                            <div class="task__item">
+                                <select class="task__assigned-to" name="taskAssignedTo" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select>
+                                    <c:forEach items="${members}" var="member">
+                                        <option value="${member.id}" ${task.isMemberInAssignedMembers(member.id) ? "selected" : ""}>${member.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <c:choose>
+                                <c:when test="${task.status == 'Đang làm'}">
+                                    <div class="task__item task__status task__status--in-progress" data-task-id="${task.id}">${task.status}</div>
+                                    <input type="hidden" name="taskStatus" value="Đang làm">
+                                </c:when>
+                                <c:when test="${task.status == 'Quá hạn'}">
+                                    <div class="task__item task__status task__status--overdue" data-task-id="${task.id}">${task.status}</div>
+                                    <input type="hidden" name="taskStatus" value="Quá hạn">
+                                </c:when>
+                                <c:when test="${task.status == 'Đã xong'}">
+                                    <div class="task__item task__status task__status--completed" data-task-id="${task.id}">${task.status}</div>
+                                    <input type="hidden" name="taskStatus" value="Đã xong">
+                                </c:when>
+                            </c:choose>
+                            <input class="task__item time-picker" type="text" value="${task.dueDate}" name="taskDueDate" required>
+                            <div class="task__controls">
+                                <input type="hidden" name="taskId" value="${task.id}">
+                                <button class="task__control task__control--edit" onclick="sendMessage(this, 'editTask')">Lưu</button>
+                                <button class="task__control task__control--delete" onclick="sendMessage(this, 'deleteTask')">Xóa</button>
+                            </div>
                         </div>
-                        <c:choose>
-                            <c:when test="${task.status == 'Đang làm'}">
-                                <div class="task__item task__status task__status--in-progress" data-task-id="${task.id}">${task.status}</div>
-                            </c:when>
-                            <c:when test="${task.status == 'Hủy bỏ'}">
-                                <div class="task__item task__status task__status--canceled" data-task-id="${task.id}">${task.status}</div>
-                            </c:when>
-                            <c:when test="${task.status == 'Đã xong'}">
-                                <div class="task__item task__status task__status--completed" data-task-id="${task.id}">${task.status}</div>
-                            </c:when>
-                        </c:choose>
-                        <input class="task__item time-picker" type="text" value="${task.dueDate}" required>
-                        <div class="task__controls">
-                            <button class="task__control task__control--edit" onclick="sendMessage(this, 'editTask')">Lưu</button>
-                            <button class="task__control task__control--delete" onclick="sendMessage(this, 'deleteTask')">Xóa</button>
-                        </div>
-                    </div>
+                    </form>
                     </c:forEach>
                     <form action="${pageContext.request.contextPath}/TaskAssignedByMeServlet" method="post">
                         <div class="task">
+                            <input type="hidden" name="action" value="createTask">
                             <input type="text" class="task__item" placeholder="Tên công việc" name="taskName" required>
                             <textarea class="task__item" placeholder="Mô tả công việc" name="taskDescription"></textarea>
-                            <div class="task__item task__assigned-to">
-                                <select name="taskAssignedTo" id="task__assigned-to" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select required>
+                            <div class="task__item">
+                                <select name="taskAssignedTo" class="task__assigned-to" data-placeholder="Chọn thành viên" data-search="true" data-select-all="true" data-list-all="true" multiple data-multi-select required>
                                     <c:forEach items="${members}" var="member">
                                         <option value="${member.id}">${member.name}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-                            <div class="task__item task__status task__status--in-progress" name="taskStatus">Đang làm</div>
+                            <input type="hidden" name="taskStatus" value="Đang làm">
+                            <div class="task__item task__status task__status--in-progress">Đang làm</div>
                             <input class="task__item time-picker" type="text" name="taskDueDate" required>
                             <div class="task__controls">
-                                <button class="task__control" onclick="sendMessage(this, 'createTask')">Thêm</button>
+                                <button class="task__control">Thêm</button>
                             </div>
                         </div>
                     </form>
@@ -430,26 +427,41 @@
         <script src="${pageContext.request.contextPath}/assets/library/multi-select-dropdown/MultiSelect.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
+
             // Kích hoạt Flatpickr cho trường nhập ngày giờ
             flatpickr(".time-picker", {
                 enableTime: true,
                 enableSeconds: true,
-                dateFormat: "H:i:S d-m-Y",
+                dateFormat: "Y-m-d H:i:S",
                 time_24hr: true,
             });
-        </script>
 
-        <script>
-            // Kiểm tra xem có phải ở chế độ tạo nhiệm hay không
-            let action = "${action}";
-            if (action === "createTask") {
-                let task = document.querySelector(".messages .task:last-child");
-                sendMessage(task, action);
+            // Kiểm tra thời gian đã hết chưa
+            function checkDueDate() {
+                let tasks = document.querySelectorAll(".task[data-task-id]");
+                tasks.forEach(task => {
+                    let taskDueDate = task.querySelector(".task__item.time-picker").value;
+                    let taskStatus = task.querySelector(".task__item.task__status");
+                    let now = new Date();
+                    let dueDate = new Date(taskDueDate);
+                    if (now > dueDate && taskStatus.textContent === "Đang làm") {
+                        taskStatus.textContent = "Quá hạn";
+                        task.querySelector("input[name='taskStatus']").value = "Quá hạn";
+                        console.log("Quá hạn");
+                        task.querySelector(".task__control.task__control--edit").click();
+                    }
+                });
             }
+
+            // Kiểm tra thời gian đã hết chưa mỗi 1 giây
+            setInterval(checkDueDate, 1000);
         </script>
 
         <c:if test="${action != null}">
             <c:set var="action" value="${''}"/>
+        </c:if>
+        <c:if test="${error != null}">
+            <c:set var="error" value="${''}"/>
         </c:if>
     </body>
 </html>

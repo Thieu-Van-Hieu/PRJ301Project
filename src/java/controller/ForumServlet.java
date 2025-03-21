@@ -29,7 +29,8 @@ import util.FileService;
         maxFileSize = 1024 * 1024 * 10, //10MB
         maxRequestSize = 1024 * 1024 * 50)    //50MB
 public class ForumServlet extends HttpServlet {
-private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+
+    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,20 +63,23 @@ private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Pr
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        
-        int clubId = (Integer)session.getAttribute("clubId");
-        int userId = (Integer)session.getAttribute("userId");
-        
-  
-        PostService postService = new PostService();
-        ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
+        if (action == null) {
 
-        session.setAttribute("clubId", clubId);
-        session.setAttribute("userId", userId);
+        }
+
+        session.setAttribute("includeWeb", "forum.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
+        dispatcher.forward(request, response);
+
+        PostService postService = new PostService();
+        ArrayList<Post> posts = postService.getAllPostOfClub(1);
+
+        session.setAttribute("clubId", "1");
+        session.setAttribute("userId", "1");
         session.setAttribute("posts", posts);
         session.setAttribute("includeWeb", "forum.jsp");
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
-       
+
     }
 
     /**
@@ -86,7 +90,6 @@ private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Pr
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -124,7 +127,7 @@ private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Pr
 
                 String filePath = uploadDir + File.separator + normalized;
                 filePart.write(filePath);
-                
+
                 postService.addPost(new PostDTO(clubId, userId, content, createdAt, normalized));
             } catch (Exception e) {
                 e.printStackTrace();

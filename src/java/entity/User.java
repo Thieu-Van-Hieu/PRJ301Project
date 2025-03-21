@@ -46,22 +46,22 @@ public class User {
         public Builder() {
         }
 
-        public Builder id(int id) {
+        public Builder setId(int id) {
             this.id = id;
             return this;
         }
 
-        public Builder userName(String userName) {
+        public Builder setUserName(String userName) {
             this.userName = userName;
             return this;
         }
 
-        public Builder password(String password) {
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }
 
-        public Builder role(String role) {
+        public Builder setRole(String role) {
             this.role = role;
             return this;
         }

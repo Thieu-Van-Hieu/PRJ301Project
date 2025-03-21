@@ -67,11 +67,7 @@ public class TaskAssignedToMeServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         // Sau sẽ có dữ liệu trên session
-        User user = new User.Builder().setId(1).build();
-        UserInformation userInformation = new UserInformation.Builder().setFirstName("Hiếu").build();
-        Member member = new Member.Builder().setId(2).setClubId(1).build();
-        session.setAttribute("userInformation", userInformation);
-        session.setAttribute("member", member);
+        Member member = (Member) session.getAttribute("member");
 
         TaskService service = new TaskService();
         ArrayList<TaskAssignedToMeResponse> tasks = service.getTasksAssignedToMe(member.getClubId(),

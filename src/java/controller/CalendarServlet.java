@@ -35,8 +35,7 @@ public class CalendarServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Member member = new Member.Builder().setId(2).setClubId(1).build();
-        request.setAttribute("member", member);
+        Member member = (Member) session.getAttribute("member");
 
         service.init();
         String action = request.getParameter("action");

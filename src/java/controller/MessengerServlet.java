@@ -66,11 +66,7 @@ public class MessengerServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Sau sẽ có dữ liệu trên session
-        User user = new User.Builder().setId(1).build();
-        UserInformation userInformation = new UserInformation.Builder().setFirstName("Hiếu").build();
-        Member member = new Member.Builder().setId(1).setClubId(1).build();
-        request.setAttribute("userInfomation", userInformation);
-        request.setAttribute("member", member);
+        Member member = (Member) session.getAttribute("member");
 
         MessageService service = new MessageService();
         ArrayList<MessageResponse> messages = service.getMessagesByClubId(member.getClubId());

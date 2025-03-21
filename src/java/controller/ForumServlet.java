@@ -62,18 +62,16 @@ private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Pr
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        if (action == null) {
-            
-        }
-        request.setAttribute("includeWeb", "forum.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
-        dispatcher.forward(request, response);
+        
+        int clubId = (Integer)session.getAttribute("clubId");
+        int userId = (Integer)session.getAttribute("userId");
+        
   
         PostService postService = new PostService();
-        ArrayList<Post> posts = postService.getAllPostOfClub(1);
+        ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
 
-        session.setAttribute("clubId", "1");
-        session.setAttribute("userId", "1");
+        session.setAttribute("clubId", clubId);
+        session.setAttribute("userId", userId);
         session.setAttribute("posts", posts);
         session.setAttribute("includeWeb", "forum.jsp");
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");

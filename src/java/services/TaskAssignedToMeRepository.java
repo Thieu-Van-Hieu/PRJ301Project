@@ -1,4 +1,4 @@
-package repository;
+package services;
 
 import java.util.ArrayList;
 import dto.TaskAssignedToMeResponse;

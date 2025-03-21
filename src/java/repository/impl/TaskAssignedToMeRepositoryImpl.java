@@ -1,8 +1,10 @@
 package repository.impl;
 
 import dto.TaskAssignedToMeResponse;
+import services.TaskAssignedToMeRepository;
+
 import java.util.ArrayList;
-import repository.TaskAssignedToMeRepository;
+
 import util.DBContext;
 import java.sql.*;
 

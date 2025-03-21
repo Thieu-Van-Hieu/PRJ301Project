@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
-    <filter-mapping>
+    <!--    <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/view/calendar.jsp</url-pattern>
         <url-pattern>/view/event.jsp</url-pattern>
         <url-pattern>/view/forum.jsp</url-pattern>
-        <!--        <url-pattern>/view/homePage.jsp</url-pattern>-->
+                <url-pattern>/view/homePage.jsp</url-pattern>
         <url-pattern>/view/information.jsp</url-pattern>
         <url-pattern>/view/member.jsp</url-pattern>
         <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
         <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
         <url-pattern>/view/otp.jsp</url-pattern>
         <url-pattern>/view/discovery.jsp</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>
         <servlet-class>controller.CalendarServlet</servlet-class>

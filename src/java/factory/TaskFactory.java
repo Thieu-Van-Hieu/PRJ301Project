@@ -2,10 +2,10 @@ package factory;
 
 import repository.MemberTaskRepository;
 import repository.TaskAssignedByMeRepository;
-import repository.TaskAssignedToMeRepository;
 import repository.impl.MemberTaskRepositoryImpl;
 import repository.impl.TaskAssignedByMeRepositoryImpl;
 import repository.impl.TaskAssignedToMeRepositoryImpl;
+import services.TaskAssignedToMeRepository;
 
 public class TaskFactory {
     private final static TaskAssignedToMeRepository taskAssignedToMeRepository = new TaskAssignedToMeRepositoryImpl();

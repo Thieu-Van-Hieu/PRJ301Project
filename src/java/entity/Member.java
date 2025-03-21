@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Member {
     private int id;
     private int clubId;
-    private int memberRoleId; // Thêm trường mới
+    private String role; // Thêm trường mới
 
     public Member() {
     }
@@ -13,7 +13,7 @@ public class Member {
     public Member(Builder builder) {
         this.id = builder.id;
         this.clubId = builder.clubId;
-        this.memberRoleId = builder.memberRoleId; // Gán giá trị từ Builder
+        this.role = builder.role; // Gán giá trị từ Builder
     }
 
     public int getId() {
@@ -24,14 +24,14 @@ public class Member {
         return clubId;
     }
 
-    public int getMemberRoleId() { // Getter cho memberRoleId
-        return memberRoleId;
-    }
+    public String getRole() {
+        return role;
+    }  
 
     public static class Builder {
         private int id;
         private int clubId;
-        private int memberRoleId; // Thêm trường mới
+        private String role; // Thêm trường mới
 
         public Builder setId(int id) {
             this.id = id;
@@ -43,8 +43,8 @@ public class Member {
             return this;
         }
 
-        public Builder setMemberRoleId(int memberRoleId) { // Setter cho memberRoleId
-            this.memberRoleId = memberRoleId;
+        public Builder setRole(String role) { // Setter cho memberRoleId
+            this.role = role;
             return this;
         }
 

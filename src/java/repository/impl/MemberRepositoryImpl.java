@@ -6,6 +6,7 @@ package repository.impl;
 
 import dto.MemberDTO;
 import dto.MemberResponse;
+import entity.Member;
 import java.util.ArrayList;
 import repository.MemberRepository;
 import util.DBContext;
@@ -63,6 +64,25 @@ public class MemberRepositoryImpl implements MemberRepository{
     @Override
     public void deleteMemberOfClub(MemberDTO memberDTO) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Member getMember(int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                         select * from members
+                         where userId = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                return new Member.Builder().setId(rs.getInt("id")).setClubId(rs.getInt("clubId")).setRole(rs.getNString("role")).build();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }

@@ -81,7 +81,11 @@ public class UserService {
         userRepository.resetPassword(response.getUserName(), newPassword);
     }
     
-    public String getFullName(int userId){
-        return userInformationRepository.getNameOfUser(userId);
+    public UserInformationResponse getFullNameAndAvatar(int userId){
+        return userInformationRepository.getNameAvatarOfUser(userId);
+    }
+    
+    public UserInformationResponse getUserInfor(int userId){
+        return userInformationRepository.getUser(userId);
     }
 }

@@ -36,7 +36,7 @@
                     <div class="modal-body">
                         <div class="modal-body-header">
                             <div class="modal-body-avatar"><img
-                                    src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                                    src="${pageContext.request.contextPath}/assets/img/img-download/${userAvatarImg}" alt="">
                             </div>
                             <p>${userFullName}</p>
                         </div>

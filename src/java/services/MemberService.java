@@ -5,6 +5,7 @@
 package services;
 
 import dto.MemberResponse;
+import entity.Member;
 import factory.MemberFactory;
 import java.util.ArrayList;
 import repository.MemberRepository;
@@ -23,4 +24,8 @@ public class MemberService {
     public ArrayList<MemberResponse> getAllMemberOfClub(int clubId){
         return memberRepository.getAllMemberOfClub(clubId);
     };
+    
+    public Member getMemberInfor(int userId){
+        return memberRepository.getMember(userId);
+    }
 }

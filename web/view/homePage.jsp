@@ -226,7 +226,7 @@
             <div class="header">
                 <div class="header-title">
                     <i class="fa-regular fa-compass"></i>
-                    <span>Nhóm 1</span>
+                    <span>${clubName}</span>
                 </div>
                 <div class="header-icons">
                     <a href="#"><i class="fa-solid fa-envelope"></i></a>
@@ -238,7 +238,11 @@
             <div class="left-toolbar">
                 <ul>
                     <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
-                    <li>1</li>
+                    <c:forEach var="clubItem" items="${clubListItems}">
+                        <li id="${clubItem.id}" onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=open&clubId=${clubItem.id}'">
+                            <img src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}" alt="alt"/>
+                        </li>
+                    </c:forEach>
                     <li><i class="fa-solid fa-plus"></i></li>
                     <li><i class="fa-regular fa-compass"></i></li>
                     <li><i class="fa-solid fa-gear"></i></li>
@@ -249,7 +253,7 @@
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="sidebar-header__item"><i class="fa-solid fa-house"></i></div>
-                    <div class="sidebar-header__name">Câu Lạc Bộ A</div>
+                    <div class="sidebar-header__name">${clubName}</div>
                 </div>
                 <div class="sidebar-coverImg">
                     <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">

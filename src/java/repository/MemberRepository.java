@@ -17,5 +17,5 @@ public interface MemberRepository {
     public ArrayList<MemberResponse> getAllMemberOfClub(int clubId);
     public void deleteMemberOfClub(MemberDTO memberDTO);
     
-    public Member getMember(int userId);
+    public Member getMember(int userId, int clubId);
 }

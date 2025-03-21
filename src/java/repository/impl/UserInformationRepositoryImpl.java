@@ -20,17 +20,8 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                         SELECT TOP (1000) [id]
-                               ,[userId]
-                               ,[firstName]
-                               ,[lastName]
-                               ,[email]
-                               ,[studentId]
-                               ,[address]
-                               ,[gender]
-                               ,[birthday]
-                           FROM [PRJ301Project].[dbo].[user_informations]
-                           where email = ?
+                           select * from user_informations
+                           where email like ?
                          """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setString(1, email);
@@ -60,7 +51,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setString(7, user.getGender());
             st.setString(8, user.getBirthday());
             rs = st.executeUpdate();
-            if(rs == 0){
+            if (rs == 0) {
                 throw new Exception();
             }
         } catch (Exception e) {
@@ -70,20 +61,11 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
 
     @Override
     public boolean isExistStudentId(String studentId) {
-          DBContext db = DBContext.getInstance();
+        DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                         SELECT TOP (1000) [id]
-                               ,[userId]
-                               ,[firstName]
-                               ,[lastName]
-                               ,[email]
-                               ,[studentId]
-                               ,[address]
-                               ,[gender]
-                               ,[birthday]
-                           FROM [PRJ301Project].[dbo].[user_informations]
-                           where studentId = ?
+                          select * from user_informations          
+                         where studentId = ?
                          """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setString(1, studentId);
@@ -93,5 +75,26 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public String getUsernameByEmail(String email) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                           select * from user_informations ui
+                           join users u on u.id = ui.userId
+                           where ui.email = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getString("username");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

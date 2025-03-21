@@ -49,7 +49,6 @@
                         <div class="form-row">
                             <label for="maSV">Mã sinh viên:</label>
                             <input type="text" id="maSV" name="maSV" required>
-                            <h4 style="padding-bottom: 20px; font-weight: 700; color: red; text-align: center">${error}</h4>
                         </div>
                         <div class="form-row">
                             <label for="gioiTinh">Giới tính:</label>
@@ -450,6 +449,7 @@
         });
 
     </script>
+    <jsp:include page="noticeError.jsp"/>
 
 
 </html>

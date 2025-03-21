@@ -205,7 +205,7 @@
                     <div class="inputGroup inputGroup4">
                         <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="${pageContext.request.contextPath}/view/register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
                     </div>
-                    <p style="padding-top: 10px; cursor: pointer"><a href="${pageContext.request.contextPath}/view/forgot.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;" >Quên Mật Khẩu</a> </p>
+                    <p style="padding-top: 10px; cursor: pointer"><a href="${pageContext.request.contextPath}/view/forgotPassword.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;" >Quên Mật Khẩu</a> </p>
                 </form>
             </div>
         </div>
@@ -215,9 +215,12 @@
         <script src="${pageContext.request.contextPath}/assets/js/login-js/loginmoney.js"></script>
         <script src="${pageContext.request.contextPath}/assets/js/valiate/formlogin.js"></script>
         <script>
-            document.getElementById('login').addEventListener('click', function () {
-                document.getElementById('myForm').submit();
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('login').addEventListener('click', function () {
+                    document.getElementById('myForm').submit();
+                });
             });
+
         </script>
         <jsp:include page="background.jsp" />
     </body >

@@ -22,17 +22,18 @@
                                 </c:forEach>
                             </select>
                         </td>
-                        <td class="filter-search"><input type="text" placeholder="Name, id, location" name="search"></td>
+                        <td class="filter-search"><input type="text" placeholder="Name, id, location" name="search">
+                        </td>
                     </tr>
                     <tr>
                         <td>
-                            <select name="clubName">
-                                <option value="0">Câu Lạc Bộ Tổ Chức</option>
-                                <option value="1">ABC</option>
-                                <option value="2">CDF</option>
+                            <select name="clubId">
+                                <c:forEach var="clubDiscription" items="${sessionScope.clubDescriptions}">
+                                    <option value="${clubDiscription.getId()}">${clubDiscription.getName()}</option>
+                                </c:forEach>
                             </select>
                         </td>
-                        <td>s
+                        <td>
                             <select name="status">
                                 <option value="0">Trạng Thái</option>
                                 <option value="1">Đang diễn ra</option>
@@ -62,7 +63,7 @@
                     </div>
                     <div class="event-options">...</div>
                 </div>
-            </c:forEach>>
+            </c:forEach>
 
         </div>
 
@@ -121,13 +122,14 @@
                                 </td>
                                 <td><input type="text" name="locationInfor" placeholder="Địa chỉ cụ thể"></td>
                             </tr>
+                            <tr><td colspan="2"><div class="img-create" id="imgPreview"></div></td></tr>
                             <tr>
                                 <td colspan="2">
                                     <div class="modal-select" id="customFileUpload">
                                         <i class="fa-solid fa-images"></i>
                                         <p>Thêm ảnh gì không người đẹp?</p>
                                     </div>
-                                    <input style="display: none;" type="file" id="fileInput" name="file" required>
+                                    <input style="display: none;" type="file" id="fileInput" name="file">
                                 </td>
                             </tr>
                             <tr>
@@ -199,6 +201,14 @@
     newContent.addEventListener('click', showModal)
 
     modalClose.addEventListener('click', hideModal)
+
+    modalClose.addEventListener('click', function () {
+        setTimeout(() => {
+            document.getElementById('imgPreview').innerHTML = "";
+            document.getElementById('fileInput').value = "";
+        }, 300);
+    });
+
 </script>
 
 <script>
@@ -317,6 +327,26 @@
     document.getElementById("ward").addEventListener("change", function () {
         updateHiddenInput(this, "wardText");
     });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0]; // Lấy file đầu tiên người dùng chọn
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.style.maxWidth = "100%"; // Giới hạn kích thước ảnh
+                imgElement.style.borderRadius = "8px";
+                imgElement.style.marginTop = "10px";
+
+                const previewDiv = document.getElementById('imgPreview');
+                previewDiv.innerHTML = ""; // Xóa ảnh cũ nếu có
+                previewDiv.appendChild(imgElement); // Thêm ảnh mới vào div
+            };
+            reader.readAsDataURL(file); // Chuyển file thành URL để hiển thị ảnh
+        }
+    });
 </script>
 </body>
+
 </html>

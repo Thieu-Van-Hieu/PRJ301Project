@@ -65,6 +65,10 @@
         <servlet-name>HomePageServlet</servlet-name>
         <servlet-class>controller.HomePageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DiscoveryServlet</servlet-name>
+        <servlet-class>controller.DiscoveryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -112,5 +116,9 @@
     <servlet-mapping>
         <servlet-name>HomePageServlet</servlet-name>
         <url-pattern>/HomePageServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DiscoveryServlet</servlet-name>
+        <url-pattern>/DiscoveryServlet</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -14,6 +14,7 @@ public class SearchEventDTO {
     private String type;
     private String search;
     private String trangthai;
+    private int clubId;
 
     public SearchEventDTO(String date, String type, String search) {
         this.date = date;
@@ -24,11 +25,20 @@ public class SearchEventDTO {
     public SearchEventDTO() {
     }
 
-    public SearchEventDTO(String date, String type, String search, String trangthai) {
+    public int getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
+    }
+
+    public SearchEventDTO(String date, String type, String search, String trangthai, int clubId) {
         this.date = date;
         this.type = type;
         this.search = search;
         this.trangthai = trangthai;
+        this.clubId = clubId;
     }
 
     public String getDate() {
@@ -54,6 +64,7 @@ public class SearchEventDTO {
     public void setSearch(String search) {
         this.search = search;
     }
+
     public String getTrangthai() {
         return trangthai;
     }

@@ -43,11 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
         User user = null;
         try {
             String sql = """
-                         SELECT TOP (1000) [id]
-                               ,[username]
-                               ,[password]
-                               ,[role]
-                           FROM [PRJ301Project].[dbo].[users]
+                           select * from users
                            where username = ?
                              """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
@@ -92,11 +88,7 @@ public class UserRepositoryImpl implements UserRepository {
         int result = 0;
         try {
             String sql = """
-                     SELECT TOP (1000) [id]
-                           ,[username]
-                           ,[password]
-                           ,[role]
-                       FROM [PRJ301Project].[dbo].[users]
+                       select * from users
                        where username = ?
                          """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
@@ -109,6 +101,25 @@ public class UserRepositoryImpl implements UserRepository {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public void resetPassword(String username, String password) {
+        DBContext db = DBContext.getInstance();
+        int rs = 0;
+        try {
+            String sql = """
+                          update users
+                          set password = ?
+                          where username = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareCall(sql);
+            st.setString(1, password);
+            st.setString(2, username);
+            rs = st.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -68,22 +68,23 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
-         String password = request.getParameter("password");
-    UserService userService = new UserService();
-    boolean isCheck = userService.checkLogin(username, password);
-    if (isCheck) {
+        String password = request.getParameter("password");
+        UserService userService = new UserService();
+        boolean isCheck = userService.checkLogin(username, password);
         HttpSession session = request.getSession();
-        session.setAttribute("username", username);
-        response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
-    } else {
-        request.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");
-        request.getRequestDispatcher("view/login.jsp").forward(request, response);
+
+        if (isCheck) {
+            session.setAttribute("username", username);
+            response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
+        } else {
+            session.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
     }
-}
 
     /**
      * Returns a short description of the servlet.
@@ -91,7 +92,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 

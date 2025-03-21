@@ -11,10 +11,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import services.UserService;
-import util.ForwardWithError;
 
 /**
  *
@@ -74,43 +74,43 @@ public class InformationServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            UserService service = new UserService();
+        HttpSession session = request.getSession();
+        UserService service = new UserService();
         String hoTen = request.getParameter("hoTen");
         String lastName = request.getParameter("ten");
         String studentId = request.getParameter("maSV");
         String gender = request.getParameter("gioiTinh");
         boolean isExistStudentId = service.isExistStudentId(studentId);
-        if(isExistStudentId){
-            request.setAttribute("error", "Mã sinh viên đã tồn tại");
-            request.getRequestDispatcher("view/information.jsp").forward(request, response);
+        if (isExistStudentId) {
+            session.setAttribute("error", "Mã sinh viên đã tồn tại");
+            response.sendRedirect(request.getContextPath() + "view/login.jsp");
+            return;
         }
         String temp[] = hoTen.split(" ");
-        
+
         String firstName = temp[0];
         int ngay = Integer.valueOf(request.getParameter("ngaySinh"));
         int thang = Integer.valueOf(request.getParameter("thangSinh"));
         int nam = Integer.valueOf(request.getParameter("namSinh"));
-        
+
         String city = request.getParameter("province");
         String district = request.getParameter("district");
         String ward = request.getParameter("ward");
-        
+
         LocalDate ngaySinh = LocalDate.of(nam, thang, ngay);
         String formattedDate = ngaySinh.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String address = ward + ", " + district + ", " + city;
 
         UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate);
 
-    
         service.addByParamIntoResponse(infor);
         service.addUserRoleMember();
         service.addInformationOfUser();
-        
+
         UserInformationResponse result = service.getResults();
-        
-        request.setAttribute("user", result);
-        
-        request.getRequestDispatcher("view/discovery.jsp").forward(request, response);
+
+        session.setAttribute("user", result);
+        response.sendRedirect(request.getContextPath() + "view/discovery.jsp");
     }
 
     /**

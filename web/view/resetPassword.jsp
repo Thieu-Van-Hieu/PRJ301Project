@@ -70,12 +70,14 @@
             .error-message {
                 color: red;
                 text-align: center;
-                margin-bottom: 10px;
+                margin-top: 5px;
                 font-weight: bold;
             }
         </style>
     </head>
     <body>
+        <jsp:include page="sakura.jsp" />
+        <jsp:include page="noticeError.jsp"/>
         <div class="container">
             <div class="reset-form">
                 <h2>Đặt lại mật khẩu</h2>
@@ -97,4 +99,6 @@
             </div>
         </div>
     </body>
+    <jsp:include page="background.jsp" />
+    <script src="${pageContext.request.contextPath}/assets/js/valiate/passwordright.js"></script>
 </html>

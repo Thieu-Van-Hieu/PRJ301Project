@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
-import repository.impl.MessageRepositoryImpl;
 import services.MessageService;
 
 /**
@@ -46,10 +45,10 @@ public class MessengerServlet extends HttpServlet {
 
     private MessageResponse getMessageFromRequest(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Member member = new Member.Builder().setId(1).setClubId(1).setMemberId(1).build();
+        Member member = new Member.Builder().setId(1).setClubId(1).build();
 
         int clubId = member.getClubId();
-        int memberId = member.getMemberId();
+        int memberId = member.getId();
         String content = request.getParameter("content");
 
         MessageResponse message = new MessageResponse();
@@ -69,7 +68,7 @@ public class MessengerServlet extends HttpServlet {
         // Sau sẽ có dữ liệu trên session
         User user = new User.Builder().setId(1).build();
         UserInformation userInformation = new UserInformation.Builder().setFirstName("Hiếu").build();
-        Member member = new Member.Builder().setId(1).setClubId(1).setMemberId(1).build();
+        Member member = new Member.Builder().setId(1).setClubId(1).build();
         request.setAttribute("userInfomation", userInformation);
         request.setAttribute("member", member);
 
@@ -108,7 +107,7 @@ public class MessengerServlet extends HttpServlet {
             service.deleteMessageById(messageId);
         }
 
-        doGet(request, response);
+        response.sendRedirect(request.getContextPath() + "/MessengerServlet");
     }
 
     /** Returns a short description of the servlet. */

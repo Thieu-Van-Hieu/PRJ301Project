@@ -1,25 +1,28 @@
 package dto;
 
 import java.sql.Timestamp;
-import entity.Member;
 
 public class TaskAssignedToMeResponse {
     private int id;
+    private int clubId;
     private String name;
     private String description;
-    private Member assignedByMember;
+    private int assignedByMemberId; // Thêm trường mới
+    private String assignedByMemberName; // Đổi tên trường từ assignedBy
     private String status;
     private Timestamp dueDate;
 
     public TaskAssignedToMeResponse() {
     }
 
-    public TaskAssignedToMeResponse(int id, String name, String description, Member assignedByMember, String status,
-            Timestamp dueDate) {
+    public TaskAssignedToMeResponse(int id, int clubId, String name, String description, int assignedByMemberId,
+            String assignedByMemberName, String status, Timestamp dueDate) {
         this.id = id;
+        this.clubId = clubId;
         this.name = name;
         this.description = description;
-        this.assignedByMember = assignedByMember;
+        this.assignedByMemberId = assignedByMemberId;
+        this.assignedByMemberName = assignedByMemberName;
         this.status = status;
         this.dueDate = dueDate;
     }
@@ -30,6 +33,14 @@ public class TaskAssignedToMeResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
     }
 
     public String getName() {
@@ -48,12 +59,20 @@ public class TaskAssignedToMeResponse {
         this.description = description;
     }
 
-    public Member getAssignedByMember() {
-        return assignedByMember;
+    public int getAssignedByMemberId() { // Getter cho trường mới
+        return assignedByMemberId;
     }
 
-    public void setAssignedByMember(Member assignedByMember) {
-        this.assignedByMember = assignedByMember;
+    public void setAssignedByMemberId(int assignedByMemberId) { // Setter cho trường mới
+        this.assignedByMemberId = assignedByMemberId;
+    }
+
+    public String getAssignedByMemberName() { // Đổi tên getter
+        return assignedByMemberName;
+    }
+
+    public void setAssignedByMemberName(String assignedByMemberName) { // Đổi tên setter
+        this.assignedByMemberName = assignedByMemberName;
     }
 
     public String getStatus() {

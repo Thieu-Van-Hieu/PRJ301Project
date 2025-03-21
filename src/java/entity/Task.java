@@ -9,7 +9,6 @@ public class Task {
     private String name;
     private String description;
     private int assignedBy;
-    private int assignedTo;
     private String status;
     private Timestamp dueDate;
 
@@ -22,7 +21,6 @@ public class Task {
         this.name = builder.name;
         this.description = builder.description;
         this.assignedBy = builder.assignedBy;
-        this.assignedTo = builder.assignedTo;
         this.status = builder.status;
         this.dueDate = builder.dueDate;
     }
@@ -47,10 +45,6 @@ public class Task {
         return assignedBy;
     }
 
-    public int getAssignedTo() {
-        return assignedTo;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -70,7 +64,6 @@ public class Task {
         private String name;
         private String description;
         private int assignedBy;
-        private int assignedTo;
         private String status;
         private Timestamp dueDate;
 
@@ -102,11 +95,6 @@ public class Task {
             return this;
         }
 
-        public Builder setAssignedTo(int assignedTo) {
-            this.assignedTo = assignedTo;
-            return this;
-        }
-
         public Builder setStatus(String status) {
             this.status = status;
             return this;
@@ -117,5 +105,8 @@ public class Task {
             return this;
         }
 
+        public Task build() {
+            return new Task(this);
+        }
     }
 }

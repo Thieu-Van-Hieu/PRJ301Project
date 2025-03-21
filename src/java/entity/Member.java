@@ -3,7 +3,7 @@ package entity;
 public class Member {
     private int id;
     private int clubId;
-    private int memberId;
+    private int memberRoleId; // Thêm trường mới
 
     public Member() {
     }
@@ -11,7 +11,7 @@ public class Member {
     public Member(Builder builder) {
         this.id = builder.id;
         this.clubId = builder.clubId;
-        this.memberId = builder.memberId;
+        this.memberRoleId = builder.memberRoleId; // Gán giá trị từ Builder
     }
 
     public int getId() {
@@ -22,14 +22,14 @@ public class Member {
         return clubId;
     }
 
-    public int getMemberId() {
-        return memberId;
+    public int getMemberRoleId() { // Getter cho memberRoleId
+        return memberRoleId;
     }
 
     public static class Builder {
         private int id;
         private int clubId;
-        private int memberId;
+        private int memberRoleId; // Thêm trường mới
 
         public Builder setId(int id) {
             this.id = id;
@@ -41,8 +41,8 @@ public class Member {
             return this;
         }
 
-        public Builder setMemberId(int memberId) {
-            this.memberId = memberId;
+        public Builder setMemberRoleId(int memberRoleId) { // Setter cho memberRoleId
+            this.memberRoleId = memberRoleId;
             return this;
         }
 

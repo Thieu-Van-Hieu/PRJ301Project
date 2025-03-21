@@ -44,7 +44,7 @@
                                 alt="alt" /></li>
                         </c:forEach>
                     <li><i class="fa-solid fa-plus"></i></li>
-                    <li><i class="fa-regular fa-compass"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet'"><i class="fa-regular fa-compass"></i></li>
                     <li><i class="fa-solid fa-gear"></i></li>
                 </ul>
             </div>
@@ -132,6 +132,12 @@
         </div>
     </body>
     <script>
+        function addTimestamp() {
+            const timestampInput = document.getElementById('createTime');
+            if (timestampInput) {
+                timestampInput.value = new Date().toISOString();
+            }
+        }
         document.addEventListener("DOMContentLoaded", function () {
             const content = document.querySelector(".content");
             const sidebar = document.querySelector(".sidebar");
@@ -206,12 +212,7 @@
             }
         });
 
-        function addTimestamp() {
-            const timestampInput = document.getElementById('createTime');
-            if (timestampInput) {
-                timestampInput.value = new Date().toISOString();
-            }
-        }
+        
     </script>
 
 </html>

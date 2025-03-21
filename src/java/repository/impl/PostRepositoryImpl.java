@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import repository.PostRepository;
 import util.DBContext;
 import java.sql.*;
+import services.UserService;
 
 /**
  *
@@ -22,7 +23,7 @@ public class PostRepositoryImpl implements PostRepository {
     public ArrayList<Post> getAllPostOfClub(int clubId) {
         DBContext db = DBContext.getInstance();
         ArrayList<Post> posts = new ArrayList<>();
-
+        UserService userService = new UserService();
         try {
             String sql = """
                          Select * from posts
@@ -40,6 +41,7 @@ public class PostRepositoryImpl implements PostRepository {
                 Timestamp createAt = rs.getTimestamp("createdAt");
                 ArrayList<PostComment> postComment = getAllCommentOfPost(id);
                 int loves = getLoves(id);
+                String fullName = userService.getFullName(userId);
                 Post post = new Post.PostBuilder()
                         .setClubId(clubId)
                         .setId(id)
@@ -50,6 +52,7 @@ public class PostRepositoryImpl implements PostRepository {
                         .setCreatedAt(createAt)
                         .setLoves(loves)
                         .setComments(postComment.size())
+                        .setFullName(fullName)
                         .build();
                 posts.add(post);
             }

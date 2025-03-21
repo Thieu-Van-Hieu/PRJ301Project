@@ -80,4 +80,8 @@ public class UserService {
     public void resetPassword(String newPassword) {
         userRepository.resetPassword(response.getUserName(), newPassword);
     }
+    
+    public String getFullName(int userId){
+        return userInformationRepository.getNameOfUser(userId);
+    }
 }

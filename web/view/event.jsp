@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/event-css/event.css">
 
-<div class="content-container">
+<div class="content-container" style="overflow-y: overlay;">
     <%
             request.setAttribute("contentHeader", "Sự kiện");
     %>
@@ -70,7 +70,7 @@
         </div>
 
         <div class="modal js-modal" id="modal">
-            <form action="EventServlet" method="POST" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/EventServlet" method="POST" enctype="multipart/form-data">
                 <div class="modal-container js-modal-container">
                     <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                     <div class="modal-header">Tạo sự kiện</div>

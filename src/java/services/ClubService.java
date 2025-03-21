@@ -41,4 +41,14 @@ public class ClubService {
     public ArrayList<ClubResponse> selectAllClubItems(int userId){
         return clubRepository.getClubIcons(userId);
     }
+    
+    public String clubName(int clubId){
+        ArrayList<Club> clubInfors = clubRepository.getAllClubIdAndName();
+        for (Club clubInfor : clubInfors) {
+            if(clubInfor.getId() == clubId){
+                return clubInfor.getName();
+            }
+        }
+        return null;
+    }
 }

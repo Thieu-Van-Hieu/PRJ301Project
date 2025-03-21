@@ -19,4 +19,6 @@ public interface UserInformationRepository {
     public boolean isExistStudentId(String studentId);
     
     public String getUsernameByEmail(String email);
+    
+    public String getNameOfUser(int userId);
 }

@@ -36,6 +36,7 @@
 .content-body {
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
 }
 
 .content-filter {

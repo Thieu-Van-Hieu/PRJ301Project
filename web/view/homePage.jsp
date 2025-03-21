@@ -54,7 +54,7 @@
                 left: 0;
                 width: 100%;
                 height: 60px;
-
+                
                 grid-area: header;
                 display: flex;
                 justify-content: right;
@@ -134,7 +134,6 @@
                 grid-area: sidebar;
                 background-color: #b2d8d8;
                 border-top-left-radius: 10px;
-                overflow-y: hidden;
             }
 
             .sidebar .sidebar-header {
@@ -172,7 +171,6 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
-
             }
 
             .sidebar ul .hidden {
@@ -187,17 +185,18 @@
                 margin-left: 16px;
             }
 
-            .sidebar ul li a {
+            .sidebar__item a, .sidebar__item label {
                 text-decoration: none;
                 color: #064273;
                 font-size: 16px;
                 display: block;
                 padding: 12px 0;
                 padding-left: 20px;
+                cursor: pointer;
                 transition: all 0.3s ease;
             }
 
-            .sidebar ul li a:hover {
+            .sidebar__item a:hover, .sidebar__item label:hover {
                 border-left: 2px solid #064273;
                 color: white;
                 padding-left: 18px;
@@ -208,7 +207,17 @@
                 display: flex;
                 flex-direction: column;
                 grid-area: cont;
+                overflow-y: auto;
                 height: 100%;
+            }
+
+            #task-list {
+                display: none;
+                padding-left: 20px;
+            }
+
+            #task__toggle:checked~#task-list {
+                display: block;
             }
         </style>
         <jsp:include page="/view/background.jsp" />
@@ -217,7 +226,7 @@
             <div class="header">
                 <div class="header-title">
                     <i class="fa-regular fa-compass"></i>
-                    <span>${clubName}</span>
+                    <span>Nhóm 1</span>
                 </div>
                 <div class="header-icons">
                     <a href="#"><i class="fa-solid fa-envelope"></i></a>
@@ -229,11 +238,7 @@
             <div class="left-toolbar">
                 <ul>
                     <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
-                        <c:forEach var="clubItem" items="${clubListItems}">
-                        <li id="${clubItem.id}" onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=open&clubId=${clubItem.id}'">
-                            <img src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}" alt="alt"/>
-                        </li>
-                    </c:forEach>
+                    <li>1</li>
                     <li><i class="fa-solid fa-plus"></i></li>
                     <li><i class="fa-regular fa-compass"></i></li>
                     <li><i class="fa-solid fa-gear"></i></li>
@@ -244,27 +249,28 @@
             <div class="sidebar">
                 <div class="sidebar-header">
                     <div class="sidebar-header__item"><i class="fa-solid fa-house"></i></div>
-                    <div class="sidebar-header__name">${clubName}</div>
+                    <div class="sidebar-header__name">Câu Lạc Bộ A</div>
                 </div>
                 <div class="sidebar-coverImg">
                     <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">
                 </div>
-                <ul>
-                    <li><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>
-                    <li><a href="#" onclick="location.href = '?includeWeb=calendar.jsp'">Lịch</a></li>
-                    <li><a href="${pageContext.request.contextPath}/EventServlet">Sự Kiện</a></li>
-                    <li><a href="#">Đóng tiền</a></li>
-                    <li>
-                        <a href="#" id="toggle-tasks">Nhiệm vụ</a>
-                        <ul id="task-list" class="hidden">
-                            <li><a href="#" onclick="location.href = '?includeWeb=taskAssignedToMe.jsp'">Nhiệm vụ được
+                <ul class="sidebar__menu">
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/CalendarServlet">Lịch</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/EventServlet">Sự Kiện</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Đóng tiền</a></li>
+                    <li class="sidebar__item">
+                        <input type="checkbox" id="task__toggle" style="display: none;">
+                        <label for="task__toggle">Nhiệm vụ</label>
+                        <ul id="task-list">
+                            <li><a href="${pageContext.request.contextPath}/TaskAssignedToMeServlet">Nhiệm vụ được
                                     giao</a></li>
-                            <li><a href="#" onclick="location.href = '?includeWeb=taskAssignedByMe.jsp'">Giao nhiệm vụ</a>
+                            <li><a href="${pageContext.request.contextPath}/TaskAssignedByMeServlet">Giao nhiệm vụ</a>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="#">Báo Cáo</a></li>
-                    <li><a href="#" onclick="location.href = '?includeWeb=messenger.jsp'">Nhóm của bạn</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Báo Cáo</a></li>
+                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/MessengerServlet">Nhóm của bạn</a></li>
                 </ul>
             </div>
 
@@ -272,49 +278,6 @@
                 <c:set var="pageToInclude" value="${empty includeWeb ? 'forum.jsp' : includeWeb}" />
                 <jsp:include page="${pageToInclude}" />
             </div>
-
-            <script>
-                document.getElementById('toggle-tasks').addEventListener('click', function (event) {
-                    event.preventDefault();
-                    let taskList = document.getElementById('task-list');
-
-
-                    if (taskList.classList.contains('hidden')) {
-                        taskList.classList.remove('hidden');
-                        taskList.classList.add('show');
-                    } else {
-                        taskList.classList.remove('show');
-                        taskList.classList.add('hidden');
-                    }
-                });
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    const sidebar = document.querySelector(".sidebar");
-
-                    function checkScroll(element) {
-                        if (element.scrollTop > 0) {
-                            element.style.overflowY = "auto";
-                        } else {
-                            setTimeout(() => {
-                                element.style.overflowY = "hidden";
-                            }, 300); // Delay tránh lỗi flickering
-                        }
-                    }
-
-                    function enableScroll(element) {
-                        element.style.overflowY = "auto";
-                    }
-
-                    // Áp dụng cho cả `.content` và `.sidebar`
-                    [sidebar].forEach(element => {
-                        if (element) {
-                            element.addEventListener("wheel", () => enableScroll(element));
-                            element.addEventListener("touchmove", () => enableScroll(element));
-                            element.addEventListener("scroll", () => checkScroll(element));
-                        }
-                    });
-                });
-            </script>
     </body>
 
 </html>

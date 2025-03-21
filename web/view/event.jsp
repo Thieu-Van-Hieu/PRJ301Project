@@ -70,7 +70,7 @@
         </div>
 
         <div class="modal js-modal" id="modal">
-            <form action="EventServlet" method="POST" enctype="multipart/form-data">
+            <form action="${pageContext.request.contextPath}/EventServlet" method="POST" enctype="multipart/form-data">
                 <div class="modal-container js-modal-container">
                     <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                     <div class="modal-header">Tạo sự kiện</div>

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dto.ClubResponse;
 import dto.PostDTO;
 import entity.Post;
 import jakarta.servlet.RequestDispatcher;
@@ -23,6 +24,7 @@ import services.PostService;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import services.ClubService;
 import util.FileService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
@@ -63,23 +65,25 @@ public class ForumServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
+        ClubService clubService = new ClubService();
+        PostService postService = new PostService();
         if (action == null) {
 
         }
+        int userId = (Integer) session.getAttribute("userId");
+        int clubId = (Integer) session.getAttribute("clubId");
+        String clubName = clubService.clubName(clubId);
+
+        ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
+        ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         
-        session.setAttribute("includeWeb", "forum.jsp");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/view/homePage.jsp");
-        dispatcher.forward(request, response);
-
-        PostService postService = new PostService();
-        ArrayList<Post> posts = postService.getAllPostOfClub(1);
-
-        session.setAttribute("clubId", "1");
-        session.setAttribute("userId", "1");
+        session.setAttribute("clubListItems", clubListItems);
+        session.setAttribute("clubName", clubName);
+        session.setAttribute("clubId", clubId);
+        session.setAttribute("userId", userId);
         session.setAttribute("posts", posts);
         session.setAttribute("includeWeb", "forum.jsp");
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
-
     }
 
     /**

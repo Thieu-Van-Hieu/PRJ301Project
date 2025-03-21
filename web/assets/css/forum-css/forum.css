@@ -3,6 +3,11 @@
 .content-container {
     background: #eaf8f2;
     height: calc(100vh - 60px);
+    overflow-y: overlay;
+}
+
+.content-body {
+    
 }
 .content-list {
     display: flex;

@@ -97,4 +97,25 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         }
         return null;
     }
+
+    @Override
+    public String getNameOfUser(int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                           select (ui.lastName + ' ' + ui.firstName) as fullName from user_informations ui
+                           join users u on u.id = ui.userId
+                           where ui.userId = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, userId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getString("fullName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

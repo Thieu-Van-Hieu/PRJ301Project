@@ -12,126 +12,128 @@
             <i class="fa-solid fa-magnifying-glass content-search"></i>
         </div>
     </header>
-    <div class="content-create js-open-modal">
-        <div class="content-text">
-            <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
-            </div>
-            <input type="text" id="commentInput" class="input" placeholder="Content gì chưa người đẹp?">
-        </div>
-        <div class="content-img">
-            <i class="fa-solid fa-images"></i>
-            <p>Ảnh / Video</p>
-        </div>
-    </div>
-    <div class="modal js-modal" id="modal">
-        <form action="${pageContext.request.contextPath}/ForumServlet" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="action" value="add">
-            <div class="modal-container js-modal-container">
-                <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
-                <div class="modal-header">Tạo Bài Viết</div>
-                <input type="hidden" name="createTime" id="createTime" value="">
-                <input type="hidden" name="userId" value="1">
-                <input type="hidden" name="clubId" value="1">
-                <div class="modal-body">
-                    <div class="modal-body-header">
-                        <div class="modal-body-avatar"><img
-                                src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
-                        </div>
-                        <p>Chong cua Bo</p>
-                    </div>
-                    <input type="text" class="modal-content" name="content" placeholder="   Content gì chưa người đẹp?">
-                    <div class="img-create" id="imgPreview"></div>
-                    <div class="modal-select" id="customFileUpload"><i class="fa-solid fa-images"></i>
-                        <p>Thêm ảnh gì không người đẹp?</p>
-                    </div>
-                    <input type="file" id="fileInput" name="file">
-                    <input type="submit" class="btn-submit" name="name" value="Đăng">
+    <div class="content-body">
+        <div class="content-create js-open-modal">
+            <div class="content-text">
+                <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
                 </div>
+                <input type="text" id="commentInput" class="input" placeholder="Content gì chưa người đẹp?">
             </div>
-        </form>
-    </div>
-
-    <div class="content-list">
-        <c:choose>
-            <c:when test="${not empty posts}">
-                <c:forEach var="post" items="${posts}">
-                    <div class="content-item" data-id="${post.id}">
-                        <div class="item-header">
-                            <div class="item-avatar">
-                                <div class="item-img"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg"
-                                                           alt=""></div>
-                                <div class="item-name-date">
-                                    <div class="item-name">Chong cua Bo</div>
-                                    <div class="item-date">${post.createdAt}</div>
-                                </div>
+            <div class="content-img">
+                <i class="fa-solid fa-images"></i>
+                <p>Ảnh / Video</p>
+            </div>
+        </div>
+        <div class="modal js-modal" id="modal">
+            <form action="${pageContext.request.contextPath}/ForumServlet" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="add">
+                <div class="modal-container js-modal-container">
+                    <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
+                    <div class="modal-header">Tạo Bài Viết</div>
+                    <input type="hidden" name="createTime" id="createTime" value="">
+                    <input type="hidden" name="userId" value="1">
+                    <input type="hidden" name="clubId" value="1">
+                    <div class="modal-body">
+                        <div class="modal-body-header">
+                            <div class="modal-body-avatar"><img
+                                    src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
                             </div>
-                            <div class="item-utils">
-                                <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
-                                <ul>
-                                    <li>Chỉnh sửa</li>
-                                    <li>Ẩn</li>
-                                </ul>
-                                <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
-                            </div>
+                            <p>${userFullName}</p>
                         </div>
-                        <div class="item-body">
-                            <div class="item-content-text">${post.content}</div>
-                            <div class="item-content-img">
-                                <img src="${pageContext.request.contextPath}/assets/img/img-download/${post.img}" alt="">
-                            </div>
-                            <div class="item-content-comment">
-                                <div class="item-body-love">
-                                    <i class="fa-solid fa-heart"></i>
-                                    <p>${post.loves}</p>
-                                </div>
-                                <div class="item-body-comment">${post.comments} bình luận</div>
-                            </div>
+                        <input type="text" class="modal-content" name="content" placeholder="   Content gì chưa người đẹp?">
+                        <div class="img-create" id="imgPreview"></div>
+                        <div class="modal-select" id="customFileUpload"><i class="fa-solid fa-images"></i>
+                            <p>Thêm ảnh gì không người đẹp?</p>
                         </div>
-                        <div class="item-footer">
-                            <div class="item-footer-item love">
-                                <i class="fa-regular fa-heart"></i>
-                                <p>Thích</p>
-                            </div>
-                            <div class="item-footer-item comment">
-                                <i class="fa-regular fa-comment"></i>
-                                <p>Bình Luận</p>
-                            </div>
-                        </div>
-                        <div class="content-text input-comment">
-                            <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
-                            </div>
-                            <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
-                        </div>
-                        <div class="comment-list">
-                            <c:choose>
-                                <c:when test="${not empty post.postCommentList}">
-                                    <c:forEach var="postComment" items="${post.postCommentList}">
-                                        <div class="content-text" id="${postCommentList.postId}">
-                                            <div class="avatar">
-                                                <img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
-                                            </div>
-                                            <div class="comment-body">
-                                                <div class="comment-name">Chong cua Bo</div>
-                                                <div class="comment-content">${postCommentList.content}</div>
-                                            </div>
-                                            <div class="item-utils">
-                                                <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
-                                                <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </c:when>
-                            </c:choose>
-                        </div>
+                        <input type="file" id="fileInput" name="file">
+                        <input type="submit" class="btn-submit" name="name" value="Đăng">
                     </div>
-                </c:forEach>
-            </c:when>
+                </div>
+            </form>
+        </div>
+
+        <div class="content-list">
+            <c:choose>
+                <c:when test="${not empty posts}">
+                    <c:forEach var="post" items="${posts}">
+                        <div class="content-item" data-id="${post.id}">
+                            <div class="item-header">
+                                <div class="item-avatar">
+                                    <div class="item-img"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg"
+                                                               alt=""></div>
+                                    <div class="item-name-date">
+                                        <div class="item-name">${post.fullName}</div>
+                                        <div class="item-date">${post.createdAt}</div>
+                                    </div>
+                                </div>
+                                <div class="item-utils">
+                                    <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                                    <ul>
+                                        <li>Chỉnh sửa</li>
+                                        <li>Ẩn</li>
+                                    </ul>
+                                    <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                                </div>
+                            </div>
+                            <div class="item-body">
+                                <div class="item-content-text">${post.content}</div>
+                                <div class="item-content-img">
+                                    <img src="${pageContext.request.contextPath}/assets/img/img-download/${post.img}" alt="">
+                                </div>
+                                <div class="item-content-comment">
+                                    <div class="item-body-love">
+                                        <i class="fa-solid fa-heart"></i>
+                                        <p>${post.loves}</p>
+                                    </div>
+                                    <div class="item-body-comment">${post.comments} bình luận</div>
+                                </div>
+                            </div>
+                            <div class="item-footer">
+                                <div class="item-footer-item love">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <p>Thích</p>
+                                </div>
+                                <div class="item-footer-item comment">
+                                    <i class="fa-regular fa-comment"></i>
+                                    <p>Bình Luận</p>
+                                </div>
+                            </div>
+                            <div class="content-text input-comment">
+                                <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                                </div>
+                                <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
+                            </div>
+                            <div class="comment-list">
+                                <c:choose>
+                                    <c:when test="${not empty post.postCommentList}">
+                                        <c:forEach var="postComment" items="${post.postCommentList}">
+                                            <div class="content-text" id="${postCommentList.postId}">
+                                                <div class="avatar">
+                                                    <img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                                                </div>
+                                                <div class="comment-body">
+                                                    <div class="comment-name">Chong cua Bo</div>
+                                                    <div class="comment-content">${postCommentList.content}</div>
+                                                </div>
+                                                <div class="item-utils">
+                                                    <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
+                                                    <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:when>
 
 
-            <c:otherwise>
-                <p>Không có bài viết nào để hiển thị.</p>
-            </c:otherwise>
-        </c:choose>
+                <c:otherwise>
+                    <p>Không có bài viết nào để hiển thị.</p>
+                </c:otherwise>
+            </c:choose>
+        </div>
     </div>
 
 
@@ -197,6 +199,26 @@
         event.stopPropagation();
     })
 
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const file = event.target.files[0]; // Lấy file đầu tiên người dùng chọn
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgElement = document.createElement('img');
+                imgElement.src = e.target.result;
+                imgElement.style.maxWidth = "100%"; // Giới hạn kích thước ảnh
+                imgElement.style.borderRadius = "8px";
+                imgElement.style.marginTop = "10px";
+
+                const previewDiv = document.getElementById('imgPreview');
+                previewDiv.innerHTML = ""; // Xóa ảnh cũ nếu có
+                previewDiv.appendChild(imgElement); // Thêm ảnh mới vào div
+            };
+            reader.readAsDataURL(file); // Chuyển file thành URL để hiển thị ảnh
+        }
+    });
+
     document.querySelectorAll('.content-item').forEach((item) => {
         const statusId = item.getAttribute('data-id');
 
@@ -261,31 +283,5 @@
             }
         });
     });
-    document.querySelector(".btn-submit").addEventListener("click", function () {
-        // Lấy thời gian hiện tại
-        let now = new Date();
-        let formattedTime = now.toISOString(); // Định dạng: YYYY-MM-DDTHH:mm:ss.sssZ
 
-        // Gán vào input ẩn
-        document.getElementById("createTime").value = formattedTime;
-    });
-
-    document.getElementById('fileInput').addEventListener('change', function (event) {
-        const file = event.target.files[0]; // Lấy file đầu tiên người dùng chọn
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const imgElement = document.createElement('img');
-                imgElement.src = e.target.result;
-                imgElement.style.maxWidth = "100%"; // Giới hạn kích thước ảnh
-                imgElement.style.borderRadius = "8px";
-                imgElement.style.marginTop = "10px";
-
-                const previewDiv = document.getElementById('imgPreview');
-                previewDiv.innerHTML = ""; // Xóa ảnh cũ nếu có
-                previewDiv.appendChild(imgElement); // Thêm ảnh mới vào div
-            };
-            reader.readAsDataURL(file); // Chuyển file thành URL để hiển thị ảnh
-        }
-    });
 </script>

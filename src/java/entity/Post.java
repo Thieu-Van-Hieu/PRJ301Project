@@ -22,7 +22,8 @@ public class Post {
     private int loves;
     private int comments;
     ArrayList<PostComment> postCommentList;
-
+    private String fullName;
+    
     public Post() {
     }
     
@@ -36,8 +37,12 @@ public class Post {
         this.comments = builder.comments;
         this.postCommentList = builder.postCommentList;
         this.createdAt = builder.createdAt;
-        
+        this.fullName = builder.fullName;
     }
+
+    public String getFullName() {
+        return fullName;
+    }  
 
     public int getId() {
         return id;
@@ -86,7 +91,8 @@ public class Post {
         private int loves;
         private int comments;
         ArrayList<PostComment> postCommentList;
-
+        private String fullName;
+        
         public PostBuilder() {
         }
 
@@ -134,6 +140,11 @@ public class Post {
             this.postCommentList = postCommentList;
             return this; 
         }       
+        
+        public PostBuilder setFullName(String fullName){
+            this.fullName = fullName;
+            return this;
+        }
         
         public Post build(){
             return new Post(this);

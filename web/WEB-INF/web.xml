@@ -121,4 +121,44 @@
         <servlet-name>DiscoveryServlet</servlet-name>
         <url-pattern>/DiscoveryServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>OTPService</servlet-name>
+        <servlet-class>controller.OTPService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>controller.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <servlet-class>controller.VerifyOTPServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OTPVerificationServlet</servlet-name>
+        <servlet-class>controller.OTPVerificationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OTPService</servlet-name>
+        <url-pattern>/OTPService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/ForgotPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VerifyOTPServlet</servlet-name>
+        <url-pattern>/VerifyOTPServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <servlet-class>controller.ResetPasswordServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordServlet</servlet-name>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OTPVerificationServlet</servlet-name>
+        <url-pattern>/OTPVerificationServlet</url-pattern>
+    </servlet-mapping>
 </web-app>

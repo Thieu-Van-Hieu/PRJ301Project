@@ -81,7 +81,7 @@ public class OTPVerificationServlet extends HttpServlet {
 
         if (generatedOTP != null && enteredOTP.equals(generatedOTP)) {
             session.removeAttribute("generatedOTP");
-            response.sendRedirect("view/information.jsp");
+            response.sendRedirect(request.getContextPath() + "/view/information.jsp");
         } else {
             session.setAttribute("error", "Mã OTP không chính xác. Vui lòng nhập lại.");
             response.sendRedirect(request.getContextPath() + "/view/otp.jsp");

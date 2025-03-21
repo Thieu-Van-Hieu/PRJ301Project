@@ -23,7 +23,7 @@
                 <input type="submit" value="Xác nhận">
             </form>
             <div class="resend">
-                <form action="ResendOTPServlet" method="post">
+                <form action=" <%= request.getContextPath() %>/ResendOTPServlet" method="post">
                     <input type="submit" value="Gửi lại OTP">
                 </form>
             </div>

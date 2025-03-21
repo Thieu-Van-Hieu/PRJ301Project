@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/event-css/event.css">
 
-<div class="content-container">
+<div class="content-container" style="overflow-y: overlay;">
     <%
             request.setAttribute("contentHeader", "Sự kiện");
     %>

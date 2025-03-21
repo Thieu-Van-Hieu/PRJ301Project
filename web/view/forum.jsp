@@ -2,7 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/forum-css/forum.css" />
 
-<div class="content-container">
+<div class="content-container" style="overflow-y: overlay;">
     <header class="content-header">
         <h2>Diễn đàn</h2>
         <div class="content-header_util">

@@ -208,7 +208,6 @@
                 display: flex;
                 flex-direction: column;
                 grid-area: cont;
-                overflow-y: hidden;
                 height: 100%;
             }
         </style>

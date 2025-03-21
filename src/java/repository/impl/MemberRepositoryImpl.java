@@ -67,14 +67,16 @@ public class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
-    public Member getMember(int userId) {
+    public Member getMember(int userId, int clubId) {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
                          select * from members
-                         where userId = ?
+                         where userId = ? and clubId = ?
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
+            statement.setInt(2, clubId);
             ResultSet rs = statement.executeQuery();
             while(rs.next()){
                 return new Member.Builder().setId(rs.getInt("id")).setClubId(rs.getInt("clubId")).setRole(rs.getNString("role")).build();

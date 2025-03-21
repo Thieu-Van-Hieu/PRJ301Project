@@ -73,9 +73,7 @@ public class ForumServlet extends HttpServlet {
         PostService postService = new PostService();
         UserService userService = new UserService();
         MemberService memberService = new MemberService();
-        if (action == null) {
 
-        }
         int userId = (Integer) session.getAttribute("userId");
         int clubId = (Integer) session.getAttribute("clubId");
         String clubName = clubService.clubName(clubId);
@@ -84,7 +82,8 @@ public class ForumServlet extends HttpServlet {
         String userAvatarImg = user.getAvatar();
         ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
-        Member member = memberService.getMemberInfor(userId);
+        Member member = memberService.getMemberInfor(userId, clubId);
+        
         session.setAttribute("member", member);
         session.setAttribute("userFullName", userFullName);
         session.setAttribute("userAvatarImg", userAvatarImg);

@@ -25,7 +25,7 @@ public class MemberService {
         return memberRepository.getAllMemberOfClub(clubId);
     };
     
-    public Member getMemberInfor(int userId){
-        return memberRepository.getMember(userId);
+    public Member getMemberInfor(int userId, int clubId){
+        return memberRepository.getMember(userId, clubId);
     }
 }

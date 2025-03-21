@@ -20,5 +20,7 @@ public interface UserInformationRepository {
     
     public String getUsernameByEmail(String email);
     
-    public String getNameOfUser(int userId);
+    public UserInformationResponse getNameAvatarOfUser(int userId);
+    
+    public UserInformationResponse getUser(int userId);
 }

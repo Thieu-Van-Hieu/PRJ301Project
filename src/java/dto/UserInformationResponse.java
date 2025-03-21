@@ -9,7 +9,7 @@ package dto;
  * @author ngoct
  */
 public class UserInformationResponse {
-
+    private int userId;
     private String userName;
     private String password;
     private String role;
@@ -20,9 +20,17 @@ public class UserInformationResponse {
     private String address;
     private String gender;
     private String birthday;
-
+    private String avatar;
+    
+    
     public UserInformationResponse() {
     }
+
+    public UserInformationResponse(String userName, String avatar) {
+        this.userName = userName;
+        this.avatar = avatar;
+    }
+      
 
     public UserInformationResponse(String firstName, String lastName, String studentId, String address, String gender, String birthday) {
         this.firstName = firstName;
@@ -32,6 +40,19 @@ public class UserInformationResponse {
         this.gender = gender;
         this.birthday = birthday;
     }
+
+    public UserInformationResponse(int userId, String role, String firstName, String lastName, String email, String studentId, String address, String birthday, String avatar) {
+        this.userId = userId;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.studentId = studentId;
+        this.address = address;
+        this.birthday = birthday;
+        this.avatar = avatar;
+    }
+
 
     public UserInformationResponse(String userName, String password, String role, String firstName, String lastName, String email, String studentId, String address, String gender, String birthday) {
         this.userName = userName;
@@ -46,6 +67,22 @@ public class UserInformationResponse {
         this.birthday = birthday;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }   
+    
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+    
     public String getUserName() {
         return userName;
     }

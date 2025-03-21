@@ -41,7 +41,7 @@ public class PostRepositoryImpl implements PostRepository {
                 Timestamp createAt = rs.getTimestamp("createdAt");
                 ArrayList<PostComment> postComment = getAllCommentOfPost(id);
                 int loves = getLoves(id);
-                String fullName = userService.getFullName(userId);
+                String fullName = userService.getFullNameAndAvatar(userId).getUserName();
                 Post post = new Post.PostBuilder()
                         .setClubId(clubId)
                         .setId(id)

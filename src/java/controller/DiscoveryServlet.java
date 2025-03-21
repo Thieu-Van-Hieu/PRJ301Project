@@ -5,6 +5,7 @@
 package controller;
 
 import dto.ClubResponse;
+import dto.UserInformationResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import services.ClubService;
 import java.sql.Timestamp;
+import services.UserService;
 
 /**
  *
@@ -63,7 +65,9 @@ public class DiscoveryServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
+        UserService userService = new UserService();       
         int userId = (Integer) session.getAttribute("userId");
+        UserInformationResponse userInfor = userService.getUserInfor(userId);
         if ("open".equals(action)) {
             int clubId = Integer.parseInt(request.getParameter("clubId"));
             session.setAttribute("clubId", clubId);
@@ -72,6 +76,7 @@ public class DiscoveryServlet extends HttpServlet {
         } else if (action == null) {
             ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
             ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
+            session.setAttribute("userInfor", userInfor);
             session.setAttribute("clubListItems", clubListItems);
             session.setAttribute("clubList", clubList);
             response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");

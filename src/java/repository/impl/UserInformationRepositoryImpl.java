@@ -6,6 +6,7 @@ package repository.impl;
 
 import dto.UserInformationResponse;
 import java.sql.*;
+import java.util.ArrayList;
 import repository.UserInformationRepository;
 import util.DBContext;
 
@@ -99,11 +100,12 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
     }
 
     @Override
-    public String getNameOfUser(int userId) {
+    public UserInformationResponse getNameAvatarOfUser(int userId) {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                           select (ui.lastName + ' ' + ui.firstName) as fullName from user_informations ui
+                           select (ui.lastName + ' ' + ui.firstName) as fullName, avatarImg
+                           from user_informations ui
                            join users u on u.id = ui.userId
                            where ui.userId = ?
                          """;
@@ -111,8 +113,38 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return rs.getString("fullName");
+                return new UserInformationResponse(rs.getNString("fullName"), rs.getString("avatarImg"));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public UserInformationResponse getUser(int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                         select * from user_informations as ui
+                         join users as u on u.id = ui.userId
+                         where u.id = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                return new UserInformationResponse(userId,
+                            rs.getNString("role"),
+                        rs.getNString("firstName"),
+                         rs.getNString("lastName"),
+                           rs.getString("email"),
+                        rs.getString("studentId"),
+                          rs.getNString("address"),
+                         rs.getString("birthday"),
+                          rs.getString("avatarImg"));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

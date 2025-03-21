@@ -23,6 +23,7 @@ public class Post {
     private int comments;
     ArrayList<PostComment> postCommentList;
     private String fullName;
+    private String userAvatar;
     
     public Post() {
     }
@@ -38,7 +39,14 @@ public class Post {
         this.postCommentList = builder.postCommentList;
         this.createdAt = builder.createdAt;
         this.fullName = builder.fullName;
+        this.userAvatar = builder.userAvatar;
     }
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+    
+    
 
     public String getFullName() {
         return fullName;
@@ -92,7 +100,7 @@ public class Post {
         private int comments;
         ArrayList<PostComment> postCommentList;
         private String fullName;
-        
+        private String userAvatar;
         public PostBuilder() {
         }
 
@@ -143,6 +151,11 @@ public class Post {
         
         public PostBuilder setFullName(String fullName){
             this.fullName = fullName;
+            return this;
+        }
+        
+        public PostBuilder setUserAvatar(String userAvatar){
+            this.userAvatar = userAvatar;
             return this;
         }
         

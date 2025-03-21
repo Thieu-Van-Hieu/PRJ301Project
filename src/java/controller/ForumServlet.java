@@ -6,6 +6,8 @@ package controller;
 
 import dto.ClubResponse;
 import dto.PostDTO;
+import dto.UserInformationResponse;
+import entity.Member;
 import entity.Post;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -25,6 +27,8 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import services.ClubService;
+import services.MemberService;
+import services.UserService;
 import util.FileService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
@@ -67,16 +71,23 @@ public class ForumServlet extends HttpServlet {
         String action = request.getParameter("action");
         ClubService clubService = new ClubService();
         PostService postService = new PostService();
+        UserService userService = new UserService();
+        MemberService memberService = new MemberService();
         if (action == null) {
 
         }
         int userId = (Integer) session.getAttribute("userId");
         int clubId = (Integer) session.getAttribute("clubId");
         String clubName = clubService.clubName(clubId);
-
+        UserInformationResponse user = userService.getFullNameAndAvatar(userId);
+        String userFullName = user.getUserName();
+        String userAvatarImg = user.getAvatar();
         ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
-        
+        Member member = memberService.getMemberInfor(userId);
+        session.setAttribute("member", member);
+        session.setAttribute("userFullName", userFullName);
+        session.setAttribute("userAvatarImg", userAvatarImg);
         session.setAttribute("clubListItems", clubListItems);
         session.setAttribute("clubName", clubName);
         session.setAttribute("clubId", clubId);

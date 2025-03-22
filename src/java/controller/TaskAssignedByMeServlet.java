@@ -9,8 +9,6 @@ import dto.MemberTaskResponse;
 
 import dto.TaskAssignedByMeResponse;
 import entity.Member;
-import entity.User;
-import entity.UserInformation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
@@ -83,7 +81,7 @@ public class TaskAssignedByMeServlet extends HttpServlet {
         Member member = (Member) session.getAttribute("member");
 
         TaskService service = new TaskService();
-        ArrayList<TaskAssignedByMeResponse> tasks = service.getTasksAssignedByMe(member.getId(), member.getClubId());
+        ArrayList<TaskAssignedByMeResponse> tasks = service.getTasksAssignedByMe(member.getClubId(), member.getId());
 
         ArrayList<MemberTaskResponse> members = service.getMembers(member);
 

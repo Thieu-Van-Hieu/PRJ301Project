@@ -83,7 +83,8 @@ public class ForumServlet extends HttpServlet {
         ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         Member member = memberService.getMemberInfor(userId, clubId);
-        
+        String coverImg = clubService.getCoverImg(clubId);
+        session.setAttribute("coverImg", coverImg);
         session.setAttribute("member", member);
         session.setAttribute("userFullName", userFullName);
         session.setAttribute("userAvatarImg", userAvatarImg);

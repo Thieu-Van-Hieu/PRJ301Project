@@ -60,4 +60,14 @@ public class ClubService {
     public ArrayList<ClubResponse> getClubsByType(String type){
         return clubRepository.getClubsByType(type);
     }
+    
+    public String getCoverImg(int clubId){
+        ArrayList<Club> clubInfors = clubRepository.getAllClubIdAndName();
+        for (Club clubInfor : clubInfors) {
+            if(clubInfor.getId() == clubId){
+                return clubInfor.getCoverImage();
+            }
+        }
+        return null;
+    }
 }

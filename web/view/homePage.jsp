@@ -54,7 +54,7 @@
                 left: 0;
                 width: 100%;
                 height: 60px;
-                
+
                 grid-area: header;
                 display: flex;
                 justify-content: right;
@@ -238,14 +238,14 @@
             <div class="left-toolbar">
                 <ul>
                     <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
-                    <c:forEach var="clubItem" items="${clubListItems}">
+                        <c:forEach var="clubItem" items="${clubListItems}">
                         <li id="${clubItem.id}" onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=open&clubId=${clubItem.id}'">
                             <img src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}" alt="alt"/>
                         </li>
                     </c:forEach>
-                    <li><i class="fa-solid fa-plus"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=createClub'"><i class="fa-solid fa-plus"></i></li>
                     <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet'"><i class="fa-regular fa-compass"></i></li>
-                    <li><i class="fa-solid fa-gear"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=setting'"><i class="fa-solid fa-gear"></i></li>
                 </ul>
             </div>
 
@@ -256,7 +256,7 @@
                     <div class="sidebar-header__name">${clubName}</div>
                 </div>
                 <div class="sidebar-coverImg">
-                    <img src="${pageContext.request.contextPath}/assets/img/login-img/loginnight.jpg" alt="">
+                    <img src="${pageContext.request.contextPath}/assets/img/img-download/${coverImg}" alt="">
                 </div>
                 <ul class="sidebar__menu">
                     <li class="sidebar__item"><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>

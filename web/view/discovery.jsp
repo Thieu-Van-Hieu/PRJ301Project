@@ -52,15 +52,15 @@
                 <h2>Khám Phá Câu Lạc Bộ</h2>
                 <ul>
                     <li><a href="${pageContext.request.contextPath}/DiscoveryServlet">Trang Chủ</a></li>
-                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=gaming">Gaming</a>
+                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&typeId=1">Gaming</a>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=music">Âm Nhạc</a>
+                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&typeId=2">Âm Nhạc</a>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=science">Khoa học &
+                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&typeId=3">Khoa học &
                             Công Nghệ</a></li>
-                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=sport">Thể Thao</a>
+                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&typeId=4">Thể Thao</a>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&type=education">Giáo
+                    <li><a href="${pageContext.request.contextPath}/DiscoveryServlet?action=filter&typeId=5">Giáo
                             Dục</a></li>
                 </ul>
             </div>

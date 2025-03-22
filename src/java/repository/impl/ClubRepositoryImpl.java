@@ -144,6 +144,35 @@ public class ClubRepositoryImpl implements ClubRepository {
 
     @Override
     public ArrayList<ClubResponse> getClubsByType(String type) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DBContext db = DBContext.getInstance();
+        ArrayList<ClubResponse> clubResponses = new ArrayList<>();
+
+        try {
+            String sql = """
+                         select 
+                         c.id, c.name, c.description, c.type, c.avatarClub, c.coverImage, (ai.lastName +' ' + ai.firstName) as namePresident
+                         from clubs as c
+                         join members as m on m.clubId = c.id
+                         join user_informations as ai on ai.userId = m.userId
+                         where m.role = N'Chủ Nhiệm' and c.type = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setNString(1, type);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getNString("name");
+                String description = rs.getNString("description");
+                String avatarClub = rs.getString("avatarClub");
+                String coverImage = rs.getString("coverImage");
+                String presidentName = rs.getString("namePresident");
+                ClubResponse clubResponse = new ClubResponse(id, name, description, type, avatarClub, coverImage, presidentName);
+                clubResponses.add(clubResponse);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return clubResponses;
     }
 }

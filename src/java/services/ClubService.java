@@ -7,6 +7,7 @@ package services;
 import dto.ClubResponse;
 import entity.Club;
 import factory.ClubFactory;
+import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import repository.ClubRepository;
 
@@ -54,5 +55,9 @@ public class ClubService {
     
     public int addClub(ClubResponse club){
         return clubRepository.addClub(club);
+    }
+    
+    public ArrayList<ClubResponse> getClubsByType(String type){
+        return clubRepository.getClubsByType(type);
     }
 }

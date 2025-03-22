@@ -32,15 +32,14 @@ public class UserRepositoryImpl implements UserRepository {
             return rs.next();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
     public User getUsername(String username) {
         DBContext db = DBContext.getInstance();
-        User user = null;
+        User user = new User();
         try {
             String sql = """
                            select * from users
@@ -57,11 +56,10 @@ public class UserRepositoryImpl implements UserRepository {
                         .setRole("role")
                         .build();
             }
+            return user;
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            return new User();
         }
-        return user;
     }
 
     @Override
@@ -78,7 +76,7 @@ public class UserRepositoryImpl implements UserRepository {
             st.setString(3, "member");
             rs = st.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
     }
 
@@ -95,12 +93,12 @@ public class UserRepositoryImpl implements UserRepository {
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return rs.getInt("id");
+                result = rs.getInt("id");
             }
+            return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            return 0;
         }
-        return result;
     }
 
     @Override
@@ -118,7 +116,7 @@ public class UserRepositoryImpl implements UserRepository {
             st.setString(2, username);
             rs = st.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
     }
 

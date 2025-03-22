@@ -76,10 +76,11 @@ public class VerifyOTPServlet extends HttpServlet {
         if (inputOTP != null && inputOTP.equals(sessionOTP)) {
             session.removeAttribute("otp");
             session.setAttribute("otpVerified", true);
+            session.setAttribute("success", "Đã xác minh thành công vui lòng thay đổi mật khẩu");
             response.sendRedirect(request.getContextPath() + "/view/resetPassword.jsp");
         } else {
-            request.setAttribute("error", "OTP không hợp lệ. Vui lòng kiểm tra lại.");
-            request.getRequestDispatcher("view/otpSent.jsp").forward(request, response);
+            session.setAttribute("error", "OTP không hợp lệ. Vui lòng kiểm tra lại.");
+            response.sendRedirect(request.getContextPath() + "/view/otpSent.jsp");
         }
     }
 

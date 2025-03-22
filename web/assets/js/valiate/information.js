@@ -20,15 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   
     function validateField(input, regex, errorText) {
-      const rawValue = input.value;
-      const value = rawValue.trim();
-      const errorEl = createErrorElement(input);
-  
-      if (input.id === "hoTen" && /\s{2,}/.test(rawValue)) {
-        input.style.border = "2px solid red";
-        errorEl.textContent = "Không được spam khoảng trắng.";
-        return false;
-      }
+        const rawValue = input.value;
+        const value = rawValue.trim();
+        const errorEl = createErrorElement(input);
+
+        if (input.id === "hoTen" && /\s{2,}/.test(rawValue)) {
+            input.style.border = "2px solid red";
+            errorEl.textContent = "Không được spam khoảng trắng.";
+            return false;
+        }
   
       if (rawValue !== "" && value === "") {
         input.style.border = "2px solid red";

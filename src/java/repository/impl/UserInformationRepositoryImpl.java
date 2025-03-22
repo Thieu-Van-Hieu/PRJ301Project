@@ -29,9 +29,8 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -56,7 +55,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
                 throw new Exception();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
     }
 
@@ -73,14 +72,14 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (Exception e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     @Override
     public String getUsernameByEmail(String email) {
         DBContext db = DBContext.getInstance();
+        StringBuilder result = new StringBuilder();
         try {
             String sql = """
                            select * from user_informations ui
@@ -91,17 +90,18 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return rs.getString("username");
+                result.append(rs.getString("username"));
             }
+            return result.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return new StringBuilder().toString();
         }
-        return null;
     }
 
     @Override
     public UserInformationResponse getNameAvatarOfUser(int userId) {
         DBContext db = DBContext.getInstance();
+        UserInformationResponse userInformationResponse = new UserInformationResponse();
         try {
             String sql = """
                            select (ui.lastName + ' ' + ui.firstName) as fullName, avatarImg
@@ -113,17 +113,18 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                return new UserInformationResponse(rs.getNString("fullName"), rs.getString("avatarImg"));
+                userInformationResponse = new UserInformationResponse(rs.getNString("fullName"), rs.getString("avatarImg"));
             }
+            return userInformationResponse;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new UserInformationResponse();
         }
-        return null;
     }
 
     @Override
     public UserInformationResponse getUser(int userId) {
         DBContext db = DBContext.getInstance();
+        UserInformationResponse results = new UserInformationResponse();
         try {
             String sql = """
                          select * from user_informations as ui
@@ -135,7 +136,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                return new UserInformationResponse(userId,
+                results = new UserInformationResponse(userId,
                         rs.getNString("role"),
                         rs.getNString("firstName"),
                         rs.getNString("lastName"),
@@ -145,15 +146,16 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
                         rs.getString("birthday"),
                         rs.getString("avatarImg"));
             }
+            return results;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new UserInformationResponse();
         }
-        return null;
     }
 
     @Override
     public UserInformationResponse getUserSetting(int userId) {
         DBContext db = DBContext.getInstance();
+        UserInformationResponse userInformationResponse = new UserInformationResponse();
         try {
             String sql = """
                          select * from user_informations as ui
@@ -165,23 +167,23 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                return new UserInformationResponse(userId, 
-                        rs.getString("username"), 
-                        rs.getString("password"), 
-                        rs.getNString("firstName"), 
-                        rs.getNString("lastName"),  
+                userInformationResponse = new UserInformationResponse(userId,
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getNString("firstName"),
+                        rs.getNString("lastName"),
                         rs.getString("email"));
             }
+            return userInformationResponse;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new UserInformationResponse();
         }
-        return null;
     }
 
     @Override
     public void updateUserAvatar(UserInformationResponse user) {
         DBContext db = DBContext.getInstance();
-        
+
         try {
             String sql = """
                          update user_informations 
@@ -192,10 +194,10 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             statement.setString(1, user.getAvatar());
             statement.setInt(2, user.getUserId());
             int rs = statement.executeUpdate();
-            if(rs == 0){
+            if (rs == 0) {
                 throw new Exception();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             return;
         }
     }

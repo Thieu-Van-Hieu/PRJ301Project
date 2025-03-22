@@ -92,4 +92,8 @@ public class UserService {
     public UserInformationResponse getUserInforSetting(int userId){
         return userInformationRepository.getUserSetting(userId);
     }
+    
+    public void updateUserAvatar(UserInformationResponse user){
+        userInformationRepository.updateUserAvatar(user);
+    }
 }

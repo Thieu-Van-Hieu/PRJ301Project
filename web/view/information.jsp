@@ -32,9 +32,9 @@
             <div class="form-register">
                 <h2>Thông tin cá nhân</h2>
                 <form action="${pageContext.request.contextPath}/InformationServlet" method="post">
-                    <input type="hidden" name="province" value="" id="provinceText">
-                    <input type="hidden" name="district" value="" id="districtText">
-                    <input type="hidden" name="ward" value="" id="wardText">
+                    <input type="hidden" name="province" value="" id="provinceText" required>
+                    <input type="hidden" name="district" value="" id="districtText" required>
+                    <input type="hidden" name="ward" value="" id="wardText" required>
                     <div class="inner-name">
                         <div class="form-row">
                             <label for="hoTen">Họ và tên đệm:</label>
@@ -208,6 +208,18 @@
         <script src="${pageContext.request.contextPath}/assets/js/valiate/information.js"></script>
 
         <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    document.querySelector("form").addEventListener("submit", function (event) {
+                                        let province = document.getElementById("provinceText").value;
+                                        let district = document.getElementById("districtText").value;
+                                        let ward = document.getElementById("wardText").value;
+
+                                        if (!province || !district || !ward) {
+                                            alert("Vui lòng chọn đầy đủ tỉnh, quận/huyện và phường/xã.");
+                                            event.preventDefault(); 
+                                        }
+                                    });
+                                });
                                 function updateHiddenInput(selectElement, hiddenInputId) {
                                     const selectedOption = selectElement.options[selectElement.selectedIndex];
                                     document.getElementById(hiddenInputId).value = selectedOption.textContent;

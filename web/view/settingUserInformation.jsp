@@ -120,6 +120,7 @@
             transition: 0.3s ease-in-out;
             cursor: pointer;
         }
+
         .btn-logout:hover,
         .btn-setting:hover {
             border: 2px solid orangered;
@@ -149,6 +150,108 @@
             align-self: end;
             margin-top: 24px;
         }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+            display: none;
+            overflow-y: auto;
+            z-index: 10000;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-container {
+            background-color: #fff;
+            width: 900px;
+            max-width: calc(100% - 32px);
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn ease 0.5s;
+            border-radius: 12px;
+
+        }
+
+        .modal-close {
+            position: absolute;
+            right: 24px;
+            top: 16px;
+            color: #000;
+            cursor: pointer;
+            opacity: 0.8;
+            font-size: 24px;
+            background-color: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+
+        .modal-select {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 18px;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .img-create {
+            width: 100%;
+        }
+
+        .img-create img {
+            width: 100%;
+        }
+
+        .modal .btn-submit {
+            width: 100%;
+            border: none;
+            padding: 12px 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            background-color: #064273;
+            border-radius: 16px;
+            margin-top: 24px;
+            cursor: pointer;
+        }
+
+        @keyframes sidebarFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-150px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -158,9 +261,11 @@
 
 
     <div class="account-container">
-        <div class="btn-exit" onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?userId=${userInfor.userId}'">Esc</div>
+        <div class="btn-exit"
+            onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?userId=${userInfor.userId}'">
+            Esc</div>
         <div class="account-body">
-            <div class="account-avatar">
+            <div class="account-avatar js-open-modal">
                 <img src="${pageContext.request.contextPath}/assets/img/img-download/${userInformation.avatar}" alt="">
             </div>
             <h3 class="account-name">${userInfor.lastName} ${userInfor.firstName}</h3>
@@ -186,14 +291,97 @@
                     </div>
                     <button class="btn-setting">Chỉnh sửa</button>
                 </div>
-                <div class="btn-logout" onclick="location.href = '${pageContext.request.contextPath}/UserSettingServlet?action=logout'">Đăng Xuất</div>
-                
+                <div class="btn-logout"
+                    onclick="location.href = '${pageContext.request.contextPath}/UserSettingServlet?action=logout'">Đăng
+                    Xuất</div>
             </div>
-
         </div>
     </div>
+    <div class="modal js-modal" id="modal">
+        <form action="${pageContext.request.contextPath}/UserSettingServlet" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="changeImg">
+            <div class="modal-container js-modal-container">
+                <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
+                <div class="img-create" id="imgPreview"></div>
+                <div class="modal-select" id="customFileUpload"><i class="fa-solid fa-images"></i>
+                    <p>Đổi ảnh gì chưa người đẹp?</p>
+                </div>
+                <input type="file" id="fileInput" name="file" style="display: none;">
+                <input type="submit" class="btn-submit" name="name" value="Đổi">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        document.getElementById("customFileUpload").addEventListener("click", function () {
+            document.getElementById("fileInput").click();
+        });
+
+        const newContent = document.querySelector('.js-open-modal')
+        const modal = document.querySelector('.js-modal')
+        const modalContainer = document.querySelector('.js-modal-container')
+        const modalClose = document.querySelector('.js-modal-close')
+        const imgPreview = document.getElementById('imgPreview');
+        const fileInput = document.getElementById('fileInput');
+
+        function showModal() {
+            modal.classList.add('open')
+        }
+
+        function hideModal() {
+            modal.classList.remove('open')
+        }
+
+        newContent.addEventListener('click', showModal)
+
+        modalClose.addEventListener('click', hideModal)
+
+        modalClose.addEventListener('click', function () {
+            setTimeout(() => {
+                document.getElementById('imgPreview').innerHTML = "";
+                document.getElementById('fileInput').value = "";
+            }, 300);
+        });
+        modal.addEventListener('click', hideModal)
+        modal.addEventListener('click', function () {
+            setTimeout(() => {
+                document.getElementById('imgPreview').innerHTML = "";
+                document.getElementById('fileInput').value = "";
+            }, 300);
+        });
+
+        modalContainer.addEventListener('click', function (event) {
+            event.stopPropagation();
+        })
 
 
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0]; // Lấy file đầu tiên người dùng chọn
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = e.target.result;
+                    imgElement.style.maxWidth = "100%"; // Giới hạn kích thước ảnh
+                    imgElement.style.borderRadius = "8px";
+                    imgElement.style.marginTop = "10px";
+
+                    const previewDiv = document.getElementById('imgPreview');
+                    previewDiv.innerHTML = ""; // Xóa ảnh cũ nếu có
+                    previewDiv.appendChild(imgElement); // Thêm ảnh mới vào div
+                };
+                reader.readAsDataURL(file); // Chuyển file thành URL để hiển thị ảnh
+            }
+        });
+    </script>
 </body>
 
 </html>

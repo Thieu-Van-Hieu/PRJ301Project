@@ -178,4 +178,26 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         return null;
     }
 
+    @Override
+    public void updateUserAvatar(UserInformationResponse user) {
+        DBContext db = DBContext.getInstance();
+        
+        try {
+            String sql = """
+                         update user_informations 
+                         set avatarImg = ?
+                         where userId = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setString(1, user.getAvatar());
+            statement.setInt(2, user.getUserId());
+            int rs = statement.executeUpdate();
+            if(rs == 0){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            return;
+        }
+    }
+
 }

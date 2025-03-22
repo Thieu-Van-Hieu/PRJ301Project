@@ -31,6 +31,11 @@ public class UserInformationResponse {
         this.avatar = avatar;
     }
 
+    public UserInformationResponse(int userId, String avatar) {
+        this.userId = userId;
+        this.avatar = avatar;
+    }  
+
     public UserInformationResponse(int userId, String userName, String password, String firstName, String lastName, String email) {
         this.userId = userId;
         this.userName = userName;

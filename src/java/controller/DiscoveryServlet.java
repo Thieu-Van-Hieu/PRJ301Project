@@ -65,18 +65,23 @@ public class DiscoveryServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
-        UserService userService = new UserService();       
+        UserService userService = new UserService();
         int userId = (Integer) session.getAttribute("userId");
-        UserInformationResponse userInfor = userService.getUserInfor(userId);
+        UserInformationResponse userInformation = userService.getUserInfor(userId);
         if ("open".equals(action)) {
             int clubId = Integer.parseInt(request.getParameter("clubId"));
             session.setAttribute("clubId", clubId);
             session.setAttribute("userId", userId);
             response.sendRedirect(request.getContextPath() + "/ForumServlet");
+        } else if ("setting".equals(action)) {
+            UserInformationResponse userInfor = userService.getUserInforSetting(userId);
+            session.setAttribute("userInformation", userInformation);
+            session.setAttribute("userInfor", userInfor);
+            response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
         } else if (action == null) {
             ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
             ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
-            session.setAttribute("userInfor", userInfor);
+            session.setAttribute("userInformation", userInformation);
             session.setAttribute("clubListItems", clubListItems);
             session.setAttribute("clubList", clubList);
             response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");

@@ -45,7 +45,7 @@
                         </c:forEach>
                     <li><i class="fa-solid fa-plus"></i></li>
                     <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet'"><i class="fa-regular fa-compass"></i></li>
-                    <li><i class="fa-solid fa-gear"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=setting'"><i class="fa-solid fa-gear"></i></li>
                 </ul>
             </div>
 

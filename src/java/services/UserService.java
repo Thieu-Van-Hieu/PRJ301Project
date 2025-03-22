@@ -88,4 +88,8 @@ public class UserService {
     public UserInformationResponse getUserInfor(int userId){
         return userInformationRepository.getUser(userId);
     }
+    
+    public UserInformationResponse getUserInforSetting(int userId){
+        return userInformationRepository.getUserSetting(userId);
+    }
 }

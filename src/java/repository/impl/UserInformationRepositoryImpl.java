@@ -131,23 +131,51 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
                          where u.id = ?
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
                 return new UserInformationResponse(userId,
-                            rs.getNString("role"),
+                        rs.getNString("role"),
                         rs.getNString("firstName"),
-                         rs.getNString("lastName"),
-                           rs.getString("email"),
+                        rs.getNString("lastName"),
+                        rs.getString("email"),
                         rs.getString("studentId"),
-                          rs.getNString("address"),
-                         rs.getString("birthday"),
-                          rs.getString("avatarImg"));
+                        rs.getNString("address"),
+                        rs.getString("birthday"),
+                        rs.getString("avatarImg"));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    @Override
+    public UserInformationResponse getUserSetting(int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                         select * from user_informations as ui
+                         join users as u on u.id = ui.userId
+                         where u.id = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                return new UserInformationResponse(userId, 
+                        rs.getString("username"), 
+                        rs.getString("password"), 
+                        rs.getNString("firstName"), 
+                        rs.getNString("lastName"),  
+                        rs.getString("email"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

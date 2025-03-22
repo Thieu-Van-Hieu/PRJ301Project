@@ -20,4 +20,6 @@ public interface ClubRepository {
     public ArrayList<ClubResponse> getClubIcons(int userId);
     
     public int addClub(ClubResponse club);
+    
+    public ArrayList<ClubResponse> getClubsByType(String type);
 }

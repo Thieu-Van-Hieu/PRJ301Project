@@ -19,16 +19,18 @@
             /* Màu xanh dương */
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: right;
+            align-items: end;
             height: 100vh;
             margin: 0;
         }
 
         .account-container {
             background-color: #e0f2ff;
-            width: 400px;
-            border-radius: 10px;
+            width: 92vw;
+            height: 88vh;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
             padding: 20px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
@@ -51,19 +53,7 @@
         .profile-header h2 {
             margin: 0;
             color: #004a99;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #bde0ff;
-        }
-
-        .info-item:last-child {
-            border-bottom: none;
-        }
-
+        }     
         .edit-button {
             background-color: #ccc;
             border: none;
@@ -72,7 +62,7 @@
             cursor: pointer;
         }
         .logout-button {
-            width: 100%;
+            width: 60px;
             background-color: #d9534f;
             color: white;
             border: none;
@@ -90,31 +80,10 @@
     <jsp:include page="background.jsp" />
 
     <div class="account-container">
-        <div class="profile-header">
-            <img src="" alt="Avatar">
-            <h2>Hùng dz</h2>
-        </div>
-        <div class="info-item">
-            <span>Tên Hiển Thị</span>
-            <span>Hùng dz</span>
-        </div>
-        <div class="info-item">
-            <span>Mật khẩu</span>
-            <span><input type="password" name="password"></span>
-            <button class="edit-button">Chỉnh sửa</button>
-        </div>
-        <div class="info-item">
-            <span>Email</span>
-            <span><input type="text" name="password"></span>
-            <button class="edit-button">Chỉnh sửa</button>
-        </div>
-        <div class="info-item">
-            <span>Số điện thoại</span>
-            <span><input type="text" name="password"></span>
-            <button class="edit-button">Chỉnh sửa</button>
-        </div>
-        <button class="logout-button">Đăng xuất</button>
+         
+        <button class="logout-button">Đăng xuất</button>     
     </div>
+    
 </body>
 
 </html>

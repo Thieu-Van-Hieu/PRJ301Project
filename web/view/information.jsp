@@ -208,22 +208,6 @@
         <script src="${pageContext.request.contextPath}/assets/js/valiate/information.js"></script>
 
         <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    document.querySelector("form").addEventListener("submit", function (event) {
-                                        let province = document.getElementById("provinceText").value;
-                                        let district = document.getElementById("districtText").value;
-                                        let ward = document.getElementById("wardText").value;
-
-                                        if (!province || !district || !ward) {
-                                            alert("Vui lòng chọn đầy đủ tỉnh, quận/huyện và phường/xã.");
-                                            event.preventDefault(); 
-                                        }
-                                    });
-                                });
-                                function updateHiddenInput(selectElement, hiddenInputId) {
-                                    const selectedOption = selectElement.options[selectElement.selectedIndex];
-                                    document.getElementById(hiddenInputId).value = selectedOption.textContent;
-                                }
 
 // Khi chọn tỉnh/thành phố
                                 document.getElementById("province").addEventListener("change", function () {

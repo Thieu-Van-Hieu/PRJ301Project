@@ -78,6 +78,8 @@ public class DiscoveryServlet extends HttpServlet {
             session.setAttribute("userInformation", userInformation);
             session.setAttribute("userInfor", userInfor);
             response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
+        } else if("createClub".equals(action)){
+            
         } else if (action == null) {
             ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
             ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();

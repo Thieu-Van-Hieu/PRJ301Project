@@ -77,9 +77,10 @@ public class LoginServlet extends HttpServlet {
         boolean isCheck = userService.checkLogin(username, password);
         int userId = userService.getUsername(username, password).getId();
         HttpSession session = request.getSession();
-        
+
         if (isCheck) {
             session.setAttribute("userId", userId);
+            session.setAttribute("success", "Đăng nhập thành công");
             response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
         } else {
             session.setAttribute("error", "Donate cho tao 50 triệu thì có Account!");

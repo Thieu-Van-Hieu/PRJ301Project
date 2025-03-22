@@ -65,7 +65,7 @@ public class DiscoveryServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
-        UserService userService = new UserService();       
+        UserService userService = new UserService();
         int userId = (Integer) session.getAttribute("userId");
         UserInformationResponse userInfor = userService.getUserInfor(userId);
         if ("open".equals(action)) {

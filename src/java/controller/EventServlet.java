@@ -86,7 +86,7 @@ public class EventServlet extends HttpServlet {
         session.setAttribute("eventDescriptions", eventDescriptions);
         session.setAttribute("eventTypes", eventTypes);
         session.setAttribute("includeWeb", "event.jsp");
-        
+
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 

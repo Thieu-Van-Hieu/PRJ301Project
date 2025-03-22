@@ -9,6 +9,7 @@ import java.io.IOException;
 import services.UserService;
 
 public class ResetPasswordServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,14 +35,17 @@ public class ResetPasswordServlet extends HttpServlet {
         String confirmPassword = request.getParameter("confirmPassword");
         UserService userService = new UserService();
         userService.resetPassword(newPassword);
+        HttpSession session = request.getSession();
         boolean updated = updatePassword(newPassword);
         if (updated) {
+            session.setAttribute("success", "Đổi mật khẩu thành công!");
             response.sendRedirect(request.getContextPath() + "/view/resetSuccess.jsp");
         } else {
-            request.setAttribute("error", "Có lỗi xảy ra khi cập nhật mật khẩu. Vui lòng thử lại.");
+            session.setAttribute("error", "Có lỗi xảy ra khi cập nhật mật khẩu. Vui lòng thử lại.");
             request.getRequestDispatcher("view/resetPassword.jsp").forward(request, response);
         }
     }
+
     private boolean updatePassword(String newPassword) {
         System.out.println("Cập nhật mật khẩu thành: " + newPassword);
         return true;

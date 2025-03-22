@@ -83,7 +83,7 @@ public class InformationServlet extends HttpServlet {
         boolean isExistStudentId = service.isExistStudentId(studentId);
         if (isExistStudentId) {
             session.setAttribute("error", "Mã sinh viên đã tồn tại");
-            response.sendRedirect(request.getContextPath() + "view/login.jsp");
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
             return;
         }
         String temp[] = hoTen.split(" ");
@@ -108,8 +108,8 @@ public class InformationServlet extends HttpServlet {
         service.addInformationOfUser();
 
         UserInformationResponse result = service.getResults();
-
         session.setAttribute("user", result);
+        session.setAttribute("success", "Đăng ký thành công!");
         response.sendRedirect(request.getContextPath() + "/view/login.jsp");
     }
 

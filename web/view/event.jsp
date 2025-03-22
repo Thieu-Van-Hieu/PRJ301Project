@@ -12,7 +12,7 @@
 
     <div class="content-body">
         <div class="content-filter">
-            <form action="EventServlet" method="GET">
+            <form action="${pageContext.request.getContextPath()}/EventServlet" method="GET">
                 <input type="hidden" value="filter" name="action">
                 <table>
                     <tr>

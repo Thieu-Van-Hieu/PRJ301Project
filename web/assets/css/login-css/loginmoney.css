@@ -248,3 +248,12 @@ body, html, form {
   form .inputGroup2 #showPasswordToggle input:disabled ~ .indicator:after {
     visibility: hidden;
   }
+  .forgot a {
+    text-decoration: none;
+    color: #3D2097;
+    font-weight: 600;
+  }
+
+  .forgot a:hover {
+    color: white !important;
+  }

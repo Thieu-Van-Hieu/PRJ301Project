@@ -1,14 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${not empty error}">
+<c:if test="${not empty success}">
     <style>
-        .notification.error {
+        .notification.success {
             position: fixed;
-            top: 70px;
+            top: 20px;
             right: -300px;
             width: 280px;
             padding: 15px;
-            background-color: #ff4d4d;
+            background-color: #4CAF50;
             color: white;
             font-size: 18px;
             font-weight: bold;
@@ -21,7 +21,7 @@
             z-index: 9999;
             border-left: 5px solid #ffffff;
         }
-        .notification.error.show {
+        .notification.success.show {
             right: 20px;
         }
         .close-btn {
@@ -33,24 +33,24 @@
         }
     </style>
 
-    <div id="notification-error" class="notification error">
-        ${error}
-        <button class="close-btn" onclick="closeNotificationError()">×</button>
+    <div id="notification-success" class="notification success">
+        ${success}
+        <button class="close-btn" onclick="closeNotificationSuccess()">×</button>
     </div>
     <script>
         window.addEventListener("load", function () {
-            var notification = document.getElementById("notification-error");
+            var notification = document.getElementById("notification-success");
             if (notification) {
                 notification.classList.add("show");
-                setTimeout(closeNotificationError, 3000);
+                setTimeout(closeNotificationSuccess, 3000);
             }
         });
-        function closeNotificationError() {
-            var notification = document.getElementById("notification-error");
+        function closeNotificationSuccess() {
+            var notification = document.getElementById("notification-success");
             if (notification) {
                 notification.classList.remove("show");
             }
         }
     </script>
-    <% session.removeAttribute("error"); %>
+    <% session.removeAttribute("success"); %>
 </c:if>

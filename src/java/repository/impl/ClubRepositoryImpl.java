@@ -57,7 +57,7 @@ public class ClubRepositoryImpl implements ClubRepository {
                          from clubs as c
                          join members as m on m.clubId = c.id
                          join user_informations as ai on ai.userId = m.userId
-                         where m.role = 'Ch? Nhi?m'
+                         where m.role = 'Chủ Nhiệm'
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();

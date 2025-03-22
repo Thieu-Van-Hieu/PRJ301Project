@@ -132,6 +132,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
                          where u.id = ?
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
@@ -150,4 +151,55 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             return new UserInformationResponse();
         }
     }
+
+    @Override
+    public UserInformationResponse getUserSetting(int userId) {
+        DBContext db = DBContext.getInstance();
+        UserInformationResponse userInformationResponse = new UserInformationResponse();
+        try {
+            String sql = """
+                         select * from user_informations as ui
+                         join users as u on u.id = ui.userId
+                         where u.id = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                userInformationResponse = new UserInformationResponse(userId,
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getNString("firstName"),
+                        rs.getNString("lastName"),
+                        rs.getString("email"));
+            }
+            return userInformationResponse;
+        } catch (Exception e) {
+            return new UserInformationResponse();
+        }
+    }
+
+    @Override
+    public void updateUserAvatar(UserInformationResponse user) {
+        DBContext db = DBContext.getInstance();
+
+        try {
+            String sql = """
+                         update user_informations 
+                         set avatarImg = ?
+                         where userId = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setString(1, user.getAvatar());
+            statement.setInt(2, user.getUserId());
+            int rs = statement.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
 }

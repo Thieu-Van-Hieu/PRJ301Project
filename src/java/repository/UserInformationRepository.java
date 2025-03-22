@@ -23,4 +23,8 @@ public interface UserInformationRepository {
     public UserInformationResponse getNameAvatarOfUser(int userId);
     
     public UserInformationResponse getUser(int userId);
+    
+    public UserInformationResponse getUserSetting(int userId);
+    
+    public void updateUserAvatar(UserInformationResponse user);
 }

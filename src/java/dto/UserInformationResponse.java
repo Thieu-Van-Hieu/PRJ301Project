@@ -30,8 +30,22 @@ public class UserInformationResponse {
         this.userName = userName;
         this.avatar = avatar;
     }
-      
 
+    public UserInformationResponse(int userId, String avatar) {
+        this.userId = userId;
+        this.avatar = avatar;
+    }  
+
+    public UserInformationResponse(int userId, String userName, String password, String firstName, String lastName, String email) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+  
+      
     public UserInformationResponse(String firstName, String lastName, String studentId, String address, String gender, String birthday) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -67,6 +81,7 @@ public class UserInformationResponse {
         this.birthday = birthday;
     }
 
+   
     public int getUserId() {
         return userId;
     }

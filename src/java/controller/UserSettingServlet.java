@@ -4,25 +4,25 @@
  */
 package controller;
 
-import dto.ClubResponse;
 import dto.UserInformationResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import services.ClubService;
-import java.sql.Timestamp;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import services.UserService;
+import util.FileService;
 
-/**
- *
- * @author hunggt1572004
- */
-public class DiscoveryServlet extends HttpServlet {
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
+        maxFileSize = 1024 * 1024 * 10, //10MB
+        maxRequestSize = 1024 * 1024 * 50) 
+public class UserSettingServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +41,10 @@ public class DiscoveryServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DiscoveryServlet</title>");
+            out.println("<title>Servlet UserSettingServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DiscoveryServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserSettingServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,33 +62,14 @@ public class DiscoveryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        ClubService clubService = new ClubService();
-        UserService userService = new UserService();
-        int userId = (Integer) session.getAttribute("userId");
-        UserInformationResponse userInformation = userService.getUserInfor(userId);
-        if ("open".equals(action)) {
-            int clubId = Integer.parseInt(request.getParameter("clubId"));
-            session.setAttribute("clubId", clubId);
-            session.setAttribute("userId", userId);
-            response.sendRedirect(request.getContextPath() + "/ForumServlet");
-        } else if ("setting".equals(action)) {
-            UserInformationResponse userInfor = userService.getUserInforSetting(userId);
-            session.setAttribute("userInformation", userInformation);
-            session.setAttribute("userInfor", userInfor);
-            response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
-        } else if ("createClub".equals(action)) {
+        String action = request.getParameter("action");
 
-        } else if (action == null) {
-            ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
-            ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
-            session.setAttribute("userInformation", userInformation);
-            session.setAttribute("clubListItems", clubListItems);
-            session.setAttribute("clubList", clubList);
-            response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
+        if ("logout".equals(action)) {
+            session.invalidate();
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         }
-
+        response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
     }
 
     /**
@@ -99,18 +80,34 @@ public class DiscoveryServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        int userId = (Integer) session.getAttribute("userId");
-        if (action.equals("joinClub")) {
-            String createTimeStr = request.getParameter("createTime");
-            Timestamp createTime = Timestamp.valueOf(createTimeStr);
+        int userId = (Integer)session.getAttribute("userId");
+        UserService userService = new UserService();
+        if ("changeImg".equals(action)) {
+            Part filePart = request.getPart("file");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
+            String uploadDir = IMG_DIR;
+            
+            File uploadFolder = new File(uploadDir);
+            if (!uploadFolder.exists()) {
+                uploadFolder.mkdirs();
+            }
+
+            String normalized = FileService.normalizeFileName(fileName);
+
+            String filePath = uploadDir + File.separator + normalized;
+            filePart.write(filePath);
+            UserInformationResponse user = new UserInformationResponse(userId, fileName);
+            userService.updateUserAvatar(user);
         }
-
+        doGet(request, response);
     }
 
     /**

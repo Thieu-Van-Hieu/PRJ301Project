@@ -5,7 +5,7 @@ import repository.TaskAssignedByMeRepository;
 import repository.impl.MemberTaskRepositoryImpl;
 import repository.impl.TaskAssignedByMeRepositoryImpl;
 import repository.impl.TaskAssignedToMeRepositoryImpl;
-import services.TaskAssignedToMeRepository;
+import repository.TaskAssignedToMeRepository;
 
 public class TaskFactory {
     private final static TaskAssignedToMeRepository taskAssignedToMeRepository = new TaskAssignedToMeRepositoryImpl();

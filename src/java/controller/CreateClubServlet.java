@@ -4,7 +4,10 @@
  */
 package controller;
 
-import dto.UserInformationResponse;
+import dto.ClubResponse;
+import dto.MemberDTO;
+import entity.Club;
+import entity.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,13 +19,16 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.nio.file.Paths;
-import services.UserService;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import services.ClubService;
+import services.MemberService;
 import util.FileService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
         maxFileSize = 1024 * 1024 * 10, //10MB
-        maxRequestSize = 1024 * 1024 * 50) 
-public class UserSettingServlet extends HttpServlet {
+        maxRequestSize = 1024 * 1024 * 50)
+public class CreateClubServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,81 +47,66 @@ public class UserSettingServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UserSettingServlet</title>");
+            out.println("<title>Servlet CreateClubServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UserSettingServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateClubServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String action = request.getParameter("action");
-
-        if ("logout".equals(action)) {
-            session.invalidate();
-            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
-            return;
-        }
-        response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
+        processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String action = request.getParameter("action");
+        ClubService clubService = new ClubService();
+        MemberService memberService = new MemberService();
         int userId = (Integer)session.getAttribute("userId");
-        UserService userService = new UserService();
-        if ("changeImg".equals(action)) {
-            Part filePart = request.getPart("file");
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String clubName = request.getParameter("clubName");
+        String clubType = request.getParameter("type");
+        String description = request.getParameter("description");
+        Part avatar = request.getPart("avatarClub");
+        Part coverImg = request.getPart("coverImgClub");
+        LocalDate today = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String date = today.format(formatter);
+        
+        String avatarName = Paths.get(avatar.getSubmittedFileName()).getFileName().toString();
+        String coverImgName = Paths.get(coverImg.getSubmittedFileName()).getFileName().toString();
+        String uploadDir = IMG_DIR;
 
-            String uploadDir = IMG_DIR;
-            
-            File uploadFolder = new File(uploadDir);
-            if (!uploadFolder.exists()) {
-                uploadFolder.mkdirs();
-            }
-
-            String normalized = FileService.normalizeFileName(fileName);
-
-            String filePath = uploadDir + File.separator + normalized;
-            filePart.write(filePath);
-            UserInformationResponse user = new UserInformationResponse(userId, fileName);
-            userService.updateUserAvatar(user);
+        File uploadFolder = new File(uploadDir);
+        if (!uploadFolder.exists()) {
+            uploadFolder.mkdirs();
         }
-        doGet(request, response);
+
+        String avatarNormalized = FileService.normalizeFileName(avatarName);
+        String coverImgNormalized = FileService.normalizeFileName(coverImgName);
+        
+        String avatarPath = uploadDir + File.separator + avatarNormalized;
+        String coverImgPath = uploadDir + File.separator + coverImgNormalized;
+        
+        avatar.write(avatarPath);
+        coverImg.write(coverImgPath);
+        
+        ClubResponse club = new ClubResponse(clubName, description, clubType, date, avatarName, coverImgName);
+        int clubId = clubService.addClub(club);
+        MemberDTO newMember = new MemberDTO(clubId, userId, 1, "Chủ Nhiệm");
+        memberService.addMember(newMember);
+        
+        session.setAttribute("clubId", clubId);
+        response.sendRedirect(request.getContextPath() + "/DiscoveryServlet?action=open&clubId=" + clubId);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

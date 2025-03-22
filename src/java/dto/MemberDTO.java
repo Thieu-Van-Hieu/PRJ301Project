@@ -11,10 +11,19 @@ package dto;
 public class MemberDTO {
     private int clubId;
     private int id;
-
+    private int userId;
+    private int deptId;
+    private String role;
     public MemberDTO(int clubId, int id) {
         this.clubId = clubId;
         this.id = id;
+    }
+
+    public MemberDTO(int clubId, int userId, int deptId, String role) {
+        this.clubId = clubId;
+        this.userId = userId;
+        this.deptId = deptId;
+        this.role = role;
     }
 
     public int getClubId() {
@@ -32,6 +41,32 @@ public class MemberDTO {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(int deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
     
     
     

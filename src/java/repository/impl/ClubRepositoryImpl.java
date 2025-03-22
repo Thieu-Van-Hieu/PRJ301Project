@@ -61,8 +61,8 @@ public class ClubRepositoryImpl implements ClubRepository {
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getNString("name");
                 String description = rs.getNString("description");
@@ -70,7 +70,7 @@ public class ClubRepositoryImpl implements ClubRepository {
                 String avatarClub = rs.getString("avatarClub");
                 String coverImage = rs.getString("coverImage");
                 String presidentName = rs.getString("namePresident");
-                
+
                 ClubResponse clubResponse = new ClubResponse(id, name, description, type, avatarClub, coverImage, presidentName);
                 clubResponses.add(clubResponse);
             }
@@ -96,16 +96,49 @@ public class ClubRepositoryImpl implements ClubRepository {
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 int id = rs.getInt("id");
-                String avatarClub = rs.getString("avatarClub");               
-                ClubResponse clubResponse = new ClubResponse(id,avatarClub);
+                String avatarClub = rs.getString("avatarClub");
+                ClubResponse clubResponse = new ClubResponse(id, avatarClub);
                 clubResponses.add(clubResponse);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return clubResponses;
+    }
+
+    @Override
+    public int addClub(ClubResponse club) {
+        DBContext db = DBContext.getInstance();
+        int generatedId = -1;
+        try {
+            String sql = """
+                         insert into clubs(name, description, type, createdAt, avatarClub, coverImage)
+                         values (?, ?, ?, ?, ?, ?);
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setNString(1, club.getName());
+            statement.setNString(2, club.getDescription());
+            statement.setNString(3, club.getType());
+            statement.setString(4, club.getDate());
+            statement.setString(5, club.getAvatarClub());
+            statement.setString(6, club.getCoverImage());
+            int rs = statement.executeUpdate();
+
+            if (rs > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    generatedId = generatedKeys.getInt(1);
+                }
+            } else {
+                throw new Exception();
+            }
+
+        } catch (Exception e) {
+            return 0;
+        }
+        return generatedId;
     }
 }

@@ -145,7 +145,6 @@
             border-radius: 50%;
             position: absolute;
             z-index: 1000;
-            top: 24px;
             right: 24px;
             color: #ccc;
             cursor: pointer;
@@ -155,9 +154,9 @@
         <div class="form-register">
             <h2>Tạo Câu Lạc Bộ</h2>
             <div class="btn-exit"
-            onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?userId=${userInfor.userId}'">
+            onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?userId=${userId}'">
             Esc</div>
-            <form action="${pageContext.request.contextPath}/RegisterServlet" method="post">
+            <form action="${pageContext.request.contextPath}/CreateClubServlet" method="post" enctype="multipart/form-data">
                 <div class="form-row">
                     <label for="clubName">Tên Câu Lạc Bộ:</label>
                     <input type="text" id="clubName" name="clubName" autocomplete="off" required>
@@ -182,7 +181,7 @@
                     <div class="modal-select" id="customAvatarFile"><i class="fa-solid fa-images"></i>
                         <p>Thêm ảnh đại diện câu lạc bộ gì không người đẹp?</p>
                     </div>
-                    <input type="file" id="avatarClub" name="avatarClub" style="display: none;">
+                    <input type="file" id="avatarClub" name="avatarClub" style="display: none;" required>
 
                 </div>
                 <div class="form-row">
@@ -190,7 +189,7 @@
                     <div class="modal-select" id="customCoverImgFile"><i class="fa-solid fa-images"></i>
                         <p>Thêm ảnh nền câu lạc bộ gì không người đẹp?</p>
                     </div>
-                    <input type="file" id="coverImgClub" name="coverImgClub" style="display: none;">
+                    <input type="file" id="coverImgClub" name="coverImgClub" style="display: none;" required>
 
                 </div>
                 <button type="submit" style="color: white; font-weight: 700;margin-top: 24px;">Đăng Ký</button>

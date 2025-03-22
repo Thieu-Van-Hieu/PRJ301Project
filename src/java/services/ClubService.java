@@ -51,4 +51,8 @@ public class ClubService {
         }
         return null;
     }
+    
+    public int addClub(ClubResponse club){
+        return clubRepository.addClub(club);
+    }
 }

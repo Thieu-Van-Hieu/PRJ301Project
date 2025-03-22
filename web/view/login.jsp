@@ -16,7 +16,6 @@
 
     <body>
         <jsp:include page="noticeError.jsp"/>
-        <jsp:include page="noiceSuccess.jsp"/>
         <jsp:include page="sakura.jsp" />
         <div class="container">
             <div class="left-intro">

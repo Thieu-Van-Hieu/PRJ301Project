@@ -86,5 +86,28 @@ public class MemberRepositoryImpl implements MemberRepository{
         }
         return null;
     }
+
+    @Override
+    public void addMember(MemberDTO member) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                         insert into members(userId, clubId, deptId, role)
+                         values (?, ?, ?, ?)
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, member.getUserId());
+            statement.setInt(2, member.getUserId());
+            statement.setInt(3, member.getDeptId());
+            statement.setNString(4, member.getRole());
+            
+            int rs = statement.executeUpdate();
+            if(rs == 0){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            return;
+        }
+    }
     
 }

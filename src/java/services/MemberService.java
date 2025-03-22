@@ -4,6 +4,7 @@
  */
 package services;
 
+import dto.MemberDTO;
 import dto.MemberResponse;
 import entity.Member;
 import factory.MemberFactory;
@@ -27,5 +28,9 @@ public class MemberService {
     
     public Member getMemberInfor(int userId, int clubId){
         return memberRepository.getMember(userId, clubId);
+    }
+    
+    public void addMember(MemberDTO member){
+        memberRepository.addMember(member);
     }
 }

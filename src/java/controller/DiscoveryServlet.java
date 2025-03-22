@@ -28,10 +28,10 @@ public class DiscoveryServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -50,14 +50,15 @@ public class DiscoveryServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -65,9 +66,9 @@ public class DiscoveryServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
-        UserService userService = new UserService();       
+        UserService userService = new UserService();
         int userId = (Integer) session.getAttribute("userId");
-        UserInformationResponse userInfor = userService.getUserInfor(userId);
+        UserInformationResponse userInformation = userService.getUserInfor(userId);
         if ("open".equals(action)) {
             int clubId = Integer.parseInt(request.getParameter("clubId"));
             session.setAttribute("clubId", clubId);
@@ -76,7 +77,7 @@ public class DiscoveryServlet extends HttpServlet {
         } else if (action == null) {
             ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
             ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();
-            session.setAttribute("userInfor", userInfor);
+            session.setAttribute("userInformation", userInformation);
             session.setAttribute("clubListItems", clubListItems);
             session.setAttribute("clubList", clubList);
             response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
@@ -87,10 +88,10 @@ public class DiscoveryServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

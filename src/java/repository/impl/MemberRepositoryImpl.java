@@ -97,7 +97,7 @@ public class MemberRepositoryImpl implements MemberRepository{
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, member.getUserId());
-            statement.setInt(2, member.getUserId());
+            statement.setInt(2, member.getClubId());
             statement.setInt(3, member.getDeptId());
             statement.setNString(4, member.getRole());
             

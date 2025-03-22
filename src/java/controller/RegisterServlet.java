@@ -137,6 +137,7 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("password", password);
         session.setAttribute("generatedOTP", otp);
         session.setAttribute("email", email);
+        session.setAttribute("success", "Chúng tôi đã gửi OTP!");
         response.sendRedirect(request.getContextPath() + "/view/otp.jsp");
     }
 

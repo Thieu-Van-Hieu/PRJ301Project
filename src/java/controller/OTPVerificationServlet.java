@@ -80,6 +80,7 @@ public class OTPVerificationServlet extends HttpServlet {
         String email = (String) session.getAttribute("email");
 
         if (generatedOTP != null && enteredOTP.equals(generatedOTP)) {
+            session.setAttribute("success", "Xác nhận OTP thành công!");
             session.removeAttribute("generatedOTP");
             response.sendRedirect(request.getContextPath() + "/view/information.jsp");
         } else {

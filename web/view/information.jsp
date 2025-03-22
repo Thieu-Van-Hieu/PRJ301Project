@@ -28,6 +28,7 @@
 
     <body>
         <jsp:include page="sakura.jsp" />
+        <jsp:include page="noticeSuccess.jsp"/>
         <div class="container">
             <div class="form-register">
                 <h2>Thông tin cá nhân</h2>

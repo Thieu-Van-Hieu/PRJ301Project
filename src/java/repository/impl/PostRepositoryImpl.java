@@ -4,6 +4,7 @@
  */
 package repository.impl;
 
+import dto.CommentDTO;
 import dto.PostDTO;
 import entity.Post;
 import entity.PostComment;
@@ -36,6 +37,7 @@ public class PostRepositoryImpl implements PostRepository {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int userId = rs.getInt("userId");
+                String userAvatar = userService.getUserInfor(userId).getAvatar();
                 String content = rs.getNString("content");
                 String img = rs.getString("img");
                 Timestamp createAt = rs.getTimestamp("createdAt");
@@ -53,6 +55,7 @@ public class PostRepositoryImpl implements PostRepository {
                         .setLoves(loves)
                         .setComments(postComment.size())
                         .setFullName(fullName)
+                        .setUserAvatar(userAvatar)
                         .build();
                 posts.add(post);
             }
@@ -69,8 +72,9 @@ public class PostRepositoryImpl implements PostRepository {
 
         try {
             String sql = """
-                         select * from comments 
-                         where postId = ?
+                         select c.id, c.postId, c.userId, c.content, ui.avatarImg, CONCAT(ui.lastName, ' ', ui.firstName) as fullName from comments as c
+                                                  join user_informations as ui on ui.userId = c.userId
+                                                  where postId = ?
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postId);
@@ -78,7 +82,7 @@ public class PostRepositoryImpl implements PostRepository {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                PostComment postComment = new PostComment(rs.getInt("id"), postId, rs.getInt("userId"), rs.getNString("content"), rs.getString("createAt"));
+                PostComment postComment = new PostComment(rs.getInt("id"), rs.getInt("postId"), rs.getInt("userId"), rs.getNString("content"), rs.getString("avatarImg"), rs.getNString("fullName"));
                 postComments.add(postComment);
             }
         } catch (Exception e) {
@@ -86,6 +90,26 @@ public class PostRepositoryImpl implements PostRepository {
         }
 
         return postComments;
+    }
+
+    @Override
+    public void addLove(int postId, int userId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                       insert into loves(postId, userId)
+                       values (?, ?)
+                       """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, postId);
+            statement.setInt(2, userId);
+            int rs = statement.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
     }
 
     private int getLoves(int postId) {
@@ -110,8 +134,7 @@ public class PostRepositoryImpl implements PostRepository {
         }
         return 0;
     }
-    
-    
+
     @Override
     public void addPost(PostDTO postDTO) {
         DBContext db = DBContext.getInstance();
@@ -128,13 +151,54 @@ public class PostRepositoryImpl implements PostRepository {
             statement.setTimestamp(4, postDTO.getCreatedAt());
             statement.setString(5, postDTO.getImg());
             rs = statement.executeUpdate();
-            
-            if(rs == 0){
+
+            if (rs == 0) {
                 throw new Exception();
             }
-            
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean isLove(int postId, int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                         select * from loves
+                         where postId = ? and userId = ?
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, postId);
+            statement.setInt(2, userId);
+
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void addComment(CommentDTO commentDTO) {
+        DBContext db = DBContext.getInstance();
+
+        try {
+            String sql = """
+                         insert into comments(postId, userId, content, createdAt)
+                         values (?, ?, ?, ?)
+                         """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, commentDTO.getPostId());
+            statement.setInt(2, commentDTO.getUserId());
+            statement.setNString(3, commentDTO.getContent());
+            statement.setTimestamp(4, commentDTO.getCreatedAt());
+
+            int rs = statement.executeUpdate();
+        } catch (Exception e) {
+            return;
         }
     }
 

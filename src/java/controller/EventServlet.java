@@ -72,6 +72,7 @@ public class EventServlet extends HttpServlet {
         ArrayList<EventType> eventTypes = eventService.selectAllEventType();
         ArrayList<EventResponse> eventDescriptions = null;
         ArrayList<ClubResponse> clubIdAndNames = clubService.selectAllClubIdAndClubName();
+        int userId = (Integer) session.getAttribute("userId");
         if (action == null) {
             eventDescriptions = eventService.getAllEventDescription();
         } else if (action.equals("filter")) {
@@ -83,6 +84,7 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent, status, clubId);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
+        session.setAttribute("userId", userId);
         request.setAttribute("clubDescriptions", clubIdAndNames);
         request.setAttribute("eventDescriptions", eventDescriptions);
         request.setAttribute("eventTypes", eventTypes);
@@ -93,7 +95,6 @@ public class EventServlet extends HttpServlet {
         System.out.println(session.getAttribute("eventId"));
         session.removeAttribute("eventId");
         request.setAttribute("clubId", session.getAttribute("clubId"));
-        session.removeAttribute("clubId");
         request.setAttribute("startDate", session.getAttribute("startDate"));
         session.removeAttribute("startDate");
         request.setAttribute("endDate", session.getAttribute("endDate"));

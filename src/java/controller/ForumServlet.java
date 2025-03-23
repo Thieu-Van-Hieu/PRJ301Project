@@ -125,27 +125,17 @@ public class ForumServlet extends HttpServlet {
             try {
                 int clubId = Integer.parseInt(request.getParameter("clubId"));
                 String content = request.getParameter("content");
-                Timestamp createdAt = null;
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-                    createdAt = new Timestamp(dateFormat.parse(request.getParameter("createTime")).getTime());
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Timestamp createdAt = getCurrentTimestamp();
                 Part filePart = request.getPart("file");
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-                String fileExtension = FileService.getFileExtension(fileName);
-                String uploadDir = "";
+                String uploadDir = IMG_DIR;
 
                 File uploadFolder = new File(uploadDir);
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
                 }
-                String imgName = "Ảnh" + "_" + clubId + "." + fileExtension;
-                String normalized = FileService.normalizeFileName(imgName);
+                String normalized = FileService.normalizeFileName(fileName);
 
                 String filePath = uploadDir + File.separator + normalized;
                 filePart.write(filePath);

@@ -1,4 +1,3 @@
-
 /* Nội dung chính */
 .content-container {
     background: #eaf8f2;
@@ -7,7 +6,6 @@
 }
 
 .content-body {
-
 }
 .content-list {
     display: flex;
@@ -43,7 +41,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .content-item .item-img img {
@@ -59,7 +56,6 @@
     flex-direction: column;
     justify-content: left;
     align-items: center;
-
 }
 
 .item-name {
@@ -113,7 +109,6 @@
 .item-extend {
     padding: 8px 12px;
 }
-
 
 .item-content-text {
     padding: 0 12px 6px;
@@ -183,6 +178,36 @@
     font-size: 18px;
 }
 
+.content-text {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ccc;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.content-text .send {
+    position: absolute;
+    right: 10px;
+    border-radius: 12px;
+    transition: 0.3s ease-in-out;
+    font-size: 16px;
+    border: none;
+    width: 36px;
+    height: 36px;
+}
+
+.content-text .send:hover {
+    background-color: orangered;
+    color: #fff;
+}
+.content-text .input {
+    padding: 16px 6px;
+    width: 95%;
+    border-radius: 12px;
+    border: none;
+}
 
 @keyframes likeAnimation {
     0% {
@@ -271,7 +296,7 @@
     position: absolute;
     right: 10px;
     font-size: 16px;
-    color: #CCC
+    color: #ccc;
 }
 
 .content-create {
@@ -283,8 +308,6 @@
     margin: 12px 32px;
 }
 
-
-
 .content-text .avatar {
     width: 32px;
     height: 32px;
@@ -292,8 +315,6 @@
     align-items: center;
     justify-content: center;
 }
-
-
 
 .content-text img {
     width: 100%;
@@ -340,7 +361,6 @@
     position: relative;
     animation: modalFadeIn ease 0.5s;
     border-radius: 12px;
-
 }
 
 .modal-close {

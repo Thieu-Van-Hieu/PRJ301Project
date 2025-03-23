@@ -6,7 +6,7 @@
     <header class="content-header">
         <h2>Diễn đàn</h2>
         <div class="content-header_util">
-            <i class="fa-solid fa-scroll"></i>
+            <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
             <input type="text" name="" id="" placeholder="Tìm kiếm">
             <i class="fa-solid fa-magnifying-glass content-search"></i>
@@ -97,39 +97,7 @@
                                     <i class="fa-regular fa-comment"></i>
                                     <p>Bình Luận</p>             
                                 </div>
-                            </div>
-                            <style>
-                                .content-text {
-                                    display: flex;
-                                    gap: 12px;
-                                    padding: 12px 0;
-                                    border-bottom: 1px solid #ccc;
-                                    justify-content: space-between;
-                                    align-items: center;
-                                    position: relative;
-                                }
-                                .content-text .send {
-                                    position: absolute;
-                                    right: 10px;
-                                    border-radius: 12px;
-                                    transition: 0.3s ease-in-out;
-                                    font-size: 16px;
-                                    border: none;
-                                    width: 36px;
-                                    height: 36px;
-                                }
-
-                                .content-text .send:hover {
-                                    background-color: orangered;
-                                    color: #fff;
-                                }
-                                .content-text .input {
-                                    padding: 16px 6px;
-                                    width: 95%;
-                                    border-radius: 12px;
-                                    border: none;
-                                }
-                            </style>        
+                            </div>      
                             <form action="${pageContext.request.contextPath}/ForumServlet" method="POST">
                                 <div class="content-text input-comment">
                                     <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/img-download/${post.userAvatar}" alt="">

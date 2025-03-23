@@ -77,6 +77,14 @@
         <servlet-name>CreateClubServlet</servlet-name>
         <servlet-class>controller.CreateClubServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserChangePassword</servlet-name>
+        <servlet-class>controller.UserChangePassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestClubServlet</servlet-name>
+        <servlet-class>controller.RequestClubServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -176,5 +184,13 @@
     <servlet-mapping>
         <servlet-name>CreateClubServlet</servlet-name>
         <url-pattern>/CreateClubServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserChangePassword</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestClubServlet</servlet-name>
+        <url-pattern>/RequestClubServlet</url-pattern>
     </servlet-mapping>
 </web-app>

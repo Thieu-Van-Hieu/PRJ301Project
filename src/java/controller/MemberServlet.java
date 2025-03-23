@@ -5,6 +5,7 @@
 package controller;
 
 import dto.MemberResponse;
+import entity.Member;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -64,7 +65,8 @@ public class MemberServlet extends HttpServlet {
         MemberService memberService = new MemberService();
         String action = request.getParameter("action");
 
-        ArrayList<MemberResponse> memberResponses = memberService.getAllMemberOfClub(2);
+        ArrayList<MemberResponse> memberResponses = memberService
+                .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());
         session.setAttribute("memberResponses", memberResponses);
         session.setAttribute("includeWeb", "member.jsp");
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");

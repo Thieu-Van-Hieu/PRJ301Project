@@ -28,10 +28,10 @@ public class DiscoveryServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -55,10 +55,10 @@ public class DiscoveryServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -76,7 +76,6 @@ public class DiscoveryServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/ForumServlet");
         } else if ("setting".equals(action)) {
             UserInformationResponse userInfor = userService.getUserInforSetting(userId);
-            session.setAttribute("userInformation", userInformation);
             session.setAttribute("userInfor", userInfor);
             response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
         } else if ("createClub".equals(action)) {
@@ -85,15 +84,15 @@ public class DiscoveryServlet extends HttpServlet {
         } else if ("filter".equals(action)) {
             int typeId = Integer.parseInt(request.getParameter("typeId"));
             String type = "";
-            if(typeId == 1){
+            if (typeId == 1) {
                 type = "Gaming";
-            } else if (typeId == 2){
+            } else if (typeId == 2) {
                 type = "Âm Nhạc";
-            } else if (typeId == 3){
+            } else if (typeId == 3) {
                 type = "Khoa Học & Công Nghệ";
-            } else if (typeId == 4){
+            } else if (typeId == 4) {
                 type = "Thể Thao";
-            } else if (typeId == 5){
+            } else if (typeId == 5) {
                 type = "Giáo Dục";
             }
             ArrayList<ClubResponse> clubListFilter = clubService.getClubsByType(type);
@@ -113,10 +112,10 @@ public class DiscoveryServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

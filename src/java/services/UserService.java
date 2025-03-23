@@ -62,6 +62,7 @@ public class UserService {
         response.setStudentId(infor.getStudentId());
         response.setAddress(infor.getAddress());
         response.setBirthday(infor.getBirthday());
+        response.setAvatar(infor.getAvatar());
     }
 
     public boolean isExistStudentId(String studentId) {

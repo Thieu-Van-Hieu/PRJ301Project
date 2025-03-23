@@ -81,6 +81,7 @@ public class InformationServlet extends HttpServlet {
         String studentId = request.getParameter("maSV");
         String gender = request.getParameter("gioiTinh");
         boolean isExistStudentId = service.isExistStudentId(studentId);
+        String avatarImg = "avatarClub_1.jpg";
         if (isExistStudentId) {
             session.setAttribute("error", "Mã sinh viên đã tồn tại");
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
@@ -101,7 +102,7 @@ public class InformationServlet extends HttpServlet {
         String formattedDate = ngaySinh.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String address = ward + ", " + district + ", " + city;
 
-        UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate);
+        UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate, avatarImg);
 
         service.addByParamIntoResponse(infor);
         service.addUserRoleMember();

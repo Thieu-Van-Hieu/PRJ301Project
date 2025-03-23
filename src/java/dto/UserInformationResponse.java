@@ -46,13 +46,14 @@ public class UserInformationResponse {
     }
   
       
-    public UserInformationResponse(String firstName, String lastName, String studentId, String address, String gender, String birthday) {
+    public UserInformationResponse(String firstName, String lastName, String studentId, String address, String gender, String birthday, String avatarImg) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentId = studentId;
         this.address = address;
         this.gender = gender;
         this.birthday = birthday;
+        this.avatar = avatarImg;
     }
 
     public UserInformationResponse(int userId, String role, String firstName, String lastName, String email, String studentId, String address, String birthday, String avatar) {

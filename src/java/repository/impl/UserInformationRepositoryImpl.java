@@ -40,7 +40,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         int rs = 0;
         try {
             String sql = """
-                        insert into user_informations values(?, ?, ?, ?,?, ?, ?, ?)
+                        insert into user_informations values(?, ?, ?, ?,?, ?, ?, ?, ?)
                          """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setInt(1, userid);
@@ -51,6 +51,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setString(6, user.getAddress());
             st.setString(7, user.getGender());
             st.setString(8, user.getBirthday());
+            st.setString(9, user.getAvatar());
             rs = st.executeUpdate();
             if (rs == 0) {
                 throw new Exception();

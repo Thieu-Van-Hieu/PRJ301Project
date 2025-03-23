@@ -6,7 +6,7 @@
     <header class="content-header">
         <h2>Diễn đàn</h2>
         <div class="content-header_util">
-            <i class="fa-solid fa-scroll"></i>
+            <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/ClubRequestServlet'"></i>
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
             <input type="text" name="" id="" placeholder="Tìm kiếm">
             <i class="fa-solid fa-magnifying-glass content-search"></i>

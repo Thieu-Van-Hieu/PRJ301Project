@@ -70,8 +70,8 @@ public class CalendarService {
         setAttribute();
     }
 
-    public void getCalendarResponses(int clubId, int memberId) {
-        events = calendarRepository.getAllCalendars(clubId, memberId);
+    public void getCalendarResponses(int clubId) {
+        events = calendarRepository.getAllCalendars(clubId);
         setAttribute();
     }
 

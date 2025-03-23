@@ -7,8 +7,8 @@
     <header class="content-header">
         <h2>Danh sách yêu cầu vào câu lạc bộ</h2>
         <div class="content-header_util">
-            <i class="fa-solid fa-scroll"></i>
-            <i class="fa-solid fa-user-group" onclick="location.href='clubManagement'"></i>
+            <i class="fa-solid fa-scroll" onclick="location.href = '${pageContext.request.contextPath}/RequestClubServlet'"></i>
+            <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
         </div>
     </header>
 
@@ -32,14 +32,18 @@
                     <td>${request.studentId}</td>
                     <td>${request.name}</td>
                     <td>
-                    <form action="acceptRequest" method="POST" style="display: inline;">
+                    <form action="${pageContext.request.contextPath}/RequestClubServlet" method="post" style="display: inline;">
+                        <input type="hidden" name="action" value="updateRequest">
                         <input type="hidden" name="requestId" value="${request.id}">
+                        <input type="hidden" name="status" value="Đã duyệt">
                         <button type="submit" class="btn btn-success btn-sm">
-                        Chấp nhận
+                        Duyệt
                         </button>
                     </form>
-                    <form action="rejectRequest" method="POST" style="display: inline;">
+                    <form action="${pageContext.request.contextPath}/RequestClubServlet" method="post" style="display: inline;">
+                        <input type="hidden" name="action" value="updateRequest">
                         <input type="hidden" name="requestId" value="${request.id}">
+                        <input type="hidden" name="status" value="Từ chối">
                         <button type="submit" class="btn btn-danger btn-sm">
                         Từ chối
                         </button>

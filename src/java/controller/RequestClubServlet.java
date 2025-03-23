@@ -21,7 +21,7 @@ import services.RequestClubService;
 /**
  * @author quann
  */
-public class ClubRequestServlet extends HttpServlet {
+public class RequestClubServlet extends HttpServlet {
 
     /**
      * Handles requests for both HTTP GET and POST methods.
@@ -54,6 +54,15 @@ public class ClubRequestServlet extends HttpServlet {
 
         ArrayList<RequestClubResponse> requests = service.getAllRequest(member.getClubId());
 
+        if (session.getAttribute("error") != null) {
+            request.setAttribute("error", session.getAttribute("error"));
+            session.removeAttribute("error");
+        }
+
+        if (session.getAttribute("requestId") != null) {
+            request.setAttribute("requestId", session.getAttribute("requestId"));
+            session.removeAttribute("requestId");
+        }
         request.setAttribute("requests", requests);
         session.setAttribute("includeWeb", "requestClub.jsp");
         request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
@@ -63,7 +72,25 @@ public class ClubRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        RequestClubService service = new RequestClubService();
+
+        String action = request.getParameter("action");
+        if (action.equals("createRequest")) {
+            
+        }
+
+        if (action.equals("updateRequest")) {
+            int requestId = Integer.parseInt(request.getParameter("requestId"));
+            String status = request.getParameter("status");
+
+            if (!service.updateRequest(requestId, status)) {
+                session.setAttribute("error", "Xảy ra lỗi khi cập nhật yêu cầu");
+                session.setAttribute("requestId", requestId);
+            }
+        }
+
+        response.sendRedirect(request.getContextPath() + "/RequestClubServlet");
     }
 
     /** Returns a short description of the servlet. */

@@ -82,8 +82,8 @@
         <servlet-class>controller.UserChangePassword</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ClubRequestServlet</servlet-name>
-        <servlet-class>controller.ClubRequestServlet</servlet-class>
+        <servlet-name>RequestClubServlet</servlet-name>
+        <servlet-class>controller.RequestClubServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>FilterMember</servlet-name>
@@ -194,8 +194,8 @@
         <url-pattern>/change</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ClubRequestServlet</servlet-name>
-        <url-pattern>/ClubRequestServlet</url-pattern>
+        <servlet-name>RequestClubServlet</servlet-name>
+        <url-pattern>/RequestClubServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FilterMember</servlet-name>

@@ -10,4 +10,6 @@ public interface RequestClubRepository {
     public RequestClubResponse getRequest(int id);
 
     public boolean updateRequest(int id, String status);
+
+    public boolean createRequest(RequestClubResponse request);
 }

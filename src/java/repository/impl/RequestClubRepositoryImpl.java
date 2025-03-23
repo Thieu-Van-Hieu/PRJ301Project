@@ -91,4 +91,22 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
         }
     }
 
+    @Override
+    public boolean createRequest(RequestClubResponse request) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                    insert into club_join_requests (clubId, userId, status)
+                    values (?, ?, N'Chờ duyệt')
+                    """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setString(1, request.getClubId());
+            statement.setString(2, request.getStudentId());
+            int rows = statement.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

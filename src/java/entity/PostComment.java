@@ -14,8 +14,10 @@ public class PostComment {
     private int userId;
     private String content;
     private String createdAt;
-
+    private String avatarUser;
+    private String userName;
     public PostComment() {
+        
     }
 
     public PostComment(int commentId, int postId, int userId, String content, String createdAt) {
@@ -24,6 +26,15 @@ public class PostComment {
         this.userId = userId;
         this.content = content;
         this.createdAt = createdAt;
+    }
+
+    public PostComment(int commentId, int postId, int userId, String content, String avatarUser, String userName) {
+        this.commentId = commentId;
+        this.postId = postId;
+        this.userId = userId;
+        this.content = content;
+        this.avatarUser = avatarUser;
+        this.userName = userName;
     }
 
     public int getCommentId() {
@@ -65,5 +76,23 @@ public class PostComment {
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getAvatarUser() {
+        return avatarUser;
+    }
+
+    public void setAvatarUser(String avatarUser) {
+        this.avatarUser = avatarUser;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
+    
     
 }

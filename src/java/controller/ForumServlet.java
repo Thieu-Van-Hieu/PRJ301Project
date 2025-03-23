@@ -5,6 +5,7 @@
 package controller;
 
 import dto.ClubResponse;
+import dto.CommentDTO;
 import dto.PostDTO;
 import dto.UserInformationResponse;
 import entity.Member;
@@ -73,9 +74,12 @@ public class ForumServlet extends HttpServlet {
         PostService postService = new PostService();
         UserService userService = new UserService();
         MemberService memberService = new MemberService();
-
         int userId = (Integer) session.getAttribute("userId");
         int clubId = (Integer) session.getAttribute("clubId");
+        if ("love".equals(action)) {
+            int postId = Integer.parseInt(request.getParameter("postId"));
+            postService.addLove(postId, userId);
+        }
         String clubName = clubService.clubName(clubId);
         UserInformationResponse user = userService.getFullNameAndAvatar(userId);
         String userFullName = user.getUserName();
@@ -108,7 +112,8 @@ public class ForumServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        HttpSession session = request.getSession();
+        int userId = (Integer) session.getAttribute("userId");
         String action = request.getParameter("action");
         PostService postService = new PostService();
         if (action == null) {
@@ -116,7 +121,6 @@ public class ForumServlet extends HttpServlet {
         } else if (action.equals("add")) {
             try {
                 int clubId = Integer.parseInt(request.getParameter("clubId"));
-                int userId = Integer.parseInt(request.getParameter("userId"));
                 String content = request.getParameter("content");
                 Timestamp createdAt = null;
                 try {
@@ -148,8 +152,18 @@ public class ForumServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
+        } else if ("comment".equals(action)) {
+            String content = request.getParameter("content");
+            int postId = Integer.parseInt(request.getParameter("postId"));
+            Timestamp createdAt = getCurrentTimestamp();
+            CommentDTO commentDTO = new CommentDTO(postId, userId, content, createdAt);
+            postService.addComment(commentDTO);
         }
         doGet(request, response);
+    }
+
+    private Timestamp getCurrentTimestamp() {
+        return new Timestamp(System.currentTimeMillis());
     }
 
     /**

@@ -7,7 +7,7 @@
 }
 
 .content-body {
-    
+
 }
 .content-list {
     display: flex;
@@ -183,6 +183,7 @@
     font-size: 18px;
 }
 
+
 @keyframes likeAnimation {
     0% {
         transform: scale(1) translateY(0);
@@ -235,7 +236,7 @@
     }
 }
 
-.heart-animate {
+.heart-animate:hover {
     animation: likeAnimation 3s ease;
 }
 
@@ -282,14 +283,7 @@
     margin: 12px 32px;
 }
 
-.content-text {
-    display: flex;
-    gap: 12px;
-    padding: 12px 0;
-    border-bottom: 1px solid #ccc;
-    justify-content: space-between;
-    align-items: center;
-}
+
 
 .content-text .avatar {
     width: 32px;
@@ -299,12 +293,7 @@
     justify-content: center;
 }
 
-.content-text .input {
-    padding: 8px 6px;
-    width: 95%;
-    border-radius: 12px;
-    border: none;
-}
+
 
 .content-text img {
     width: 100%;
@@ -351,7 +340,7 @@
     position: relative;
     animation: modalFadeIn ease 0.5s;
     border-radius: 12px;
-    
+
 }
 
 .modal-close {

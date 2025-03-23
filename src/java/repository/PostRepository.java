@@ -4,6 +4,7 @@
  */
 package repository;
 
+import dto.CommentDTO;
 import dto.PostDTO;
 import entity.Post;
 import java.util.ArrayList;
@@ -16,4 +17,10 @@ public interface PostRepository {
     public ArrayList<Post> getAllPostOfClub(int clubId);
     
     public void addPost(PostDTO postDTO);
+    
+    public void addLove(int postId, int userId);
+    
+    public boolean isLove(int postId, int userId);
+    
+    public void addComment(CommentDTO commentDTO);
 }

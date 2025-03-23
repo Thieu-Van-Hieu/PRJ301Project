@@ -77,8 +77,10 @@ public class ForumServlet extends HttpServlet {
         int userId = (Integer) session.getAttribute("userId");
         int clubId = (Integer) session.getAttribute("clubId");
         if ("love".equals(action)) {
-            int postId = Integer.parseInt(request.getParameter("postId"));
-            postService.addLove(postId, userId);
+            if (!postService.isLove(clubId, userId)) {
+                int postId = Integer.parseInt(request.getParameter("postId"));
+                postService.addLove(postId, userId);
+            }
         }
         String clubName = clubService.clubName(clubId);
         UserInformationResponse user = userService.getFullNameAndAvatar(userId);
@@ -88,6 +90,7 @@ public class ForumServlet extends HttpServlet {
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         Member member = memberService.getMemberInfor(userId, clubId);
         String coverImg = clubService.getCoverImg(clubId);
+        session.setAttribute("userId", userId);
         session.setAttribute("coverImg", coverImg);
         session.setAttribute("member", member);
         session.setAttribute("userFullName", userFullName);

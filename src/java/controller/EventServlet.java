@@ -92,8 +92,8 @@ public class EventServlet extends HttpServlet {
         request.setAttribute("eventId", session.getAttribute("eventId"));
         System.out.println(session.getAttribute("eventId"));
         session.removeAttribute("eventId");
-        request.setAttribute("clubId", session.getAttribute("clubId"));
-        session.removeAttribute("clubId");
+        int clubId = (Integer)session.getAttribute("clubId");
+        session.setAttribute("clubId", clubId);
         request.setAttribute("startDate", session.getAttribute("startDate"));
         session.removeAttribute("startDate");
         request.setAttribute("endDate", session.getAttribute("endDate"));

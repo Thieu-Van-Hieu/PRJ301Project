@@ -37,7 +37,7 @@
                 <ul>
                     <li><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt=""></li>
                         <c:forEach var="clubItem" items="${clubListItems}">
-                        <li id="${clubItem.id}" onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=open&clubId=${clubItem.id}'"><img
+                        <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=open&clubId=${clubItem.id}'"><img
                                 src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}"
                                 alt="alt" /></li>
                         </c:forEach>

@@ -85,6 +85,10 @@
         <servlet-name>ClubRequestServlet</servlet-name>
         <servlet-class>controller.ClubRequestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilterMember</servlet-name>
+        <servlet-class>controller.FilterMember</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -192,5 +196,9 @@
     <servlet-mapping>
         <servlet-name>ClubRequestServlet</servlet-name>
         <url-pattern>/ClubRequestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterMember</servlet-name>
+        <url-pattern>/filtermember</url-pattern>
     </servlet-mapping>
 </web-app>

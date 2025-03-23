@@ -18,8 +18,9 @@
                     <tr>
                         <td class="filter-time">Ngày Đăng <input type="date" name="date"></td>
                         <td>
+<!--                            nhan tu EventServlet-->
                             <select name="type" id="id">
-                                <c:forEach var="eventType" items="${sessionScope.eventTypes}">
+                                <c:forEach var="eventType" items="${eventTypes}">
                                     <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
                                 </c:forEach>
                             </select>
@@ -30,7 +31,7 @@
                     <tr>
                         <td>
                             <select name="clubId">
-                                <c:forEach var="clubDiscription" items="${sessionScope.clubDescriptions}">
+                                <c:forEach var="clubDiscription" items="${clubDescriptions}">
                                     <option value="${clubDiscription.getId()}">${clubDiscription.getName()}</option>
                                 </c:forEach>
                             </select>
@@ -52,7 +53,7 @@
             <button class="js-open-modal">Tạo sự kiện</button>
         </div>
         <div class="contentListEvent">
-            <c:forEach var="eventDescription" items="${sessionScope.eventDescriptions}">
+            <c:forEach var="eventDescription" items="${eventDescriptions}">
                 <div class="event-item" id="${eventDescription.getEventId()}">
                     <div class="event-img"><img
                             src="${pageContext.request.contextPath}/assets/img/img-download/${eventDescription.getImg()}"
@@ -92,7 +93,7 @@
                                 <td><input type="text" name="nameEvent" placeholder="Tên Sự Kiện"></td>
                                 <td>
                                     <select name="type" id="id">
-                                        <c:forEach var="eventType" items="${sessionScope.eventTypes}">
+                                        <c:forEach var="eventType" items="${eventTypes}">
                                             <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
                                         </c:forEach>
                                     </select>
@@ -100,7 +101,7 @@
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                        placeholder="Chọn ngày giờ bắt đầu"></td>
+                                           placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -154,25 +155,25 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-    flatpickr("#startDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-    });
+                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+                                        flatpickr("#startDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+                                        });
 
-    flatpickr("#endDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below"
-    });
+                                        flatpickr("#endDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below"
+                                        });
 
-    // Xử lý chọn file ảnh
-    document.getElementById("customFileUpload").addEventListener("click", function () {
-        document.getElementById("fileInput").click();
-    });
+                                        // Xử lý chọn file ảnh
+                                        document.getElementById("customFileUpload").addEventListener("click", function () {
+                                            document.getElementById("fileInput").click();
+                                        });
 </script>
 
 <script>

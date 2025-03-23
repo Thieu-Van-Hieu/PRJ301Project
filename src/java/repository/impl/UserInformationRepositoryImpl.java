@@ -5,6 +5,7 @@
 package repository.impl;
 
 import dto.UserInformationResponse;
+import entity.UserInformation;
 import java.sql.*;
 import java.util.ArrayList;
 import repository.UserInformationRepository;
@@ -134,7 +135,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
-            
+
             while (rs.next()) {
                 results = new UserInformationResponse(userId,
                         rs.getNString("role"),
@@ -202,4 +203,36 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         }
     }
 
+    @Override
+    public UserInformation getInformationByMemberId(int memberID) {
+        UserInformation user = new UserInformation();
+        DBContext db = DBContext.getInstance();
+
+        try {
+            String sql = """
+                         select ui.* from user_informations ui 
+                         	 join users u on u.id = ui.userId
+                         	 join members m on m.userId = u.id
+                         	 where m.id = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, memberID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                user = new UserInformation.Builder()
+                        .setId(rs.getInt("id"))
+                        .setUserId(rs.getInt("userId"))
+                        .setFirstName(rs.getString("firstName"))
+                        .setLaseName(rs.getString("lastName"))
+                        .setEmail(rs.getString("email"))
+                        .setStudentId(rs.getString("studentId"))
+                        .setAddress(rs.getString("address"))
+                        .setGender(rs.getString("gender"))
+                        .setBirthday(rs.getString("birthday")).build();
+            }
+            return user;
+        } catch (Exception e) {
+            return new UserInformation();
+        }
+    }
 }

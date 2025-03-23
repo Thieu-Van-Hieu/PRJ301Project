@@ -4,6 +4,7 @@
  */
 package repository;
 
+import dto.FilterMemberDTO;
 import dto.MemberDTO;
 import dto.MemberResponse;
 import entity.Member;
@@ -14,10 +15,14 @@ import java.util.ArrayList;
  * @author hunggt1572004
  */
 public interface MemberRepository {
+
     public ArrayList<MemberResponse> getAllMemberOfClub(int clubId);
+
     public void deleteMemberOfClub(MemberDTO memberDTO);
-    
+
     public Member getMember(int userId, int clubId);
-    
+
     public void addMember(MemberDTO member);
+    
+    public ArrayList<Member> filterMember(FilterMemberDTO filterMemberDTO);
 }

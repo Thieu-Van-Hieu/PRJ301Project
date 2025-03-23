@@ -6,7 +6,7 @@ public class Member {
 
     private int id;
     private int clubId;
-    private String role; // Thêm trường mới
+    private String role; //
     private int userId;
     private int deptId;
 
@@ -63,8 +63,8 @@ public class Member {
             this.role = role;
             return this;
         }
-        
-        public Builder setUserId(int userId){
+
+        public Builder setUserId(int userId) {
             this.userId = userId;
             return this;
         }
@@ -73,7 +73,7 @@ public class Member {
             this.deptId = deptId;
             return this;
         }
-        
+
         public Member build() {
             return new Member(this);
         }

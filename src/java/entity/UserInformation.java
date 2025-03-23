@@ -18,6 +18,9 @@ public class UserInformation {
     private String StudentId;
     private String address;
     private String gender;
+
+    public UserInformation() {
+    }
     private String birthday;
 
     public UserInformation(Builder user) {

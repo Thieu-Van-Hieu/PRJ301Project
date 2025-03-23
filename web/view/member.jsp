@@ -6,13 +6,13 @@
         <h2>Thành Viên</h2>
         <div class="content-header_util">
             <i class="fa-solid fa-scroll"></i>
-            <i class="fa-solid fa-user-group" onclick="location.href='?includeWeb=member.jsp'"></i>
+            <i class="fa-solid fa-user-group" onclick="location.href = '?includeWeb=member.jsp'"></i>
         </div>
     </header>
 
     <div class="content-body">
         <div class="content-filter">
-            <form action="#" method="GET">
+            <form action="${pageContext.request.contextPath}/filtermember" method="get">
                 <table>
                     <tr>
                         <td><select name="department" id="">
@@ -23,18 +23,17 @@
                                 <option value="5">Chuyên Môn</option>
                             </select>
                         </td>
-                        <td class="filter-time">Thời điểm tham gia<input type="date"></td>
+                        <td class="filter-time">Thời điểm tham gia<input type="date" name="dateJoin"></td>
                         <td>
                             <select name="gender" id="">
-                                <option value="1">Nam</option>
-                                <option value="2">Nữ</option>
-                                <option value="3">Giới Tính Khác</option>
+                                <option value="male">Nam</option>
+                                <option value="famale">Nữ</option>
                             </select>
                         </td>
-                        <td class="filter-search"><input type="text" placeholder="Name, id, email"></td>
+                        <td class="filter-search"><input type="text" placeholder="Name, id, email" name="search"></td>
                     </tr>
                     <tr>
-                        <td class="age-filter">Age <input type="text" name="ageMin"> - <input type="text" name="ageMax">
+                        <td class="age-filter">Age <input type="text" name="ageFrom"> - <input type="text" name="ageTo">
                             year(s)</td>
                         <td>
                             <div class="status">
@@ -83,7 +82,7 @@
                         <td>${member.gender}</td> 
                         <td>${member.del}</td> 
                         <td>${member.role}</td> 
-                        <td><button value="Delete" onclick="location.href='${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${member.rollNumber}'">Xoá</button></td> 
+                        <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${member.rollNumber}'">Xoá</button></td> 
                     </tr>
                 </c:forEach>
             </table>

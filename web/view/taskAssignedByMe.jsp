@@ -274,6 +274,7 @@
 
             function updateStatus(taskAssignedByMe) {
                 let task = $(".task__item.task__status[data-task-id='" + taskAssignedByMe.taskId + "']");
+                console.log(taskAssignedByMe, task);
 
                 if (task) {
                     task.textContent = taskAssignedByMe.status;
@@ -322,6 +323,10 @@
 
             // Gửi tin nhắn lên Server
             function sendMessage(element, action) {
+                if (!checkValidate(element)) {
+                    return;
+                }
+
                 event.preventDefault();
                 let task = element.closest(".task");
                 let taskAttributes = task.querySelectorAll(".task__item");
@@ -332,7 +337,7 @@
                 let taskStatus = taskAttributes[3].textContent;
                 let taskDueDate = taskAttributes[4].value;
 
-                let taskAssignedToMe = new TaskAssignedToMe(taskId, taskName, taskDescription, "${userInformation.firstName}", taskAssignedTo, taskStatus, taskDueDate, ${member.clubId});
+                let taskAssignedToMe = new TaskAssignedToMe(taskId, taskName, taskDescription, "${userInformation.firstName}", ${member.id}, taskAssignedTo, taskStatus, taskDueDate, ${member.clubId});
 
                 let message = {
                     action: action,
@@ -352,6 +357,7 @@
         </script>
     </head>
     <body>
+        <jsp:include page="noticeError.jsp" />
         <jsp:include page="contentHeader.jsp" />
         <div class="box">
             <div class="tasks">
@@ -417,7 +423,7 @@
                             <div class="task__item task__status task__status--in-progress">Đang làm</div>
                             <input class="task__item time-picker" type="text" name="taskDueDate" required>
                             <div class="task__controls">
-                                <button class="task__control">Thêm</button>
+                                <button class="task__control" onclick="checkValidate(this)">Thêm</button>
                             </div>
                         </div>
                     </form>
@@ -455,6 +461,37 @@
 
             // Kiểm tra thời gian đã hết chưa mỗi 1 giây
             setInterval(checkDueDate, 1000);
+
+            // Kiểm tra validate form
+            function checkValidate(element) {
+                event.preventDefault();
+                let form = element.closest("form");
+                let hasName = !!form.querySelector("input[name='taskName']").value;
+                let hasMember = !!form.querySelector("input[name='taskAssignedTo[]']");
+                let hasDueDate = !!form.querySelector("input[name='taskDueDate']").value;
+
+                if (!hasName) {
+                    alert("Vui lòng nhập tên công việc!");
+                    return false;
+                }
+
+                if (!hasMember) {
+                    alert("Vui lòng chọn ít nhất 1 thành viên!");
+                    return false;
+                }
+
+                if (!hasDueDate) {
+                    alert("Vui lòng chọn hạn chót!");
+                    return false;
+                }
+
+                if (element.textContent === "Thêm") {
+                    form.submit();
+                }
+                else {
+                    return true;
+                }
+            }
         </script>
 
         <c:if test="${action != null}">

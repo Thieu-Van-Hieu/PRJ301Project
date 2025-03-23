@@ -1,7 +1,7 @@
 package repository.impl;
 
 import dto.TaskAssignedToMeResponse;
-import services.TaskAssignedToMeRepository;
+import repository.TaskAssignedToMeRepository;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ public class TaskAssignedToMeRepositoryImpl implements TaskAssignedToMeRepositor
         DBContext db = new DBContext();
         try {
             String sql = """
-                    select t.id, t.clubId, t.name, t.description, ta.status, t.dueDate, ui.firstName
+                    select t.id, t.clubId, t.name, t.description, ta.status, t.dueDate, ui.firstName, t.assignedBy
                     from tasks as t
                     join task_assignees as ta on t.id = ta.taskId
                     join members as m on ta.assignedTo = m.id
@@ -36,6 +36,8 @@ public class TaskAssignedToMeRepositoryImpl implements TaskAssignedToMeRepositor
                 task.setStatus(rs.getString("status"));
                 task.setDueDate(rs.getTimestamp("dueDate"));
                 task.setAssignedByMemberName((rs.getString("firstName")));
+                task.setAssignedByMemberId(rs.getInt("assignedBy"));
+                
                 tasks.add(task);
             }
             return tasks;

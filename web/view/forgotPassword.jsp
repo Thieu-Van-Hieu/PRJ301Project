@@ -4,55 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Quên mật khẩu - Nhận OTP</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background: #f2f2f2;
-            }
-            .container {
-                max-width: 400px;
-                margin: 100px auto;
-                padding: 20px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            h2 {
-                text-align: center;
-                font-weight: 700;
-            }
-            form {
-                display: flex;
-                flex-direction: column;
-            }
-            label, input {
-                font-weight: 700;
-            }
-            input {
-                margin-bottom: 10px;
-                padding: 8px;
-                font-size: 16px;
-            }
-            button {
-                padding: 10px;
-                font-size: 16px;
-                background: #4CAF50;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s ease;
-            }
-            button:hover {
-                background-color: #45a049;
-            }
-            .error {
-                color: red;
-                font-size: 14px;
-                margin-bottom: 10px;
-                display: none;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/forgotpassword-css/forgotpassword.css" />
     </head>
     <jsp:include page="noticeError.jsp"/>
     <jsp:include page="sakura.jsp" />

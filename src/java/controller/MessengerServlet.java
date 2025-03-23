@@ -45,7 +45,7 @@ public class MessengerServlet extends HttpServlet {
 
     private MessageResponse getMessageFromRequest(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Member member = new Member.Builder().setId(1).setClubId(1).build();
+        Member member = (Member) session.getAttribute("member");
 
         int clubId = member.getClubId();
         int memberId = member.getId();
@@ -77,7 +77,9 @@ public class MessengerServlet extends HttpServlet {
             action = "";
         }
 
-        session.setAttribute("messages", messages);
+        request.setAttribute("action", session.getAttribute("action"));
+
+        request.setAttribute("messages", messages);
         session.setAttribute("includeWeb", "messenger.jsp");
 
         request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
@@ -87,6 +89,7 @@ public class MessengerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         MessageService service = new MessageService();
         String action = request.getParameter("action");
         request.setAttribute("action", action);
@@ -95,6 +98,7 @@ public class MessengerServlet extends HttpServlet {
             MessageResponse message = getMessageFromRequest(request);
             if (message != null) {
                 message = service.addMessage(message);
+                session.setAttribute("action", "createMessage");
             }
         }
 

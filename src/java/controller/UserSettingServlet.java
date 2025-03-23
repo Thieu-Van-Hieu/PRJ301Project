@@ -21,7 +21,7 @@ import util.FileService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
         maxFileSize = 1024 * 1024 * 10, //10MB
-        maxRequestSize = 1024 * 1024 * 50) 
+        maxRequestSize = 1024 * 1024 * 50)
 public class UserSettingServlet extends HttpServlet {
 
     /**
@@ -88,14 +88,14 @@ public class UserSettingServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-        int userId = (Integer)session.getAttribute("userId");
+        int userId = (Integer) session.getAttribute("userId");
         UserService userService = new UserService();
         if ("changeImg".equals(action)) {
             Part filePart = request.getPart("file");
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
             String uploadDir = IMG_DIR;
-            
+
             File uploadFolder = new File(uploadDir);
             if (!uploadFolder.exists()) {
                 uploadFolder.mkdirs();
@@ -115,7 +115,7 @@ public class UserSettingServlet extends HttpServlet {
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
-     */
+ */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -50,7 +50,7 @@ public class CalendarServlet extends HttpServlet {
 
         map.get(action).run();
 
-        service.getCalendarResponses(member.getClubId(), member.getId());
+        service.getCalendarResponses(member.getClubId());
 
         Date weekStart = service.getMondayCalendar().getTime();
         Date weekEnd = service.getSundayCalendar().getTime();

@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <title>Xác nhận OTP - 4Club</title>
         <jsp:include page="noticeError.jsp"/>
+        <jsp:include page="noticeSuccess.jsp"/>
         <jsp:include page="sakura.jsp" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/otp-css/otp.css" />
     </head>

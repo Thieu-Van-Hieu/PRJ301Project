@@ -166,12 +166,13 @@ public class TaskAssignedByMeRepositoryImpl implements TaskAssignedByMeRepositor
             ArrayList<Integer> assignedTo = task.getAssignedTo();
             for (Integer assignedMember : assignedTo) {
                 sql = """
-                        insert into task_assignees (taskId, assignedTo, status)
-                        values (?, ?, N'Đang làm')
+                        insert into task_assignees (taskId, assignedTo, status, clubId)
+                        values (?, ?, N'Đang làm', ?)
                         """;
                 statement = db.getConnection().prepareStatement(sql);
                 statement.setInt(1, task.getId());
                 statement.setInt(2, assignedMember);
+                statement.setInt(3, task.getClubId());
                 rs = statement.executeUpdate();
                 if (rs == 0) {
                     return null;
@@ -217,12 +218,13 @@ public class TaskAssignedByMeRepositoryImpl implements TaskAssignedByMeRepositor
             for (Integer assignedMember : assignedTo) {
                 if (!assignedMembers.contains(assignedMember)) {
                     sql = """
-                            insert into task_assignees (taskId, assignedTo, status)
-                            values (?, ?, 'Đang làm')
+                            insert into task_assignees (taskId, assignedTo, status, clubId)
+                            values (?, ?, N'Đang làm', ?)
                             """;
                     PreparedStatement statement = db.getConnection().prepareStatement(sql);
                     statement.setInt(1, task.getId());
                     statement.setInt(2, assignedMember);
+                    statement.setInt(3, task.getClubId());
                     int rs = statement.executeUpdate();
                     if (rs == 0) {
                         return null;

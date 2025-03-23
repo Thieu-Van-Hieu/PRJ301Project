@@ -71,6 +71,7 @@ public class EventServlet extends HttpServlet {
         ArrayList<EventType> eventTypes = eventService.selectAllEventType();
         ArrayList<EventResponse> eventDescriptions = null;
         ArrayList<ClubResponse> clubIdAndNames = clubService.selectAllClubIdAndClubName();
+        int userId = (Integer) session.getAttribute("userId");
         if (action == null) {
             eventDescriptions = eventService.getAllEventDescription();
         } else if (action.equals("filter")) {
@@ -82,12 +83,23 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent, status, clubId);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
-        session.setAttribute("clubDescriptions", clubIdAndNames);
-        session.setAttribute("eventDescriptions", eventDescriptions);
-        session.setAttribute("eventTypes", eventTypes);
-        session.setAttribute("includeWeb", "event.jsp");
+        session.setAttribute("userId", userId);
+        request.setAttribute("clubDescriptions", clubIdAndNames);
+        request.setAttribute("eventDescriptions", eventDescriptions);
+        request.setAttribute("eventTypes", eventTypes);
+        request.setAttribute("includeWeb", "event.jsp");
+        request.setAttribute("action", session.getAttribute("action"));
+        session.removeAttribute("action");
+        request.setAttribute("eventId", session.getAttribute("eventId"));
+        System.out.println(session.getAttribute("eventId"));
+        session.removeAttribute("eventId");
+        request.setAttribute("clubId", session.getAttribute("clubId"));
+        request.setAttribute("startDate", session.getAttribute("startDate"));
+        session.removeAttribute("startDate");
+        request.setAttribute("endDate", session.getAttribute("endDate"));
+        session.removeAttribute("endDate");
 
-        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
+        request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
     }
 
     /**

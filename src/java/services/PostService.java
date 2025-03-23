@@ -4,6 +4,7 @@
  */
 package services;
 
+import dto.CommentDTO;
 import dto.PostDTO;
 import entity.Post;
 import factory.PostFactory;
@@ -27,5 +28,13 @@ public class PostService {
     
     public ArrayList<Post> getAllPostOfClub(int clubId){
         return postRepository.getAllPostOfClub(clubId);
+    }
+    
+    public void addLove(int postId, int userId){
+        postRepository.addLove(postId, userId);
+    }
+    
+    public void addComment(CommentDTO commentDTO){
+        postRepository.addComment(commentDTO);
     }
 }

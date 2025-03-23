@@ -15,7 +15,7 @@
     <div class="content-body">
         <div class="content-create js-open-modal">
             <div class="content-text">
-                <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/img-download/${userAvatarImg}" alt="">
                 </div>
                 <input type="text" id="commentInput" class="input" placeholder="Content gì chưa người đẹp?">
             </div>
@@ -59,7 +59,7 @@
                         <div class="content-item" data-id="${post.id}">
                             <div class="item-header">
                                 <div class="item-avatar">
-                                    <div class="item-img"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg"
+                                    <div class="item-img"><img src="${pageContext.request.contextPath}/assets/img/img-download/${post.userAvatar}"
                                                                alt=""></div>
                                     <div class="item-name-date">
                                         <div class="item-name">${post.fullName}</div>
@@ -89,31 +89,68 @@
                                 </div>
                             </div>
                             <div class="item-footer">
-                                <div class="item-footer-item love">
+                                <div class="item-footer-item love" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=love&postId=${post.id}'">
                                     <i class="fa-regular fa-heart"></i>
                                     <p>Thích</p>
                                 </div>
                                 <div class="item-footer-item comment">
                                     <i class="fa-regular fa-comment"></i>
-                                    <p>Bình Luận</p>
+                                    <p>Bình Luận</p>             
                                 </div>
                             </div>
-                            <div class="content-text input-comment">
-                                <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                            <style>
+                                .content-text {
+                                    display: flex;
+                                    gap: 12px;
+                                    padding: 12px 0;
+                                    border-bottom: 1px solid #ccc;
+                                    justify-content: space-between;
+                                    align-items: center;
+                                    position: relative;
+                                }
+                                .content-text .send {
+                                    position: absolute;
+                                    right: 10px;
+                                    border-radius: 12px;
+                                    transition: 0.3s ease-in-out;
+                                    font-size: 16px;
+                                    border: none;
+                                    width: 36px;
+                                    height: 36px;
+                                }
+
+                                .content-text .send:hover {
+                                    background-color: orangered;
+                                    color: #fff;
+                                }
+                                .content-text .input {
+                                    padding: 16px 6px;
+                                    width: 95%;
+                                    border-radius: 12px;
+                                    border: none;
+                                }
+                            </style>        
+                            <form action="${pageContext.request.contextPath}/ForumServlet" method="POST">
+                                <div class="content-text input-comment">
+                                    <div class="avatar"><img src="${pageContext.request.contextPath}/assets/img/img-download/${post.userAvatar}" alt="">
+                                    </div>
+                                    <input type="text" id="commentInput" name="content" class="input" placeholder="Bình luận gì chưa người đẹp?" required>
+                                    <input type="hidden" name="postId" value="${post.id}">
+                                    <input type="hidden" name="action" value="comment">
+                                    <button type="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>
                                 </div>
-                                <input type="text" id="commentInput" class="input" placeholder="Bình luận gì chưa người đẹp?">
-                            </div>
+                            </form>
                             <div class="comment-list">
                                 <c:choose>
                                     <c:when test="${not empty post.postCommentList}">
                                         <c:forEach var="postComment" items="${post.postCommentList}">
-                                            <div class="content-text" id="${postCommentList.postId}">
+                                            <div class="content-text" id="${postComment.postId}">
                                                 <div class="avatar">
-                                                    <img src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
+                                                    <img src="${pageContext.request.contextPath}/assets/img/img-download/${postComment.avatarUser}" alt="">
                                                 </div>
                                                 <div class="comment-body">
-                                                    <div class="comment-name">Chong cua Bo</div>
-                                                    <div class="comment-content">${postCommentList.content}</div>
+                                                    <div class="comment-name">${postComment.userName}</div>
+                                                    <div class="comment-content">${postComment.content}</div>
                                                 </div>
                                                 <div class="item-utils">
                                                     <div class="item-extend"><i class="fa-solid fa-quote-right"></i></div>
@@ -276,5 +313,6 @@
             }
         });
     });
+
 
 </script>

@@ -18,17 +18,18 @@ import entity.Event;
  * @author hunggt1572004
  */
 public class EventRepositoryImpl implements EventRepository {
-    
+
     @Override
-    public void addEvent(int clubId, int userId, String name, String description, int typeId, Timestamp startDate, Timestamp endDate, int locationId, String img) {
+    public void addEvent(int clubId, int userId, String name, String description, int typeId, Timestamp startDate,
+            Timestamp endDate, int locationId, String img) {
         DBContext db = DBContext.getInstance();
         int rs = 0;
         try {
             String sql = """
-                         insert into events (clubId, userId, name, description, typeId, startTimestamp, endTimestamp, locationId, img)
-                         values (?, ?, ?, ?, ?, ?, ? , ?, ?)
-                         """;
-            
+                    insert into events (clubId, userId, name, description, typeId, startTimestamp, endTimestamp, locationId, img)
+                    values (?, ?, ?, ?, ?, ?, ? , ?, ?)
+                    """;
+
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);
             statement.setInt(2, userId);
@@ -40,7 +41,7 @@ public class EventRepositoryImpl implements EventRepository {
             statement.setInt(8, locationId);
             statement.setString(9, img);
             rs = statement.executeUpdate();
-            
+
             if (rs == 0) {
                 throw new Exception();
             }
@@ -48,23 +49,23 @@ public class EventRepositoryImpl implements EventRepository {
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public ArrayList<EventResponse> getEventDescription() {
         DBContext db = DBContext.getInstance();
         ArrayList<EventResponse> eventList = new ArrayList<>();
-        
+
         try {
             String sql = """
-                     SELECT e.id, e.name, c.name AS clubName, 
-                            e.startTimestamp, e.endTimestamp, e.img 
-                     FROM events e
-                     JOIN clubs c ON e.clubId = c.id
-                     """;
-            
+                    SELECT e.id, e.name, c.name AS clubName,
+                           e.startTimestamp, e.endTimestamp, e.img
+                    FROM events e
+                    JOIN clubs c ON e.clubId = c.id
+                    """;
+
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            
+
             while (rs.next()) {
                 int eventId = rs.getInt("id");
                 String eventName = rs.getNString("name");
@@ -72,25 +73,25 @@ public class EventRepositoryImpl implements EventRepository {
                 Timestamp startDate = rs.getTimestamp("startTimestamp");
                 Timestamp endDate = rs.getTimestamp("endTimestamp");
                 String img = rs.getString("img");
-                
+
                 EventResponse event = new EventResponse(eventId, eventName, clubName, startDate, endDate, img);
                 eventList.add(event);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return eventList;
     }
-    
+
     @Override
     public ArrayList<Event> searchEvent(SearchEventDTO event) {
         DBContext db = DBContext.getInstance();
         ArrayList<Event> result = new ArrayList<>();
         try {
             String sql = """
-                         select e.*, c.name as [clubName] from events e
-                         """;
+                    select e.*, c.name as [clubName] from events e
+                    """;
             sql += joinSearchEvent(event);
             sql += whereSearchEvent(event);
             PreparedStatement st = db.getConnection().prepareStatement(sql);
@@ -116,16 +117,16 @@ public class EventRepositoryImpl implements EventRepository {
         }
         return result;
     }
-    
+
     private String joinSearchEvent(SearchEventDTO event) {
         StringBuilder sql = new StringBuilder();
         sql.append(" JOIN clubs  c ON c.id = e.clubId ");
         return sql.toString();
     }
-    
+
     private String whereSearchEvent(SearchEventDTO event) {
         StringBuilder sql = new StringBuilder(" Where 1 = 1 ");
-        
+
         if (event.getSearch() != null && !event.getSearch().isEmpty()) {
             sql.append(" and e.[name] like '%").append(event.getSearch()).append("%' ");
         }
@@ -139,5 +140,37 @@ public class EventRepositoryImpl implements EventRepository {
             sql.append(" and clubId = ").append(event.getClubId());
         }
         return sql.toString();
+    }
+
+    @Override
+    public boolean deleteEvent(int eventId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            // Delete corresponding rows in event_participants first
+            String deleteParticipantsSql = """
+                    delete from event_participants where eventId = ?
+                    """;
+            PreparedStatement deleteParticipantsStmt = db.getConnection().prepareStatement(deleteParticipantsSql);
+            deleteParticipantsStmt.setInt(1, eventId);
+            deleteParticipantsStmt.executeUpdate();
+
+            // Delete the event itself
+            String deleteEventSql = """
+                    delete from events where id = ?
+                    """;
+            PreparedStatement deleteEventStmt = db.getConnection().prepareStatement(deleteEventSql);
+            deleteEventStmt.setInt(1, eventId);
+            int rs = deleteEventStmt.executeUpdate();
+
+            if (rs == 0) {
+                throw new Exception();
+            }
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

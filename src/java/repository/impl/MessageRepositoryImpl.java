@@ -48,6 +48,7 @@ public class MessageRepositoryImpl implements MessageRepository {
                     join members as mb on mb.id = m.memberId
                     join user_informations as ui on ui.userId = mb.userId
                     where m.clubId = ?
+                    order by m.id
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);

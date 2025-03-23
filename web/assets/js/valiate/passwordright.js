@@ -27,15 +27,12 @@ document.addEventListener("DOMContentLoaded", function() {
         
         function checkPassword() {
             if (confirmPassword.value === "") {
-                // Trường nhập lại rỗng: reset border và ẩn thông báo
                 confirmPassword.style.border = "1px solid #ddd";
                 passwordError.style.display = "none";
             } else if (confirmPassword.value !== newPassword.value) {
-                // Nếu không khớp: border đỏ, hiển thị lỗi
                 confirmPassword.style.border = "2px solid red";
                 passwordError.style.display = "block";
             } else {
-                // Nếu khớp: border xanh, ẩn lỗi
                 confirmPassword.style.border = "2px solid green";
                 passwordError.style.display = "none";
             }

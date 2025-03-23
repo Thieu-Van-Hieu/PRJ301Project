@@ -12,7 +12,7 @@
 
     <div class="content-body">
         <div class="content-filter">
-            <form action="EventServlet" method="GET">
+            <form action="${pageContext.request.getContextPath()}/EventServlet" method="GET">
                 <input type="hidden" value="filter" name="action">
                 <table>
                     <tr>
@@ -100,7 +100,7 @@
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                           placeholder="Chọn ngày giờ bắt đầu"></td>
+                                        placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -124,7 +124,11 @@
                                 </td>
                                 <td><input type="text" name="locationInfor" placeholder="Địa chỉ cụ thể"></td>
                             </tr>
-                            <tr><td colspan="2"><div class="img-create" id="imgPreview"></div></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="img-create" id="imgPreview"></div>
+                                </td>
+                            </tr>
                             <tr>
                                 <td colspan="2">
                                     <div class="modal-select" id="customFileUpload">
@@ -150,35 +154,28 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-                                        flatpickr("#startDate", {
-                                            enableTime: true,
-                                            dateFormat: "Y-m-d H:i",
-                                            time_24hr: true,
-                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-                                        });
+    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+    flatpickr("#startDate", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+    });
 
-                                        flatpickr("#endDate", {
-                                            enableTime: true,
-                                            dateFormat: "Y-m-d H:i",
-                                            time_24hr: true,
-                                            position: "below"
-                                        });
+    flatpickr("#endDate", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+        time_24hr: true,
+        position: "below"
+    });
 
-                                        // Xử lý chọn file ảnh
-                                        document.getElementById("customFileUpload").addEventListener("click", function () {
-                                            document.getElementById("fileInput").click();
-                                        });
+    // Xử lý chọn file ảnh
+    document.getElementById("customFileUpload").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
+    });
 </script>
 
 <script>
-    document.getElementById('toggle-tasks').addEventListener('click', function (event) {
-        event.preventDefault();
-        let taskList = document.getElementById('task-list');
-        taskList.classList.toggle('show');
-        taskList.classList.toggle('hidden');
-    });
-
     function openModal() {
         document.getElementById('modal').style.display = 'flex';
     }
@@ -210,7 +207,6 @@
             document.getElementById('fileInput').value = "";
         }, 300);
     });
-
 </script>
 
 <script>

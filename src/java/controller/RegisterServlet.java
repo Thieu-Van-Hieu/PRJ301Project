@@ -83,13 +83,17 @@ public class RegisterServlet extends HttpServlet {
         User user = userService.getUsername(username, password);
         boolean isExistEmail = userService.isExistEmail(email);
 
-        if (user != null) {
+        if (user.getUserName() != null) {
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
             session.setAttribute("error", " Tài Khoản đã tồn tại");
             response.sendRedirect(request.getContextPath() + "/view/register.jsp");
             return;
         }
         if (isExistEmail) {
             session.setAttribute("error", "Email đã tồn tại");
+            request.setAttribute("username", username);
+            request.setAttribute("email", email);
             response.sendRedirect(request.getContextPath() + "/view/register.jsp");
             return;
         }
@@ -133,6 +137,7 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("password", password);
         session.setAttribute("generatedOTP", otp);
         session.setAttribute("email", email);
+        session.setAttribute("success", "Chúng tôi đã gửi OTP!");
         response.sendRedirect(request.getContextPath() + "/view/otp.jsp");
     }
 

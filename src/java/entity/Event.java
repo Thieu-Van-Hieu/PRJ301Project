@@ -7,6 +7,7 @@ public class Event {
 
     private int id;
     private String name;
+    private String clubName;
     private String description;
     private int typeId;
     private Timestamp startDate;
@@ -18,7 +19,27 @@ public class Event {
 
     public Event() {
     }
-    
+
+    public String getClubName() {
+        return clubName;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
     public Event(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
@@ -77,8 +98,10 @@ public class Event {
     }
 
     public static class Builder {
+
         private int id;
         private String name;
+        private String clubName;
         private String description;
         private int typeId;
         private Timestamp startDate;
@@ -89,6 +112,11 @@ public class Event {
         private String img;
 
         public Builder() {
+        }
+
+        public Builder setClubName(String clubName) {
+            this.clubName = clubName;
+            return this;
         }
 
         public Builder setId(int id) {

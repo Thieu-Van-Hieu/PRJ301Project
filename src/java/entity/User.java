@@ -12,6 +12,9 @@ public class User {
     private String role;
     private String email;
 
+    public User() {
+    }
+
     private User(Builder builder) {
         this.id = builder.id;
         this.userName = builder.userName;

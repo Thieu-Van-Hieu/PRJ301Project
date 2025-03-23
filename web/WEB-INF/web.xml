@@ -69,6 +69,10 @@
         <servlet-name>DiscoveryServlet</servlet-name>
         <servlet-class>controller.DiscoveryServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserSettingServlet</servlet-name>
+        <servlet-class>controller.UserSettingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -160,5 +164,9 @@
     <servlet-mapping>
         <servlet-name>OTPVerificationServlet</servlet-name>
         <url-pattern>/OTPVerificationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserSettingServlet</servlet-name>
+        <url-pattern>/UserSettingServlet</url-pattern>
     </servlet-mapping>
 </web-app>

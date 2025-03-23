@@ -90,14 +90,6 @@
         </div>
     </div>
 </div>
-<script>
-    document.getElementById('toggle-tasks').addEventListener('click', function (event) {
-        event.preventDefault();
-        let taskList = document.getElementById('task-list');
-        taskList.classList.toggle('show');
-        taskList.classList.toggle('hidden');
-    });
-</script>
 
 <script src="${pageContext.request.contextPath}/assets/js/effect-js/roihoa.js"></script>
 

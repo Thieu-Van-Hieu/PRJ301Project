@@ -143,13 +143,6 @@
 
 
 <script>
-    document.getElementById('toggle-tasks').addEventListener('click', function (event) {
-        event.preventDefault();
-        let taskList = document.getElementById('task-list');
-        taskList.classList.toggle('show');
-        taskList.classList.toggle('hidden');
-    });
-
     function openModal() {
         document.getElementById('modal').style.display = 'flex';
     }
@@ -160,7 +153,7 @@
 
     document.getElementById("customFileUpload").addEventListener("click", function () {
         document.getElementById("fileInput").click();
-    })
+    });
 
     const newContent = document.querySelector('.js-open-modal')
     const modal = document.querySelector('.js-modal')

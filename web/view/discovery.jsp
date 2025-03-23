@@ -17,9 +17,7 @@
     </head>
 
     <body>
-        <style>
-
-        </style>
+        <jsp:include page="/view/noticeSuccess.jsp"/>
         <jsp:include page="/view/background.jsp" />
         <div class="container">
             <!-- Header -->
@@ -43,9 +41,9 @@
                                 src="${pageContext.request.contextPath}/assets/img/img-download/${clubItem.name}"
                                 alt="alt" /></li>
                         </c:forEach>
-                    <li><i class="fa-solid fa-plus"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=createClub'"><i class="fa-solid fa-plus"></i></li>
                     <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet'"><i class="fa-regular fa-compass"></i></li>
-                    <li><i class="fa-solid fa-gear"></i></li>
+                    <li onclick="location.href = '${pageContext.request.contextPath}/DiscoveryServlet?action=setting'"><i class="fa-solid fa-gear"></i></li>
                 </ul>
             </div>
 
@@ -182,7 +180,7 @@
                     const avatarImageSrc = this.querySelector(".club-avatar img").src;
                     const clubDiscription = this.querySelector(".club-infor p").innerText;
                     const clubId = this.querySelector("#clubIdItem").value;
-                    
+
                     document.getElementById("clubName").innerText = clubName;
                     document.getElementById("clubPresidentName").innerText = "Chủ Nhiệm: " + clubPresidentName;
                     document.getElementById("type").innerText = "Loại: " + clubType;
@@ -212,7 +210,7 @@
             }
         });
 
-        
+
     </script>
 
 </html>

@@ -8,12 +8,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class DBContext {
+
     private static DBContext _instance = null;
     private Connection connection = null;
 
     public static DBContext getInstance() {
-        if (_instance == null)
+        if (_instance == null) {
             _instance = new DBContext();
+        }
 
         return _instance;
     }

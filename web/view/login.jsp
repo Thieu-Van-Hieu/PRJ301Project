@@ -16,6 +16,7 @@
 
     <body>
         <jsp:include page="noticeError.jsp"/>
+        <jsp:include page="noticeSuccess.jsp"/>
         <jsp:include page="sakura.jsp" />
         <div class="container">
             <div class="left-intro">
@@ -205,7 +206,7 @@
                     <div class="inputGroup inputGroup4">
                         <p style="color: #444A51;">Bạn chưa có tài khoản? <a href="${pageContext.request.contextPath}/view/register.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;">Đăng ký</a></p>
                     </div>
-                    <p style="padding-top: 10px; cursor: pointer"><a href="${pageContext.request.contextPath}/view/forgotPassword.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;" >Quên Mật Khẩu</a> </p>
+                    <p style="padding-top: 10px; cursor: pointer" class="forgot"><a href="${pageContext.request.contextPath}/view/forgotPassword.jsp" style="text-decoration: none;color: #3D2097; font-weight: 600;" >Quên Mật Khẩu</a> </p>
                 </form>
             </div>
         </div>

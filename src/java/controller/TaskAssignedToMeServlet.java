@@ -49,13 +49,13 @@ public class TaskAssignedToMeServlet extends HttpServlet {
     private TaskAssignedToMeResponse getTaskFromRequest(HttpServletRequest request) {
         String taskId = request.getParameter("taskId");
         String taskStatus = request.getParameter("taskStatus");
-        String taskAssignedBy = request.getParameter("taskAssignedBy");
+        int taskAssignedBy = Integer.parseInt(request.getParameter("taskAssignedBy"));
         Timestamp taskDueDate = Timestamp.valueOf(request.getParameter("taskDueDate"));
 
         TaskAssignedToMeResponse task = new TaskAssignedToMeResponse();
         task.setId(Integer.parseInt(taskId));
         task.setStatus(taskStatus);
-        task.setAssignedByMemberName(taskAssignedBy);
+        task.setAssignedByMemberId(taskAssignedBy);
         task.setDueDate(taskDueDate);
 
         return task;
@@ -91,6 +91,8 @@ public class TaskAssignedToMeServlet extends HttpServlet {
             request.setAttribute("action", "updateStatus");
             request.setAttribute("taskId", session.getAttribute("taskId"));
             session.removeAttribute("taskId");
+            request.setAttribute("assignedBy", session.getAttribute("assignedBy"));
+            session.removeAttribute("assignedBy");
         }
 
         request.setAttribute("error", session.getAttribute("error"));
@@ -125,6 +127,7 @@ public class TaskAssignedToMeServlet extends HttpServlet {
                 if (service.isTaskCompleted(task.getId())) {
                     session.setAttribute("action", "updateStatus");
                     session.setAttribute("taskId", task.getId());
+                    session.setAttribute("assignedBy", task.getAssignedByMemberId());
                 }
             }
 

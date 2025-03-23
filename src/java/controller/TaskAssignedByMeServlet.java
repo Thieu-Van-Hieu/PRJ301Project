@@ -133,6 +133,7 @@ public class TaskAssignedByMeServlet extends HttpServlet {
             }
         } else if (action.equals("editTask")) {
             TaskAssignedByMeResponse task = getTaskFromRequest(request);
+            task.setClubId(member.getClubId());
             task = service.editTask(task);
             if (task == null) {
                 session.setAttribute("error", "Có lỗi xảy ra khi sửa task");

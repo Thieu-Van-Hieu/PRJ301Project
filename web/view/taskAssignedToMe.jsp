@@ -396,7 +396,7 @@
                             <input type="hidden" name="taskId" value="` + taskAssignedToMe.taskId + `">
                             <input type="hidden" name="taskName" value="` + taskAssignedToMe.taskName + `">
                             <input type="hidden" name="taskDescription" value="` + taskAssignedToMe.taskDescription + `">
-                            <input type="hidden" name="taskAssignedBy" value="` + taskAssignedToMe.taskAssignedBy + `">
+                            <input type="hidden" name="taskAssignedBy" value="` + taskAssignedToMe.taskAssignedById + `">
                             <input type="hidden" name="taskStatus" value="Đã xong">
                             <input type="hidden" name="taskDueDate" value="` + taskAssignedToMe.taskDueDate + `">
                             <div class="task__controls">
@@ -411,27 +411,46 @@
             }
 
             function createTask(taskAssignedToMe) {
+                console.log("Tạo task: ", taskAssignedToMe);
                 let taskContainer = $(".tasks__body");
                 taskContainer.appendChild(getTaskNode(taskAssignedToMe));
             }
 
+            function editTask(taskAssignedToMe) {
+                if (!taskAssignedToMe.taskAssignedTo.includes("${member.id}")) {
+                    console.log("1 Xóa task: ", taskAssignedToMe);
+                    deleteTask(taskAssignedToMe);
+                    return;
+                }
+
+                if (taskAssignedToMe.taskAssignedTo.includes("${member.id}") && $(".task[data-task-id='" + taskAssignedToMe.taskId + "']") == null) {
+                    createTask(taskAssignedToMe);
+                    return;
+                }
+
+                console.log("Sửa task: ", taskAssignedToMe);
+
+                let taskContainer = $(".tasks__body");
+                let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
+                console.log(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
+                taskContainer.replaceChild(getTaskNode(taskAssignedToMe), task);
+            }
+
             function deleteTask(taskAssignedToMe) {
+                console.log("Xóa task: ", taskAssignedToMe);
                 let taskContainer = $(".tasks__body");
                 let task = taskContainer.querySelector(`.task[data-task-id="` + taskAssignedToMe.taskId + `"]`);
                 taskContainer.removeChild(task);
             }
 
             function isTaskAssignedToMe(taskAssignedToMe) {
-                console.log(taskAssignedToMe);
-                console.log("${member.id}");
-                return taskAssignedToMe.taskAssignedTo.includes("${member.id}") && taskAssignedToMe.clubId == "${member.clubId}";
+                return ($(".task[data-task-id='" + taskAssignedToMe.taskId + "']") != null) || (taskAssignedToMe.taskAssignedTo.includes("${member.id}") && taskAssignedToMe.clubId == "${member.clubId}");
             }
 
             // Khi nhận tin nhắn từ server
             socket.onmessage = function (event) {
                 let message = JSON.parse(event.data);
-
-
+                console.log(event);
                 console.log("Nhận tin nhắn từ Server: ", message);
 
                 if (!isTaskAssignedToMe(message.data)) {
@@ -440,6 +459,7 @@
 
                 let actionHandlers = new Map([
                     ["createTask", createTask],
+                    ["editTask", editTask],
                     ["deleteTask", deleteTask]
                 ]);
 
@@ -460,11 +480,11 @@
             function sendMessage(element) {
                 event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
                 let id = element.getAttribute("data-task-id");
-                let taskAssignedBy = element.querySelector("input[name='taskAssignedBy']").value;
-                let taskAssignedToMe = new TaskAssignedByMe(id, ${member.clubId}, taskAssignedBy, ${member.id}, "Đã xong");
+                let taskAssignedBy = "${assignedBy}";
+                let taskAssignedByMe = new TaskAssignedByMe(id, ${member.clubId}, taskAssignedBy, ${member.id}, "Đã xong");
                 let message = {
                     action: "updateStatus",
-                    data: taskAssignedToMe
+                    data: taskAssignedByMe
                 }
                 socket.send(JSON.stringify(message));
             }

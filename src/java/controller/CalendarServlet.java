@@ -43,14 +43,12 @@ public class CalendarServlet extends HttpServlet {
             action = "";
         }
 
-        if (!action.equals("refresh")) {
-            Map<String, Runnable> map = Map.of(
-                    "", () -> service.setCurrentWeek(),
-                    "next", () -> service.setNextWeek(),
-                    "prev", () -> service.setPreviousWeek());
+        Map<String, Runnable> map = Map.of(
+                "", () -> service.setCurrentWeek(),
+                "next", () -> service.setNextWeek(),
+                "prev", () -> service.setPreviousWeek());
 
-            map.get(action).run();
-        }
+        map.get(action).run();
 
         service.getCalendarResponses(member.getClubId());
 

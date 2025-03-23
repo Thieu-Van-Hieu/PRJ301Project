@@ -28,9 +28,9 @@ import dto.EventResponse;
 import dto.SearchEventDTO;
 import services.ClubService;
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-        maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 50) // 50MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
+        maxFileSize = 1024 * 1024 * 10, //10MB
+        maxRequestSize = 1024 * 1024 * 50)    //50MB
 public class EventServlet extends HttpServlet {
 
     private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
@@ -52,15 +52,14 @@ public class EventServlet extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
-    // + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -83,32 +82,21 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent, status, clubId);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
-        request.setAttribute("clubDescriptions", clubIdAndNames);
-        request.setAttribute("eventDescriptions", eventDescriptions);
-        request.setAttribute("eventTypes", eventTypes);
-        request.setAttribute("includeWeb", "event.jsp");
-        request.setAttribute("action", session.getAttribute("action"));
-        session.removeAttribute("action");
-        request.setAttribute("eventId", session.getAttribute("eventId"));
-        System.out.println(session.getAttribute("eventId"));
-        session.removeAttribute("eventId");
-        request.setAttribute("clubId", session.getAttribute("clubId"));
-        session.removeAttribute("clubId");
-        request.setAttribute("startDate", session.getAttribute("startDate"));
-        session.removeAttribute("startDate");
-        request.setAttribute("endDate", session.getAttribute("endDate"));
-        session.removeAttribute("endDate");
+        session.setAttribute("clubDescriptions", clubIdAndNames);
+        session.setAttribute("eventDescriptions", eventDescriptions);
+        session.setAttribute("eventTypes", eventTypes);
+        session.setAttribute("includeWeb", "event.jsp");
 
-        request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -165,26 +153,16 @@ public class EventServlet extends HttpServlet {
 
                 int locationId = eventService.getLocationId(province, district, ward, address);
 
-                eventService.addEvent(clubId, userId, name, description, typeId, startDate, endDate, locationId,
-                        normalized);
-                session.setAttribute("action", "createEvent");
+                eventService.addEvent(clubId, userId, name, description, typeId, startDate, endDate, locationId, normalized);
+                request.setAttribute("action", null);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (action.equals("deleteEvent")) {
-            int eventId = Integer.parseInt(request.getParameter("eventId"));
-            System.out.println(eventId);
-            eventService.deleteEvent(eventId);
-            session.setAttribute("action", "deleteEvent");
-            session.setAttribute("eventId", eventId);
-            session.setAttribute("clubId", request.getParameter("clubId"));
-            session.setAttribute("startDate", request.getParameter("startDate"));
-            session.setAttribute("endDate", request.getParameter("endDate"));
         }
 
-        response.sendRedirect(request.getContextPath() + "/EventServlet");
+        doGet(request, response);
 
     }
 

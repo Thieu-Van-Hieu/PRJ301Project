@@ -3,156 +3,10 @@
 <%@page import="entity.*" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/event-css/event.css">
-<script src="${pageContext.request.contextPath}/assets/js/base.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/dto/Event.js"></script>
-<script>
-    const socket = new WebSocket("ws://" + window.location.host + "${pageContext.request.contextPath}/event");
 
-    // Khi kết nối thành công
-    socket.onopen = function () {
-        console.log("Kết nối WebSocket thành công!");
-        let action = "${action}";
-        console.log("Action: ", action);
-        if (action === "createEvent") {
-            console.log("Gửi tin nhắn");
-            let eventElement = document.querySelector(".contentListEvent .event-item:last-child");
-            sendMessage(eventElement, action);
-        } else if (action === "deleteEvent") {
-            let eventElement = new Event("${eventId}", "", "${member.clubId}", "", "${startDate}", "${endDate}", "");
-            let message = {
-                action: "deleteEvent",
-                data: eventElement,
-            };
-            socket.send(JSON.stringify(message));
-        }
-    };
-    function isUserAtBottom() {
-        let messageContainer = $(".contentListEvent");
-        console.log(messageContainer.scrollHeight - messageContainer.scrollTop - messageContainer.clientHeight);
-        return Math.abs(messageContainer.scrollHeight - messageContainer.scrollTop - messageContainer.clientHeight) < 5;
-    }
-
-    function scrollToBottom() {
-        let messageContainer = $(".contentListEvent");
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-
-    function getNode(eventObj) {
-        const eventDiv = document.createElement("div");
-        eventDiv.id = eventObj.id;
-        eventDiv.className = "event-item";
-
-        const imgDiv = document.createElement("div");
-        imgDiv.className = "event-img";
-        const img = document.createElement("img");
-        img.src = eventObj.imgUrl;
-        img.alt = "Event Image";
-        imgDiv.appendChild(img);
-
-        const infoDiv = document.createElement("div");
-        infoDiv.className = "event-info";
-
-        const title = document.createElement("h3");
-        title.textContent = eventObj.name;
-        infoDiv.appendChild(title);
-
-        const clubInfo = document.createElement("p");
-        clubInfo.innerHTML = `<strong>Câu lạc bộ:</strong> ` + eventObj.clubName;
-        infoDiv.appendChild(clubInfo);
-
-        const startDateInfo = document.createElement("p");
-        startDateInfo.textContent = `Start Date: ` + eventObj.startDate;
-        infoDiv.appendChild(startDateInfo);
-
-        const endDateInfo = document.createElement("p");
-        endDateInfo.textContent = `End Date: ` + eventObj.endDate;
-        infoDiv.appendChild(endDateInfo);
-
-        const optionsDiv = document.createElement("div");
-        optionsDiv.className = "event-options";
-        // Add additional options here if needed
-
-        eventDiv.appendChild(imgDiv);
-        eventDiv.appendChild(infoDiv);
-        eventDiv.appendChild(optionsDiv);
-
-        return eventDiv;
-    }
-
-    function createEvent(eventObj) {
-        let eventContainer = $(".contentListEvent");
-        if (eventContainer.querySelector(".event-item[id='" + eventObj.id + "']")) {
-            return;
-        }
-
-        let isBottom = isUserAtBottom();
-
-        eventContainer.appendChild(getNode(eventObj));
-        if (isBottom) {
-            scrollToBottom();
-        }
-    }
-
-    function deleteEvent(eventObj) {
-        let eventContainer = $(".contentListEvent");
-        if (!eventContainer.querySelector(".event-item[id='" + eventObj.id + "']")) {
-            return;
-        }
-
-        eventContainer.querySelector(".event-item[id='" + eventObj.id + "']").remove();
-    }
-
-    // When receiving a message from the server
-    socket.onmessage = function (event) {
-        let message = JSON.parse(event.data);
-        console.log("Received message from Server: ", message.data);
-
-        let actionHandlers = {
-            "createEvent": createEvent,
-            "deleteEvent": deleteEvent
-        };
-
-        if (actionHandlers[message.action]) {
-            actionHandlers[message.action](message.data);
-        }
-    };
-
-    // When an error occurs
-    socket.onerror = function (error) {
-        console.error("WebSocket error: ", error);
-    };
-
-    // Gửi tin nhắn lên Server
-    function sendMessage(element, action) {
-        event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
-
-        if ("${member.role}" !== "Chủ nhiệm") {
-            alert("Bạn không có quyền thực hiện hành động này!");
-            return;
-        }
-
-        let eventElement = element.closest(".event-item");
-        console.log("Element:", element);
-        let id = eventElement?.getAttribute("id");
-        let name = eventElement?.querySelector(".event-info h3")?.textContent;
-        let clubId = "${member.clubId}";
-        let clubName = eventElement?.querySelector(".event-info p strong")?.nextSibling?.nodeValue.trim();
-        let startDate = eventElement?.querySelector(".event-info p:nth-child(3)")?.textContent.replace("Start Date: ", "");
-        let endDate = eventElement?.querySelector(".event-info p:nth-child(4)")?.textContent.replace("End Date: ", "");
-        let imgUrl = eventElement?.querySelector(".event-img img")?.getAttribute("src");
-
-        let eventData = new Event(id, name,clubId, clubName, startDate, endDate, imgUrl);
-
-        let message = {
-            action: action,
-            data: eventData,
-        };
-        socket.send(JSON.stringify(message));
-    }
-</script>
 <div class="content-container" style="overflow-y: overlay;">
     <%
-    request.setAttribute("contentHeader", "Sự kiện");
+            request.setAttribute("contentHeader", "Sự kiện");
     %>
     <jsp:include page="contentHeader.jsp" />
 
@@ -165,7 +19,7 @@
                         <td class="filter-time">Ngày Đăng <input type="date" name="date"></td>
                         <td>
                             <select name="type" id="id">
-                                <c:forEach var="eventType" items="${eventTypes}">
+                                <c:forEach var="eventType" items="${sessionScope.eventTypes}">
                                     <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
                                 </c:forEach>
                             </select>
@@ -176,7 +30,7 @@
                     <tr>
                         <td>
                             <select name="clubId">
-                                <c:forEach var="clubDiscription" items="${clubDescriptions}">
+                                <c:forEach var="clubDiscription" items="${sessionScope.clubDescriptions}">
                                     <option value="${clubDiscription.getId()}">${clubDiscription.getName()}</option>
                                 </c:forEach>
                             </select>
@@ -198,7 +52,7 @@
             <button class="js-open-modal">Tạo sự kiện</button>
         </div>
         <div class="contentListEvent">
-            <c:forEach var="eventDescription" items="${eventDescriptions}">
+            <c:forEach var="eventDescription" items="${sessionScope.eventDescriptions}">
                 <div class="event-item" id="${eventDescription.getEventId()}">
                     <div class="event-img"><img
                             src="${pageContext.request.contextPath}/assets/img/img-download/${eventDescription.getImg()}"
@@ -209,21 +63,10 @@
                         <p>Start Date: ${eventDescription.getStartDate()}</p>
                         <p>End Date: ${eventDescription.getEndDate()}</p>
                     </div>
-                    <c:if test="${member.role eq 'Chủ nhiệm'}">
-                    <div class="event-options">
-                        <form action="${pageContext.request.contextPath}/EventServlet" method="post" id="${eventDescription.getEventId()}">
-                            <input type="hidden" name="eventId" value="${eventDescription.getEventId()}">
-                            <input type="hidden" name="clubId" value="${member.clubId}">
-                            <input type="hidden" name="startDate" value="${eventDescription.getStartDate()}">
-                            <input type="hidden" name="endDate" value="${eventDescription.getEndDate()}">
-                            <input type="hidden" name="action" value="deleteEvent">
-                            <button type="submit" class="event__btn--delete">Xóa</button>
-                        </form>
-                        <div class="event__btn--more">...</div>
-                    </div>
-                    </c:if>
+                    <div class="event-options">...</div>
                 </div>
             </c:forEach>
+
         </div>
 
         <div class="modal js-modal" id="modal">
@@ -237,8 +80,8 @@
                                     src="${pageContext.request.contextPath}/assets/img/logo-img/logo_3.jpg" alt="">
                             </div>
                             <p>Chong cua Bo</p>
-                            <input type="hidden" name="userId" value="${member.id}">
-                            <input type="hidden" name="clubId" value="${member.clubId}">
+                            <input type="hidden" name="userId" value="1">
+                            <input type="hidden" name="clubId" value="2">
                             <input type="hidden" name="province" value="" id="provinceText">
                             <input type="hidden" name="district" value="" id="districtText">
                             <input type="hidden" name="ward" value="" id="wardText">
@@ -249,7 +92,7 @@
                                 <td><input type="text" name="nameEvent" placeholder="Tên Sự Kiện"></td>
                                 <td>
                                     <select name="type" id="id">
-                                        <c:forEach var="eventType" items="${eventTypes}">
+                                        <c:forEach var="eventType" items="${sessionScope.eventTypes}">
                                             <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
                                         </c:forEach>
                                     </select>
@@ -502,6 +345,6 @@
         }
     });
 </script>
-<c:if test="${action != null}">
-    <c:set var="action" value="${''}"/>
-</c:if>
+</body>
+
+</html>

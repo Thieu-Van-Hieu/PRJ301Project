@@ -201,34 +201,15 @@
                 console.log("Kết nối WebSocket thành công!");
             };
 
-            function parseCustomDate(dateStr) {
-                // Thay thế "ICT" bằng múi giờ chuẩn UTC+07:00
-                dateStr = dateStr.replace("ICT", "GMT+0700");
-                return new Date(dateStr);
-            }
-
             function isEventInWeek(calendar) {
-                let weekStartDate = parseCustomDate("${weekStart}");
-                let weekEndDate = parseCustomDate("${weekEnd}");
-                let eventStartDate = new Date(calendar.startDate);
-                let eventEndDate = new Date(calendar.endDate);
-
-                console.log("Week Start Date: ", weekStartDate);
-                console.log("Week End Date: ", weekEndDate);
-                console.log("Event Start Date: ", eventStartDate);
-                console.log("Event End Date: ", eventEndDate);
-
-                let isStartInWeek = eventStartDate >= weekStartDate && eventStartDate <= weekEndDate;
-                let isEndInWeek = eventEndDate >= weekStartDate && eventEndDate <= weekEndDate;
-
-                console.log("Is Start In Week: ", isStartInWeek);
-                console.log("Is End In Week: ", isEndInWeek);
+                let isStartInWeek = calendar.startDate >= "${weekStart}" && calendar.endDate <= "${weekEnd}";
+                let isEndInWeek = calendar.startDate <= "${weekStart}" && calendar.endDate >= "${weekEnd}";
 
                 return isStartInWeek || isEndInWeek;
             }
 
             function isEventSentToMe(calendar) {
-                return calendar.clubId == "${member.clubId}" && isEventInWeek(calendar);
+                return message.clubId == "${member.clubId}" && isEventInWeek(calendar);
             }
 
             // Khi nhận tin nhắn từ server
@@ -240,7 +221,7 @@
                     return;
                 }
 
-                location.href = "${pageContext.request.contextPath}/CalendarServlet?action=refresh";
+                location.href = "${pageContext.request.contextPath}/CalendarServlet";
             };
 
             // Khi xảy ra lỗi

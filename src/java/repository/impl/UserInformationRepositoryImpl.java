@@ -134,7 +134,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
-
+            
             while (rs.next()) {
                 results = new UserInformationResponse(userId,
                         rs.getNString("role"),

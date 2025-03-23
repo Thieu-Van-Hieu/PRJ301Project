@@ -5,45 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>OTP đã được gửi</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background: #f2f2f2;
-            }
-            .container {
-                max-width: 400px;
-                margin: 100px auto;
-                padding: 20px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            }
-            h2 {
-                text-align: center;
-            }
-            form {
-                display: flex;
-                flex-direction: column;
-            }
-            input {
-                margin-bottom: 10px;
-                padding: 8px;
-                font-size: 16px;
-            }
-            button {
-                padding: 10px;
-                font-size: 16px;
-                background: #4CAF50;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-            }
-            .error {
-                color: red;
-                text-align: center;
-                margin-bottom: 10px;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/otp-css/otpSend.css">
     </head>
     <body>
         <jsp:include page="noticeSuccess.jsp"/>

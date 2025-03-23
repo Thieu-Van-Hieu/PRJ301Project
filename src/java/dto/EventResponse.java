@@ -11,20 +11,21 @@ import java.sql.Timestamp;
  * @author hunggt1572004
  */
 public class EventResponse {
+
     private int eventId;
     private String eventName;
     private String clubName;
     private Timestamp startDate;
     private Timestamp endDate;
     private String img;
-    
+
     public EventResponse(int eventId, String eventName, String clubName, Timestamp startDate, Timestamp endDate, String img) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.clubName = clubName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.img = img;            
+        this.img = img;
     }
 
     public EventResponse() {
@@ -77,7 +78,5 @@ public class EventResponse {
     public void setImg(String img) {
         this.img = img;
     }
-    
-    
-    
+
 }

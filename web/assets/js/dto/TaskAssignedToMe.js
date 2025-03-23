@@ -4,6 +4,7 @@ class TaskAssignedToMe {
         taskName,
         taskDescription,
         taskAssignedBy,
+        taskAssignedById,
         taskAssignedTo,
         taskStatus,
         taskDueDate,
@@ -13,6 +14,7 @@ class TaskAssignedToMe {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskAssignedBy = taskAssignedBy;
+        this.taskAssignedById = taskAssignedById;
         this.taskAssignedTo = taskAssignedTo;
         this.taskStatus = taskStatus;
         this.taskDueDate = taskDueDate;
@@ -37,6 +39,10 @@ class TaskAssignedToMe {
 
     getTaskAssignedBy() {
         return this.taskAssignedBy;
+    }
+
+    getTaskAssignedById() {
+        return this.taskAssignedById;
     }
 
     getTaskAssignedTo() {

@@ -355,7 +355,7 @@
                 let id = messageElement?.getAttribute("data-message-id");
                 let clubId = "${member.clubId}";
                 let memberId = "${member.id}";
-                let memberName = "${userInfomation.firstName}";
+                let memberName = "${userInformation.firstName}";
                 let content = "";
                 
                 if (action === "createMessage") {
@@ -417,20 +417,15 @@
 
             scrollToBottom();
 
-            <%-- // Giả lập load thêm tin nhắn khi cuộn lên
-            messagesContainer.addEventListener('scroll', function () {
-                if (messagesContainer.scrollTop === 0) {
-                    loadOlderMessages();
+            // Kiểm tra xem người dùng có nhập tin nhắn mới không
+            function checkNewMessage(element) {
+                let messageInput = document.querySelector('.message__input');
+                let message = messageInput.value.trim();
+                if (message !== '') {
+                    sendMessage(messageInput.closest('form'), 'createMessage');
+                    messageInput.value = '';
                 }
-            });
-
-            // Hàm giả lập load tin nhắn cũ
-            function loadOlderMessages() {
-                const newMessage = document.createElement('div');
-                newMessage.classList.add('message');
-                newMessage.textContent = 'Old message ' + Math.random().toFixed(2);
-                messagesContainer.prepend(newMessage);
-            } --%>
+            }
         </script>
 
         <c:if test="${action != null}">

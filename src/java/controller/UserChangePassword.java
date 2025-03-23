@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dto.UserInformationResponse;
+import entity.UserInformation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,7 +19,7 @@ import services.UserService;
  *
  * @author ngoct
  */
-public class LoginServlet extends HttpServlet {
+public class UserChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +38,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet UserChangePassword</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UserChangePassword at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,21 +73,22 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UserService userService = new UserService();
-        boolean isCheck = userService.checkLogin(username, password);
-        int userId = userService.getUsername(username, password).getId();
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
         HttpSession session = request.getSession();
-
-        if (isCheck) {
-            session.setAttribute("userId", userId);
-            session.setAttribute("success", "Đăng nhập thành công");
-            response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
-        } else {
-            session.setAttribute("error", "Tài khoản hoặc mật khẩu sai!");
-            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        UserInformationResponse userInformation = (UserInformationResponse) session.getAttribute("userInfor");
+        UserService userService = new UserService();
+        boolean isCorrectPasssowrd = userService.checkLogin(userInformation.getUserName(), oldPassword);
+        if (!isCorrectPasssowrd) {
+            session.setAttribute("error", "Mật khẩu không chính xác vui lòng nhập lại");
+            response.sendRedirect(request.getContextPath() + "/view/changepassword.jsp");
+            return;
         }
+        userService.resetPassword(newPassword);
+        session.invalidate();
+        request.getSession().setAttribute("success", "Đổi mật khẩu thành công!");
+        response.sendRedirect(request.getContextPath() + "/view/login.jsp");
     }
 
     /**

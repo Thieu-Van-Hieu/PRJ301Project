@@ -80,7 +80,25 @@ public class DiscoveryServlet extends HttpServlet {
             session.setAttribute("userInfor", userInfor);
             response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
         } else if ("createClub".equals(action)) {
-
+            session.setAttribute("userId", userId);
+            response.sendRedirect(request.getContextPath() + "/view/createClub.jsp");
+        } else if ("filter".equals(action)) {
+            int typeId = Integer.parseInt(request.getParameter("typeId"));
+            String type = "";
+            if(typeId == 1){
+                type = "Gaming";
+            } else if (typeId == 2){
+                type = "Âm Nhạc";
+            } else if (typeId == 3){
+                type = "Khoa Học & Công Nghệ";
+            } else if (typeId == 4){
+                type = "Thể Thao";
+            } else if (typeId == 5){
+                type = "Giáo Dục";
+            }
+            ArrayList<ClubResponse> clubListFilter = clubService.getClubsByType(type);
+            session.setAttribute("clubList", clubListFilter);
+            response.sendRedirect(request.getContextPath() + "/view/discovery.jsp");
         } else if (action == null) {
             ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
             ArrayList<ClubResponse> clubList = clubService.selectAllClubInformations();

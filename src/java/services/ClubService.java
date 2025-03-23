@@ -7,6 +7,7 @@ package services;
 import dto.ClubResponse;
 import entity.Club;
 import factory.ClubFactory;
+import java.awt.geom.CubicCurve2D;
 import java.util.ArrayList;
 import repository.ClubRepository;
 
@@ -47,6 +48,24 @@ public class ClubService {
         for (Club clubInfor : clubInfors) {
             if(clubInfor.getId() == clubId){
                 return clubInfor.getName();
+            }
+        }
+        return null;
+    }
+    
+    public int addClub(ClubResponse club){
+        return clubRepository.addClub(club);
+    }
+    
+    public ArrayList<ClubResponse> getClubsByType(String type){
+        return clubRepository.getClubsByType(type);
+    }
+    
+    public String getCoverImg(int clubId){
+        ArrayList<Club> clubInfors = clubRepository.getAllClubIdAndName();
+        for (Club clubInfor : clubInfors) {
+            if(clubInfor.getId() == clubId){
+                return clubInfor.getCoverImage();
             }
         }
         return null;

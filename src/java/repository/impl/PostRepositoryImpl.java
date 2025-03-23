@@ -108,7 +108,7 @@ public class PostRepositoryImpl implements PostRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return -1;
+        return 0;
     }
     
     

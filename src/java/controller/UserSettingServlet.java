@@ -68,6 +68,7 @@ public class UserSettingServlet extends HttpServlet {
         if ("logout".equals(action)) {
             session.invalidate();
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+            return;
         }
         response.sendRedirect(request.getContextPath() + "/view/settingUserInformation.jsp");
     }

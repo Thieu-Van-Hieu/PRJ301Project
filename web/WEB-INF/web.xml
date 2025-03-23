@@ -73,6 +73,10 @@
         <servlet-name>UserSettingServlet</servlet-name>
         <servlet-class>controller.UserSettingServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateClubServlet</servlet-name>
+        <servlet-class>controller.CreateClubServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -168,5 +172,9 @@
     <servlet-mapping>
         <servlet-name>UserSettingServlet</servlet-name>
         <url-pattern>/UserSettingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateClubServlet</servlet-name>
+        <url-pattern>/CreateClubServlet</url-pattern>
     </servlet-mapping>
 </web-app>

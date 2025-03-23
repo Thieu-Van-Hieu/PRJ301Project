@@ -18,4 +18,6 @@ public interface MemberRepository {
     public void deleteMemberOfClub(MemberDTO memberDTO);
     
     public Member getMember(int userId, int clubId);
+    
+    public void addMember(MemberDTO member);
 }

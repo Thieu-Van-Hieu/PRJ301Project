@@ -38,6 +38,15 @@ public class ClubResponse {
         this.clubPresidentName = clubPresidentName;
     }
 
+    public ClubResponse(String name, String description, String type, String date, String avatarClub, String coverImage) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.date = date;
+        this.avatarClub = avatarClub;
+        this.coverImage = coverImage;
+    }
+
     public int getMemberId() {
         return memberId;
     }

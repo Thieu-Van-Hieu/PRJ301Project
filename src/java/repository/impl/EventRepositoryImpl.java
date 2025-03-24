@@ -61,6 +61,7 @@ public class EventRepositoryImpl implements EventRepository {
                            e.startTimestamp, e.endTimestamp, e.img
                     FROM events e
                     JOIN clubs c ON e.clubId = c.id
+                    order by e.id desc
                     """;
 
             PreparedStatement statement = db.getConnection().prepareStatement(sql);

@@ -100,9 +100,9 @@ public class CreateClubServlet extends HttpServlet {
 
         ClubResponse club = new ClubResponse(clubName, description, clubType, date, avatarName, coverImgName);
         int clubId = clubService.addClub(club);
-        MemberDTO newMember = new MemberDTO(clubId, userId, 1, "Chủ Nhiệm");
+        MemberDTO newMember = new MemberDTO(clubId, userId, 6, "Chủ Nhiệm");
         memberService.addMember(newMember);
-
+        session.setAttribute("success", "Bạn đã tạo câu lạc bộ mới thành công!");
         session.setAttribute("clubId", clubId);
         response.sendRedirect(request.getContextPath() + "/DiscoveryServlet?action=open&clubId=" + clubId);
     }

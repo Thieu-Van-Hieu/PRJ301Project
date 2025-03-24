@@ -18,9 +18,11 @@ public interface PostRepository {
     
     public void addPost(PostDTO postDTO);
     
-    public void addLove(int postId, int userId);
+    public void addLove(int postId, int memberId);
     
     public boolean isLove(int postId, int userId);
     
     public void addComment(CommentDTO commentDTO);
+    
+    public void deletePost(int postId);
 }

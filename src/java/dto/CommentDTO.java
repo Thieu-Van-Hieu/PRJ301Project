@@ -10,13 +10,13 @@ import java.sql.*;
  */
 public class CommentDTO {
     private int postId;
-    private int userId;
+    private int memberId;
     private String content;
     private Timestamp createdAt;
 
-    public CommentDTO(int postId, int userId, String content, Timestamp createdAt) {
+    public CommentDTO(int postId, int memberId, String content, Timestamp createdAt) {
         this.postId = postId;
-        this.userId = userId;
+        this.memberId = memberId;
         this.content = content;
         this.createdAt = createdAt;
     }
@@ -29,12 +29,12 @@ public class CommentDTO {
         this.postId = postId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getContent() {

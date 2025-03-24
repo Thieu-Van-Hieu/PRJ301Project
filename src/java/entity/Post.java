@@ -16,6 +16,7 @@ public class Post {
     private int id;
     private int clubId;
     private int userId;
+    private int memberId;
     private String content;
     private Timestamp createdAt;
     private String img;
@@ -31,6 +32,7 @@ public class Post {
     public Post(PostBuilder builder){
         this.id = builder.id;
         this.clubId = builder.clubId;
+        this.memberId = builder.memberId;
         this.userId = builder.userId;
         this.content = builder.content;
         this.img = builder.img;
@@ -45,8 +47,11 @@ public class Post {
     public String getUserAvatar() {
         return userAvatar;
     }
-    
-    
+
+    public int getMemberId() {
+        return memberId;
+    }
+     
 
     public String getFullName() {
         return fullName;
@@ -92,6 +97,7 @@ public class Post {
 
         private int id;
         private int clubId;
+        private int memberId;
         private int userId;
         private String content;
         private Timestamp createdAt;
@@ -108,7 +114,12 @@ public class Post {
             this.id = id;
             return this;
         }
-
+        
+        public PostBuilder setMemberId(int memberId){
+            this.memberId = memberId;
+            return this;
+        }
+        
         public PostBuilder setClubId(int clubId) {
             this.clubId = clubId;
             return this;

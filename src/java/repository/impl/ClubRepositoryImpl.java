@@ -175,4 +175,237 @@ public class ClubRepositoryImpl implements ClubRepository {
         }
         return clubResponses;
     }
+
+    @Override
+    public ArrayList<Club> getAllClubAdmin() {
+        DBContext db = new DBContext();
+        ArrayList<Club> results = new ArrayList<>();
+
+        try {
+            String sql = """
+                         select c.id, c.name, c.type, c.createdAt, concat(ui.lastName, ' ', ui.firstName) as clubChairman from clubs as c
+                         join members as m on m.clubId = c.id
+                         join user_informations as ui on ui.userId = m.userId
+                         where m.role = N'Chủ Nhiệm'
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                int clubId = rs.getInt("id");
+                String clubName = rs.getNString("name");
+                String clubType = rs.getNString("type");
+                String createdAt = rs.getString("createdAt");
+                String clubChairman = rs.getNString("clubChairman");
+                Club club = new Club.ClubBuilder()
+                        .setId(clubId)
+                        .setName(clubName)
+                        .setType(clubType)
+                        .setDate(createdAt)
+                        .setClubChairman(clubChairman)
+                        .build();
+                results.add(club);
+            }
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+        return results;
+    }
+
+    public void deleteMessageEditLogs(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM message_edit_logs WHERE memberId IN (SELECT id FROM members WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteMessages(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM messages WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteLoves(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM loves WHERE postId IN (SELECT id FROM posts WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteComments(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM comments WHERE postId IN (SELECT id FROM posts WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deletePosts(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM posts WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteMessagesByMembers(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM messages WHERE memberId IN (SELECT id FROM members WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteEventParticipants(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM event_participants WHERE memberId IN (SELECT id FROM members WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteEvents(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM events WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteTaskAssignees(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM task_assignees WHERE taskId IN (SELECT id FROM tasks WHERE clubId = ?)
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteTasks(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM tasks WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteClubJoinRequests(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM club_join_requests WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteMembers(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            String sql = """
+                     DELETE FROM members WHERE clubId = ?
+                     """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    @Override
+    public void deleteClub(int clubId) {
+        DBContext db = new DBContext();
+        try {
+            deleteMessageEditLogs(clubId);
+            deleteMessages(clubId);
+            deleteLoves(clubId);
+            deleteComments(clubId);
+            deletePosts(clubId);
+            deleteMessagesByMembers(clubId);
+            deleteEventParticipants(clubId);
+            deleteEvents(clubId);
+            deleteTaskAssignees(clubId);
+            deleteTasks(clubId);
+            deleteClubJoinRequests(clubId);
+            deleteMembers(clubId);
+            String sql = """
+                         DELETE FROM clubs WHERE id = ?
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, clubId);
+            st.executeUpdate();
+
+        } catch (Exception e) {
+            return;
+        }
+    }
+
 }

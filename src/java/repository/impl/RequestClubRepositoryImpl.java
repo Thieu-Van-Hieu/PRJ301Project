@@ -76,7 +76,7 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
         try {
             String sql = """
                     insert into members (userId, clubId, deptId, role)
-                    select userId, clubId, 1, N'Thành viên'
+                    select userId, clubId, 3, N'Thành viên'
                     from club_join_requests
                     where id = ?
                     """;

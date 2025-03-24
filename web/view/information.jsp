@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Đăng ký thông tin</title>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login-css/information.css" />
         <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/reponsivecss/reponsiveinfor.css">
         <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />

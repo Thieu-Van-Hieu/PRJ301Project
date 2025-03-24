@@ -195,9 +195,11 @@
                 </table>
             </form>
         </div>
+        <c:if test="${member.role eq 'Chủ Nhiệm'}">
         <div class="createEvent">
             <button class="js-open-modal">Tạo sự kiện</button>
         </div>
+        </c:if>
         <div class="contentListEvent">
             <c:forEach var="eventDescription" items="${eventDescriptions}">
                 <div class="event-item" id="${eventDescription.getEventId()}">
@@ -210,7 +212,7 @@
                         <p>Start Date: ${eventDescription.getStartDate()}</p>
                         <p>End Date: ${eventDescription.getEndDate()}</p>
                     </div>
-                    <c:if test="${member.role eq 'Chủ Nhiệm'}">
+                    <c:if test="${member.role eq 'Chủ Nhiệm' && member.clubId eq eventDescription.clubId}">
                     <div class="event-options">
                         <form action="${pageContext.request.contextPath}/EventServlet" method="post" id="${eventDescription.getEventId()}">
                             <input type="hidden" name="eventId" value="${eventDescription.getEventId()}">

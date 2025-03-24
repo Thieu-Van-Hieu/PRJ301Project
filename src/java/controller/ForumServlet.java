@@ -61,10 +61,10 @@ public class ForumServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -75,25 +75,18 @@ public class ForumServlet extends HttpServlet {
         PostService postService = new PostService();
         UserService userService = new UserService();
         MemberService memberService = new MemberService();
+
         int userId = -1;
         try {
             userId = (Integer) session.getAttribute("userId");
-            if(userId == -1){
+            if (userId == -1) {
                 throw new Exception();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         }
         request.setAttribute("userId", userId);
         int clubId = (Integer) session.getAttribute("clubId");
-        if ("love".equals(action)) {
-            if (!postService.isLove(clubId, userId)) {
-                int postId = Integer.parseInt(request.getParameter("postId"));
-                postService.addLove(postId, userId);
-            }
-        } else if("deletePost".equals(action)){
-            
-        }
         String clubName = clubService.clubName(clubId);
         UserInformationResponse user = userService.getFullNameAndAvatar(userId);
         String userFullName = user.getUserName();
@@ -101,10 +94,38 @@ public class ForumServlet extends HttpServlet {
         ArrayList<ClubResponse> clubListItems = clubService.selectAllClubItems(userId);
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         Member member = memberService.getMemberInfor(userId, clubId);
+        if ("love".equals(action)) {
+            try {
+                int memberId = Integer.parseInt(request.getParameter("memberId"));
+                if (!postService.isLove(clubId, memberId)) {
+                    int postId = Integer.parseInt(request.getParameter("postId"));
+                    postService.addLove(postId, memberId);
+                } else {
+                    throw new Exception();
+                }
+            } catch (ParseException e) {
+                session.setAttribute("error", "Không Tim Được Rồi!");
+            } catch (Exception e) {
+                session.setAttribute("error", "Bạn Đã Tim Rồi!");
+            }
+        } else if ("deletePost".equals(action)) {
+            try {
+                int memberPostId = Integer.parseInt(request.getParameter("postMemberId"));
+                if (member.getId() == memberPostId || member.getRole().equals("Chủ Nhiệm")) {
+                    int postDeleteId = Integer.parseInt(request.getParameter("postId"));
+                    postService.deletePost(postDeleteId);
+                } else {
+                    throw new Exception();
+                }
+            } catch (Exception e){
+                session.setAttribute("error", "Không phải chủ nhiệm sao lại đi xoá bài người ta!");
+            }
+        }
+
         String coverImg = clubService.getCoverImg(clubId);
         session.setAttribute("member", member);
         session.setAttribute("coverImg", coverImg);
-        
+
         session.setAttribute("userFullName", userFullName);
         session.setAttribute("userAvatarImg", userAvatarImg);
         session.setAttribute("clubListItems", clubListItems);
@@ -119,10 +140,10 @@ public class ForumServlet extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -131,19 +152,18 @@ public class ForumServlet extends HttpServlet {
         int userId = -1;
         try {
             userId = (Integer) session.getAttribute("userId");
-            if(userId == -1){
+            if (userId == -1) {
                 throw new Exception();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         }
         String action = request.getParameter("action");
         PostService postService = new PostService();
-        if (action == null) {
-            action = ""; // hoặc gán giá trị mặc định
-        } else if (action.equals("add")) {
+        if (action.equals("add")) {
             try {
                 int clubId = Integer.parseInt(request.getParameter("clubId"));
+                int memberId = Integer.parseInt(request.getParameter("memberId"));
                 String content = request.getParameter("content");
                 Timestamp createdAt = getCurrentTimestamp();
                 Part filePart = request.getPart("file");
@@ -161,17 +181,22 @@ public class ForumServlet extends HttpServlet {
                 String filePath = uploadDir + File.separator + normalized;
                 filePart.write(filePath);
 
-                postService.addPost(new PostDTO(clubId, userId, content, createdAt, normalized));
+                postService.addPost(new PostDTO(clubId, memberId, content, createdAt, normalized));
             } catch (Exception e) {
-                e.printStackTrace();
+                session.setAttribute("error", "Không gửi được rồi bạn ek!");
             }
 
         } else if ("comment".equals(action)) {
-            String content = request.getParameter("content");
-            int postId = Integer.parseInt(request.getParameter("postId"));
-            Timestamp createdAt = getCurrentTimestamp();
-            CommentDTO commentDTO = new CommentDTO(postId, userId, content, createdAt);
-            postService.addComment(commentDTO);
+            try {
+                String content = request.getParameter("content");
+                int memberId = Integer.parseInt(request.getParameter("memberId"));
+                int postId = Integer.parseInt(request.getParameter("postId"));
+                Timestamp createdAt = getCurrentTimestamp();
+                CommentDTO commentDTO = new CommentDTO(postId, memberId, content, createdAt);
+                postService.addComment(commentDTO);
+            } catch (Exception e) {
+                session.setAttribute("error", "Không gửi được rồi bạn ek!");
+            }
         }
         doGet(request, response);
     }

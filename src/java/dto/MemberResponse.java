@@ -9,6 +9,7 @@ package dto;
  * @author hunggt1572004
  */
 public class MemberResponse {
+    private int memberId;
     private String rollNumber;
     private String lastName;
     private String firstName;
@@ -16,7 +17,9 @@ public class MemberResponse {
     private String gender;
     private String del;
     private String role;
-    public MemberResponse(String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role) {
+     
+    public MemberResponse(int memberId,String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role) {
+        this.memberId = memberId;
         this.rollNumber = rollNumber;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -25,6 +28,16 @@ public class MemberResponse {
         this.del = del;
         this.role = role;
     }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+    
+    
 
     public String getRollNumber() {
         return rollNumber;

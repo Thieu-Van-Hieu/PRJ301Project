@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author ngoct
  */
-public class ForumFilter implements Filter {
+public class MemberFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -31,13 +31,13 @@ public class ForumFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public ForumFilter() {
+    public MemberFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ForumFilter:DoBeforeProcessing");
+            log("MemberFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -65,7 +65,7 @@ public class ForumFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ForumFilter:DoAfterProcessing");
+            log("MemberFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -102,11 +102,12 @@ public class ForumFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session.getAttribute("username") != null && session.getAttribute("member") == null) {
-            session.setAttribute("error", "bạn chưa vào club này");
-            res.sendRedirect(req.getContextPath() + "/view/discovery.jsp");
+        if (session == null || session.getAttribute("username") == null) {
+            session.setAttribute("error", "Bạn không có quyền vào đây");
+            res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
+
         try {
             chain.doFilter(request, response);
         } catch (Exception e) {
@@ -144,7 +145,7 @@ public class ForumFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("ForumFilter:Initializing filter");
+                log("MemberFilter:Initializing filter");
             }
         }
     }
@@ -155,9 +156,9 @@ public class ForumFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("ForumFilter()");
+            return ("MemberFilter()");
         }
-        StringBuffer sb = new StringBuffer("ForumFilter(");
+        StringBuffer sb = new StringBuffer("MemberFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

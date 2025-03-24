@@ -4,6 +4,9 @@
  */
 package filter;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -14,15 +17,12 @@ import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author ngoct
  */
-public class ForumFilter implements Filter {
+public class ForgotFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -31,13 +31,13 @@ public class ForumFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public ForumFilter() {
+    public ForgotFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ForumFilter:DoBeforeProcessing");
+            log("ForgotFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -65,7 +65,7 @@ public class ForumFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ForumFilter:DoAfterProcessing");
+            log("ForgotFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -102,11 +102,12 @@ public class ForumFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        if (session.getAttribute("username") != null && session.getAttribute("member") == null) {
-            session.setAttribute("error", "bạn chưa vào club này");
-            res.sendRedirect(req.getContextPath() + "/view/discovery.jsp");
+        if (session == null || session.getAttribute("email") == null) {
+            session.setAttribute("error", "Bạn chưa có quyền vào đây vui lòng nhập email ở quên mật khẩu");
+            res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
+
         try {
             chain.doFilter(request, response);
         } catch (Exception e) {
@@ -144,7 +145,7 @@ public class ForumFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("ForumFilter:Initializing filter");
+                log("ForgotFilter:Initializing filter");
             }
         }
     }
@@ -155,9 +156,9 @@ public class ForumFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("ForumFilter()");
+            return ("ForgotFilter()");
         }
-        StringBuffer sb = new StringBuffer("ForumFilter(");
+        StringBuffer sb = new StringBuffer("ForgotFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

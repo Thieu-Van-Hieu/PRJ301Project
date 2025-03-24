@@ -30,15 +30,19 @@ public class PostService {
         return postRepository.getAllPostOfClub(clubId);
     }
     
-    public void addLove(int postId, int userId){
-        postRepository.addLove(postId, userId);
+    public void addLove(int postId, int memberId){
+        postRepository.addLove(postId, memberId);
     }
     
     public void addComment(CommentDTO commentDTO){
         postRepository.addComment(commentDTO);
     }
     
-    public boolean isLove(int postId, int userId){
-        return postRepository.isLove(postId, userId);
+    public boolean isLove(int postId, int memberId){
+        return postRepository.isLove(postId, memberId);
+    }
+    
+    public void deletePost(int postId) {
+        postRepository.deletePost(postId);
     }
 }

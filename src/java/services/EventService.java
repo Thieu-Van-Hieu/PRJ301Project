@@ -48,6 +48,7 @@ public class EventService {
             EventResponse temp = new EventResponse();
             temp.setEventName(x.getName());
             // temp.setClubName(x.);
+            temp.setClubId(x.getClubId());
             temp.setStartDate(x.getStartDate());
             temp.setEndDate(x.getEndDate());
             temp.setEventId(x.getId());

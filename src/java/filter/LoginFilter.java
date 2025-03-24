@@ -20,7 +20,7 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("username") == null) {
-            session.setAttribute("error", "Đã nghèo còn không có quyền còn chui vào đây!");
+            session.setAttribute("error", "Bạn chưa đăng nhập vui lòng đăng nhập");
             res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }

@@ -19,6 +19,7 @@
     <body>
         <jsp:include page="/view/noticeSuccess.jsp"/>
         <jsp:include page="/view/background.jsp" />
+        <jsp:include page="noticeError.jsp"/>
         <div class="container">
             <!-- Header -->
             <div class="header">

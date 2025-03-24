@@ -26,6 +26,23 @@
         <url-pattern>/view/resetSuccess.jsp</url-pattern>
         <url-pattern>/view/settingUserInformation.jsp</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>ForumEventFilter</filter-name>
+        <filter-class>filter.ForumFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ForumEventFilter</filter-name>
+        <url-pattern>/view/forum.jsp</url-pattern>
+        <url-pattern>/view/event.jsp</url-pattern>
+        <url-pattern>/view/homePage.jsp</url-pattern>
+        <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
+        <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
+        <url-pattern>/view/member.jsp</url-pattern>
+        <url-pattern>/view/calendar.jsp</url-pattern>
+        <url-pattern>/view/createClub.jsp</url-pattern>
+        <url-pattern>/view/messenger.jsp</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>
         <servlet-class>controller.CalendarServlet</servlet-class>

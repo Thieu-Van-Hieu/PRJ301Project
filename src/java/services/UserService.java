@@ -56,6 +56,7 @@ public class UserService {
     }
 
     public void addByParamIntoResponse(UserInformationResponse infor) {
+        response.setUserId(getUserId());
         response.setFirstName(infor.getFirstName());
         response.setLastName(infor.getLastName());
         response.setGender(infor.getGender());
@@ -80,20 +81,20 @@ public class UserService {
     public void resetPassword(String newPassword) {
         userRepository.resetPassword(response.getUserName(), newPassword);
     }
-    
-    public UserInformationResponse getFullNameAndAvatar(int userId){
+
+    public UserInformationResponse getFullNameAndAvatar(int userId) {
         return userInformationRepository.getNameAvatarOfUser(userId);
     }
-    
-    public UserInformationResponse getUserInfor(int userId){
+
+    public UserInformationResponse getUserInfor(int userId) {
         return userInformationRepository.getUser(userId);
     }
-    
-    public UserInformationResponse getUserInforSetting(int userId){
+
+    public UserInformationResponse getUserInforSetting(int userId) {
         return userInformationRepository.getUserSetting(userId);
     }
-    
-    public void updateUserAvatar(UserInformationResponse user){
+
+    public void updateUserAvatar(UserInformationResponse user) {
         userInformationRepository.updateUserAvatar(user);
     }
 }

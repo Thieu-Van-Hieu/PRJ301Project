@@ -220,6 +220,8 @@
                 display: block;
             }
         </style>
+        <jsp:include page="/view/noticeSuccess.jsp"/>
+        <jsp:include page="/view/noticeError.jsp"/>
         <jsp:include page="/view/background.jsp" />
         <div class="container">
             <!-- Header -->

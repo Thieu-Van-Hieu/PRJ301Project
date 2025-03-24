@@ -126,7 +126,7 @@
     function sendMessage(element, action) {
         event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
 
-        if ("${member.role}" !== "Chủ nhiệm") {
+        if ("${member.role}" !== "Chủ Nhiệm") {
             alert("Bạn không có quyền thực hiện hành động này!");
             return;
         }
@@ -209,7 +209,7 @@
                         <p>Start Date: ${eventDescription.getStartDate()}</p>
                         <p>End Date: ${eventDescription.getEndDate()}</p>
                     </div>
-                    <c:if test="${member.role eq 'Chủ nhiệm'}">
+                    <c:if test="${member.role eq 'Chủ Nhiệm'}">
                     <div class="event-options">
                         <form action="${pageContext.request.contextPath}/EventServlet" method="post" id="${eventDescription.getEventId()}">
                             <input type="hidden" name="eventId" value="${eventDescription.getEventId()}">

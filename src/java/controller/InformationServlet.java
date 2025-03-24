@@ -103,8 +103,8 @@ public class InformationServlet extends HttpServlet {
 
         UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate);
 
-        service.addByParamIntoResponse(infor);
         service.addUserRoleMember();
+        service.addByParamIntoResponse(infor);
         service.addInformationOfUser();
 
         UserInformationResponse result = service.getResults();

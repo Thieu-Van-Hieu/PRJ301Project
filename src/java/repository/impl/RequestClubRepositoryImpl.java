@@ -16,7 +16,7 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
             String sql = """
                     select cjr.id, cjr.clubId, cjr.userId, ui.firstName, ui.studentId
                     from club_join_requests as cjr
-                    join user_informations as ui on cjr.id = ui.userId
+                    join user_informations as ui on cjr.userId = ui.userId
                     where cjr.clubId = ? and cjr.status = N'Chờ duyệt'
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
@@ -26,7 +26,7 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
             while (rs.next()) {
                 RequestClubResponse request = new RequestClubResponse();
                 request.setId(rs.getInt("id"));
-                request.setClubId(rs.getString("clubId"));
+                request.setClubId(rs.getInt("clubId"));
                 request.setName(rs.getString("firstName"));
                 request.setStudentId(rs.getString("studentId"));
                 requests.add(request);
@@ -58,7 +58,7 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
             if (rs.next()) {
                 RequestClubResponse request = new RequestClubResponse();
                 request.setId(rs.getInt("id"));
-                request.setClubId(rs.getString("club_id"));
+                request.setClubId(rs.getInt("club_id"));
                 request.setName(rs.getString("name"));
                 request.setStudentId(rs.getString("student_id"));
                 request.setStatus(rs.getString("status"));
@@ -68,6 +68,25 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private boolean approveRequest(int id) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                    insert into members (clubId, userId, deptId)
+                    select clubId, userId, 1
+                    from club_join_requests
+                    where id = ?
+                    """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            int rows = statement.executeUpdate();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -84,7 +103,50 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
             statement.setString(1, status);
             statement.setInt(2, id);
             int rows = statement.executeUpdate();
-            return rows > 0;
+            if (rows < 0) {
+                return false;
+            }
+            if (status.equals("Đã duyệt")) {
+                return approveRequest(id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private boolean isRequestExist(int id, int clubId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                    select *
+                    from club_join_requests
+                    where userId = ? and clubId = ? and status = N'Chờ duyệt'
+                    """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, id);
+            statement.setInt(2, clubId);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private boolean isMemberExist(int clubId, int userId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                    select *
+                    from members
+                    where clubId = ? and userId = ?
+                    """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, clubId);
+            statement.setInt(2, userId);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -93,6 +155,14 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
 
     @Override
     public boolean createRequest(RequestClubResponse request) {
+        if (isRequestExist(request.getUserId(), request.getClubId())) {
+            return false;
+        }
+
+        if (isMemberExist(request.getClubId(), request.getUserId())) {
+            return false;
+        }
+
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
@@ -100,8 +170,8 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
                     values (?, ?, N'Chờ duyệt')
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
-            statement.setString(1, request.getClubId());
-            statement.setString(2, request.getStudentId());
+            statement.setInt(1, request.getClubId());
+            statement.setInt(2, request.getUserId());
             int rows = statement.executeUpdate();
             return rows > 0;
         } catch (Exception e) {

@@ -81,7 +81,7 @@ public class UserSettingServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+    private static final String IMG_DIR = "D:\\PRJ\\ProjectPRJ\\PRJ301Project\\web\\assets\\img\\img-download";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -115,7 +115,7 @@ public class UserSettingServlet extends HttpServlet {
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
- */
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -65,8 +65,9 @@ public class LoginServlet extends HttpServlet {
      *
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs     * @param request servlet request
-
+     * @throws IOException if an I/O error occurs * @param request servlet
+     * request
+     *
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -81,6 +82,7 @@ public class LoginServlet extends HttpServlet {
         if (isCheck) {
             session.setAttribute("userId", userId);
             session.setAttribute("success", "Đăng nhập thành công");
+            session.setAttribute("username", username);
             response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
         } else {
             session.setAttribute("error", "Tài khoản hoặc mật khẩu sai!");

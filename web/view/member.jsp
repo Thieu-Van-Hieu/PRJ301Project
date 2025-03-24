@@ -5,7 +5,9 @@
     <header class="content-header">
         <h2>Thành Viên</h2>
         <div class="content-header_util">
-            <i class="fa-solid fa-scroll" onclick="location.href = '${pageContext.request.contextPath}/RequestClubServlet'"></i>
+            <c:if test="${member.role eq 'Chủ Nhiệm'}">
+                <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
+            </c:if>
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
         </div>
     </header>
@@ -54,7 +56,9 @@
                     <th>Giới Tính</th>
                     <th>Phòng Ban</th>
                     <th>Chức vụ</th>
+                    <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
                     <th></th>
+                    </c:if>
                 </tr>
 
                 <c:if test="${empty filterMemberResponseDTO}">

@@ -41,16 +41,16 @@ public class MemberTaskRepositoryImpl implements MemberTaskRepository {
         String memberRole = getMemberRole(member.getClubId(), member.getId());
         String memberRoles[] = { "Chủ Nhiệm", "Phó Chủ Nhiệm", "Trưởng Nhóm", "Thành Viên" };
         String memberRolesAvailable = "";
-        int indexOfrole = 0;
+        int indexOfRole = 0;
         for (int i = 0; i < memberRoles.length; i++) {
             if (memberRole.equals(memberRoles[i])) {
-                indexOfrole = i;
+                indexOfRole = i;
                 break;
             }
         }
-        for (; indexOfrole < memberRoles.length; indexOfrole++) {
-            memberRolesAvailable += "role = N'" + memberRoles[indexOfrole] + "'";
-            if (indexOfrole != memberRoles.length - 1) {
+        for (indexOfRole++ ; indexOfRole < memberRoles.length; indexOfRole++) {
+            memberRolesAvailable += "role = N'" + memberRoles[indexOfRole] + "'";
+            if (indexOfRole != memberRoles.length - 1) {
                 memberRolesAvailable += " or ";
             }
         }

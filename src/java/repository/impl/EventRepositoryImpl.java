@@ -57,7 +57,7 @@ public class EventRepositoryImpl implements EventRepository {
 
         try {
             String sql = """
-                    SELECT e.id, e.name, c.name AS clubName,
+                    SELECT e.id, e.name, c.name AS clubName, c.id as clubId,
                            e.startTimestamp, e.endTimestamp, e.img
                     FROM events e
                     JOIN clubs c ON e.clubId = c.id
@@ -69,12 +69,13 @@ public class EventRepositoryImpl implements EventRepository {
             while (rs.next()) {
                 int eventId = rs.getInt("id");
                 String eventName = rs.getNString("name");
+                int clubId = rs.getInt("clubId");
                 String clubName = rs.getNString("clubName");
                 Timestamp startDate = rs.getTimestamp("startTimestamp");
                 Timestamp endDate = rs.getTimestamp("endTimestamp");
                 String img = rs.getString("img");
 
-                EventResponse event = new EventResponse(eventId, eventName, clubName, startDate, endDate, img);
+                EventResponse event = new EventResponse(eventId, eventName, clubId, clubName, startDate, endDate, img);
                 eventList.add(event);
             }
         } catch (Exception e) {

@@ -25,8 +25,8 @@ import services.ClubService;
 import services.MemberService;
 import util.FileService;
 
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, //2MB
-        maxFileSize = 1024 * 1024 * 10, //10MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 50)
 public class CreateClubServlet extends HttpServlet {
 
@@ -34,10 +34,10 @@ public class CreateClubServlet extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -62,7 +62,7 @@ public class CreateClubServlet extends HttpServlet {
         processRequest(request, response);
     }
 
-    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+    private static final String IMG_RELATIVE_PATH = "/assets/img/img-download";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -70,7 +70,7 @@ public class CreateClubServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
         MemberService memberService = new MemberService();
-        int userId = (Integer)session.getAttribute("userId");
+        int userId = (Integer) session.getAttribute("userId");
         String clubName = request.getParameter("clubName");
         String clubType = request.getParameter("type");
         String description = request.getParameter("description");
@@ -79,10 +79,10 @@ public class CreateClubServlet extends HttpServlet {
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String date = today.format(formatter);
-        
+
         String avatarName = Paths.get(avatar.getSubmittedFileName()).getFileName().toString();
         String coverImgName = Paths.get(coverImg.getSubmittedFileName()).getFileName().toString();
-        String uploadDir = IMG_DIR;
+        String uploadDir = getServletContext().getRealPath(IMG_RELATIVE_PATH);
 
         File uploadFolder = new File(uploadDir);
         if (!uploadFolder.exists()) {
@@ -91,18 +91,18 @@ public class CreateClubServlet extends HttpServlet {
 
         String avatarNormalized = FileService.normalizeFileName(avatarName);
         String coverImgNormalized = FileService.normalizeFileName(coverImgName);
-        
+
         String avatarPath = uploadDir + File.separator + avatarNormalized;
         String coverImgPath = uploadDir + File.separator + coverImgNormalized;
-        
+
         avatar.write(avatarPath);
         coverImg.write(coverImgPath);
-        
+
         ClubResponse club = new ClubResponse(clubName, description, clubType, date, avatarName, coverImgName);
         int clubId = clubService.addClub(club);
         MemberDTO newMember = new MemberDTO(clubId, userId, 1, "Chủ Nhiệm");
         memberService.addMember(newMember);
-        
+
         session.setAttribute("clubId", clubId);
         response.sendRedirect(request.getContextPath() + "/DiscoveryServlet?action=open&clubId=" + clubId);
     }

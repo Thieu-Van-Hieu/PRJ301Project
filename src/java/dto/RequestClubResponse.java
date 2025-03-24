@@ -2,7 +2,8 @@ package dto;
 
 public class RequestClubResponse {
     private int id;
-    private String clubId;
+    private int clubId;
+    private int userId;
     private String name;
     private String studentId;
     private String status;
@@ -10,9 +11,10 @@ public class RequestClubResponse {
     public RequestClubResponse() {
     }
 
-    public RequestClubResponse(int id, String clubId, String name, String studentId, String status) {
+    public RequestClubResponse(int id, int clubId, int userId, String name, String studentId, String status) {
         this.id = id;
         this.clubId = clubId;
+        this.userId = userId;
         this.name = name;
         this.studentId = studentId;
         this.status = status;
@@ -26,12 +28,20 @@ public class RequestClubResponse {
         this.id = id;
     }
 
-    public String getClubId() {
+    public int getClubId() {
         return clubId;
     }
 
-    public void setClubId(String clubId) {
+    public void setClubId(int clubId) {
         this.clubId = clubId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {

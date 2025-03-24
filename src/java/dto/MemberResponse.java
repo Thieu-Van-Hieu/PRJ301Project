@@ -9,7 +9,7 @@ package dto;
  * @author hunggt1572004
  */
 public class MemberResponse {
-    private int memberId;
+
     private String rollNumber;
     private String lastName;
     private String firstName;
@@ -17,16 +17,15 @@ public class MemberResponse {
     private String gender;
     private String del;
     private String role;
-     
-    public MemberResponse(int memberId,String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role) {
-        this.memberId = memberId;
-        this.rollNumber = rollNumber;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.del = del;
-        this.role = role;
+    private int clubid;
+    private int memberId;
+
+    public int getClubid() {
+        return clubid;
+    }
+
+    public void setClubid(int clubid) {
+        this.clubid = clubid;
     }
 
     public int getMemberId() {
@@ -36,8 +35,29 @@ public class MemberResponse {
     public void setMemberId(int memberId) {
         this.memberId = memberId;
     }
-    
-    
+
+    public MemberResponse(int memberid, String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role, int clubid) {
+        this.rollNumber = rollNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.del = del;
+        this.role = role;
+        this.clubid = clubid;
+        this.memberId = memberid;
+    }
+
+    public MemberResponse(String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role) {
+        this.rollNumber = rollNumber;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.del = del;
+        this.role = role;
+    }
+   
 
     public String getRollNumber() {
         return rollNumber;
@@ -95,5 +115,4 @@ public class MemberResponse {
         this.role = role;
     }
 
-    
 }

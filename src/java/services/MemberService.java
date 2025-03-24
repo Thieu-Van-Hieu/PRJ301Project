@@ -62,6 +62,7 @@ public class MemberService {
 
             Department deparment = this.departmentRepository.getDepartmentByMemberId(x.getId());
 
+            temp.setMemberId(x.getId());
             temp.setFirstName(userInformation.getFirstName());
             temp.setBirthdate(userInformation.getBirthday());
             temp.setDepartment(deparment.getName());
@@ -69,10 +70,13 @@ public class MemberService {
             temp.setStudentID(userInformation.getStudentId());
             temp.setRoleClub(x.getRole());
             temp.setLastName(userInformation.getLaseName());
-
+            temp.setClubId(x.getClubId());
             results.add(temp);
         }
         return results;
+    }
 
+    public void deleteMemberOfClub(int memberId, int clubId) {
+        memberRepository.deleteMemberOfClub(memberId, clubId);
     }
 }

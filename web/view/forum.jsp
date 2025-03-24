@@ -74,7 +74,7 @@
                                         <li>Chỉnh sửa</li>
                                         <li>Ẩn</li>
                                     </ul>
-                                    <div class="item-close" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=deletePost&postMemberId=${post.memberId}&postId=${post.id}'"><i class="fa-solid fa-xmark"></i></div>
+                                    <div class="item-close" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=deletePost&postMemberId=${post.memberId}&postDeleteId=${post.id}'"><i class="fa-solid fa-xmark"></i></div>
                                 </div>
                             </div>
                             <div class="item-body">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="item-footer">
-                                <div class="item-footer-item love" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=love&postId=${post.id}&memberId=${member.id}'">
+                                <div class="item-footer-item love" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=love&postLoveId=${post.id}&memberId=${member.id}'">
                                     <i class="fa-regular fa-heart"></i>
                                     <p>Thích</p>
                                 </div>

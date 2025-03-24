@@ -96,28 +96,28 @@ public class ForumServlet extends HttpServlet {
         Member member = memberService.getMemberInfor(userId, clubId);
         if ("love".equals(action)) {
             try {
+                int postId = Integer.parseInt(request.getParameter("postLoveId"));
                 int memberId = Integer.parseInt(request.getParameter("memberId"));
-                if (!postService.isLove(clubId, memberId)) {
-                    int postId = Integer.parseInt(request.getParameter("postId"));
+                if (!postService.isLove(postId, memberId)) {
                     postService.addLove(postId, memberId);
+                    session.setAttribute("success", "Bạn đã Tim thành công, vui lòng click vào Diễn Đàn để hiện kết quả!");
                 } else {
                     throw new Exception();
                 }
-            } catch (ParseException e) {
-                session.setAttribute("error", "Không Tim Được Rồi!");
-            } catch (Exception e) {
-                session.setAttribute("error", "Bạn Đã Tim Rồi!");
+            } catch (Exception e){
+                session.setAttribute("error", "Bạn đã Tim bài viết này rồi!");
             }
         } else if ("deletePost".equals(action)) {
             try {
                 int memberPostId = Integer.parseInt(request.getParameter("postMemberId"));
                 if (member.getId() == memberPostId || member.getRole().equals("Chủ Nhiệm")) {
-                    int postDeleteId = Integer.parseInt(request.getParameter("postId"));
+                    int postDeleteId = Integer.parseInt(request.getParameter("postDeleteId"));
                     postService.deletePost(postDeleteId);
+                    session.setAttribute("success", "Bạn đã Xoá thành công, vui lòng click vào Diễn Đàn để hiện kết quả!");
                 } else {
                     throw new Exception();
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 session.setAttribute("error", "Không phải chủ nhiệm sao lại đi xoá bài người ta!");
             }
         }
@@ -182,8 +182,9 @@ public class ForumServlet extends HttpServlet {
                 filePart.write(filePath);
 
                 postService.addPost(new PostDTO(clubId, memberId, content, createdAt, normalized));
+                session.setAttribute("success", "Bạn đã tạo bài viết thành công!");
             } catch (Exception e) {
-                session.setAttribute("error", "Không gửi được rồi bạn ek!");
+                session.setAttribute("error", "Không tạo được rồi bạn ek!");
             }
 
         } else if ("comment".equals(action)) {

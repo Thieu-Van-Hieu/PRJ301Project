@@ -27,19 +27,20 @@ public class MemberRepositoryImpl implements MemberRepository {
         try {
             String sql = """
                     select
-                    m.id,
-                    ui.studentId,
-                    m.clubId,
-                    ui.lastName,
-                    ui.firstName,
-                    ui.birthday,
-                    ui.gender,
-                    d.name AS departmentName,
-                    m.role
-                    from members m
-                    JOIN user_informations AS ui ON ui.userId = m.userId
-                    JOIN departments AS d ON d.id = m.deptId
-                    WHERE m.clubId = ?
+                                        m.id,
+                                        ui.studentId,
+                                        m.clubId,
+                                        ui.lastName,
+                                        ui.firstName,
+                                        ui.birthday,
+                                        ui.gender,
+                                        d.name AS departmentName,
+                                        m.role
+                                        from members m
+                                        JOIN user_informations AS ui ON ui.userId = m.userId
+                                        JOIN departments AS d ON d.id = m.deptId
+                                        WHERE m.clubId =  ? and m.role is not null
+                         
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);
@@ -47,14 +48,15 @@ public class MemberRepositoryImpl implements MemberRepository {
 
             while (rs.next()) {
                 int memberId = rs.getInt("id");
+                int idclub = rs.getInt("clubId");
                 String rollNumber = rs.getString("studentId");
                 String lastName = rs.getNString("lastName");
                 String firstName = rs.getNString("firstName");
                 String birthday = rs.getString("birthday");
                 String gender = rs.getNString("gender");
                 String delName = rs.getNString("departmentName");
-                String role = rs.getNString("role");               
-                MemberResponse memberResponse = new MemberResponse(memberId, rollNumber, lastName, firstName, birthday, gender, delName, role);
+                String role = rs.getNString("role");
+                MemberResponse memberResponse = new MemberResponse(memberId, rollNumber, lastName, firstName, birthday, gender, delName, role, idclub);
                 memberResponses.add(memberResponse);
             }
             return memberResponses;
@@ -64,7 +66,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public void deleteMemberOfClub(MemberDTO memberDTO) {
+    public void deleteMemberOfClub(int memberId, int clubId) {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
@@ -73,8 +75,8 @@ public class MemberRepositoryImpl implements MemberRepository {
                     where id = ? and clubId = ?
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
-            statement.setInt(1, memberDTO.getId()); // memberId
-            statement.setInt(2, memberDTO.getClubId());
+            statement.setInt(1, memberId); // memberId
+            statement.setInt(2, clubId);
             int rs = statement.executeUpdate();
             if (rs == 0) {
                 throw new Exception();
@@ -130,7 +132,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     private String whereFilterMemeber(FilterMemberDTO filterMemberDTO) {
-        StringBuilder sql = new StringBuilder("where 1 = 1");
+        StringBuilder sql = new StringBuilder("where 1 = 1 and m.role is not null");
         sql.append(" and d.id = " + filterMemberDTO.getDepartmentId());
         sql.append(" and ui.gender = N" + "'" + filterMemberDTO.getGender() + "'");
         if (filterMemberDTO.getNameSearch() != null && !filterMemberDTO.getNameSearch().isEmpty()) {

@@ -30,6 +30,7 @@ public class PostRepositoryImpl implements PostRepository {
                          select p.id, p.memberId, m.userId, p.content, p.postImg,  p.createdAt from posts as p 
                          join members as m on p.memberId = m.id
                          where p.clubId = ?
+                         order by p.id desc
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);
@@ -79,6 +80,7 @@ public class PostRepositoryImpl implements PostRepository {
                          join members as m on m.id = c.memberId
                          join user_informations as ui on ui.userId = m.userId
                          where c.postId = ?
+                         order by c.id desc
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postId);
@@ -178,7 +180,7 @@ public class PostRepositoryImpl implements PostRepository {
             statement.setInt(2, memberId);
 
             ResultSet rs = statement.executeQuery();
-            return rs.next();
+            return rs.getInt(1) > 0;
 
         } catch (Exception e) {
             return false;
@@ -209,17 +211,51 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void deletePost(int postId) {
         DBContext db = DBContext.getInstance();
-        
+
         try {
+            deleteLove(postId);
+            deleteComment(postId);
             String sql = """
-                         delete from posts
-                         where id = ?
+                         delete from posts where id = ?;
                          """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setInt(1, postId);
-            
+     
             int rs = st.executeUpdate();
-            if(rs == 0){
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteLove(int postId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                        delete from loves where postId = ?;
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, postId);
+            int rs = st.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+    public void deleteComment(int postId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                        delete from comments where postId = ?;
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, postId);
+            int rs = st.executeUpdate();
+            if (rs == 0) {
                 throw new Exception();
             }
         } catch (Exception e) {

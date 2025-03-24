@@ -75,8 +75,8 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                    insert into members (clubId, userId, deptId)
-                    select clubId, userId, 1
+                    insert into members (userId, clubId, deptId, role)
+                    select userId, clubId, 1, N'Thành viên'
                     from club_join_requests
                     where id = ?
                     """;
@@ -106,6 +106,7 @@ public class RequestClubRepositoryImpl implements RequestClubRepository {
             if (rows < 0) {
                 return false;
             }
+
             if (status.equals("Đã duyệt")) {
                 return approveRequest(id);
             }

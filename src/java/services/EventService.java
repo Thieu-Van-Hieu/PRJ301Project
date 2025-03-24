@@ -47,7 +47,7 @@ public class EventService {
         for (Event x : searchServiceEntity) {
             EventResponse temp = new EventResponse();
             temp.setEventName(x.getName());
-            // temp.setClubName(x.);
+             temp.setClubName(x.getClubName());
             temp.setClubId(x.getClubId());
             temp.setStartDate(x.getStartDate());
             temp.setEndDate(x.getEndDate());

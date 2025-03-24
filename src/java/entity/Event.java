@@ -43,6 +43,7 @@ public class Event {
     public Event(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
+        this.clubName = builder.clubName;
         this.description = builder.description;
         this.typeId = builder.typeId;
         this.startDate = builder.startDate;

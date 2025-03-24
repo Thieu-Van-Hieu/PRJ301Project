@@ -36,22 +36,13 @@
                         <td class="age-filter">Age <input type="text" name="ageFrom"> - <input type="text" name="ageTo">
                             year(s)</td>
                         <td>
-                            <div class="status">
-                                <div class="status-1">Tham gia hoạt động</div>
-                                <div class="status-2">
-                                    <div class="status-name"><input type="radio" name="status" value="1"> Chăm
-                                    </div>
-                                    <div class="status-name"><input type="radio" name="status" value="2"> Lười
-                                        chẩy thây</div>
-                                </div>
-                            </div>
                         </td>
                         <td>
                             <select name="firstName" id="">
                                 <option value="1">Tên (A-Z)</option>
                                 <option value="2">Tên (Z-A)</option>
-                                <option value="1">Họ (A-Z)</option>
-                                <option value="2">Họ (Z-A)</option>
+                                <option value="3">Họ (A-Z)</option>
+                                <option value="4">Họ (Z-A)</option>
                             </select>
                         </td>
                         <td class="filter-submit"><input type="submit" value="Filter"></td>

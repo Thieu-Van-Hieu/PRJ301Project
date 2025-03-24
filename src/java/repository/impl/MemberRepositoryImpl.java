@@ -55,10 +55,10 @@ public class MemberRepositoryImpl implements MemberRepository {
                 MemberResponse memberResponse = new MemberResponse(rollNumber, lastName, firstName, birthday, gender, delName, role);
                 memberResponses.add(memberResponse);
             }
+            return  memberResponses;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return memberResponses;
     }
 
     @Override
@@ -159,7 +159,7 @@ public class MemberRepositoryImpl implements MemberRepository {
                         .setRole(rs.getString("role"))
                         .setClubId(rs.getInt("clubId"))
                         .build();
-                        
+
                 results.add(member);
             }
             return results;

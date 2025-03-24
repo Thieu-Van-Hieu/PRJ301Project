@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.EOFException;
 import java.util.ArrayList;
 import services.ClubService;
 import java.sql.Timestamp;
@@ -67,7 +68,15 @@ public class DiscoveryServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ClubService clubService = new ClubService();
         UserService userService = new UserService();
-        int userId = (Integer) session.getAttribute("userId");
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
         UserInformationResponse userInformation = userService.getUserInfor(userId);
         if ("open".equals(action)) {
             int clubId = Integer.parseInt(request.getParameter("clubId"));

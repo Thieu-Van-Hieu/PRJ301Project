@@ -74,7 +74,16 @@ public class ForumServlet extends HttpServlet {
         PostService postService = new PostService();
         UserService userService = new UserService();
         MemberService memberService = new MemberService();
-        int userId = (Integer) session.getAttribute("userId");
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         int clubId = (Integer) session.getAttribute("clubId");
         if ("love".equals(action)) {
             if (!postService.isLove(clubId, userId)) {
@@ -90,9 +99,9 @@ public class ForumServlet extends HttpServlet {
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         Member member = memberService.getMemberInfor(userId, clubId);
         String coverImg = clubService.getCoverImg(clubId);
-        session.setAttribute("userId", userId);
-        session.setAttribute("coverImg", coverImg);
         session.setAttribute("member", member);
+        session.setAttribute("coverImg", coverImg);
+        
         session.setAttribute("userFullName", userFullName);
         session.setAttribute("userAvatarImg", userAvatarImg);
         session.setAttribute("clubListItems", clubListItems);

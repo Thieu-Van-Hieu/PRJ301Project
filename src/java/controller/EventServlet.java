@@ -69,6 +69,16 @@ public class EventServlet extends HttpServlet {
         EventService eventService = new EventService();
         ClubService clubService = new ClubService();
         HttpSession session = request.getSession();
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         ArrayList<EventType> eventTypes = eventService.selectAllEventType();
         ArrayList<EventResponse> eventDescriptions = new ArrayList<EventResponse>();
         ArrayList<ClubResponse> clubIdAndNames = clubService.selectAllClubIdAndClubName();
@@ -83,6 +93,7 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent, status, clubId);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
+        
         request.setAttribute("clubDescriptions", clubIdAndNames);
         request.setAttribute("eventDescriptions", eventDescriptions);
         request.setAttribute("eventTypes", eventTypes);

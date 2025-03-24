@@ -64,6 +64,16 @@ public class MemberServlet extends HttpServlet {
         HttpSession session = request.getSession();
         MemberService memberService = new MemberService();
         String action = request.getParameter("action");
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if (userId == -1) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         ArrayList<MemberResponse> memberResponses = memberService
                 .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());
         session.setAttribute("memberResponses", memberResponses);
@@ -71,7 +81,6 @@ public class MemberServlet extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -27,8 +27,10 @@ public class PostRepositoryImpl implements PostRepository {
         UserService userService = new UserService();
         try {
             String sql = """
-                         Select * from posts
-                         where clubId = ?
+                         select p.id, p.memberId, m.userId, p.content, p.postImg,  p.createdAt from posts as p 
+                         join members as m on p.memberId = m.id
+                         where p.clubId = ?
+                         order by p.id desc
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);
@@ -36,10 +38,11 @@ public class PostRepositoryImpl implements PostRepository {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
+                int memberId = rs.getInt("memberId");
                 int userId = rs.getInt("userId");
                 String userAvatar = userService.getUserInfor(userId).getAvatar();
                 String content = rs.getNString("content");
-                String img = rs.getString("img");
+                String img = rs.getString("postImg");
                 Timestamp createAt = rs.getTimestamp("createdAt");
                 ArrayList<PostComment> postComment = getAllCommentOfPost(id);
                 int loves = getLoves(id);
@@ -47,6 +50,7 @@ public class PostRepositoryImpl implements PostRepository {
                 Post post = new Post.PostBuilder()
                         .setClubId(clubId)
                         .setId(id)
+                        .setMemberId(memberId)
                         .setUserId(userId)
                         .setContent(content)
                         .setImg(img)
@@ -72,9 +76,11 @@ public class PostRepositoryImpl implements PostRepository {
 
         try {
             String sql = """
-                         select c.id, c.postId, c.userId, c.content, ui.avatarImg, CONCAT(ui.lastName, ' ', ui.firstName) as fullName from comments as c
-                                                  join user_informations as ui on ui.userId = c.userId
-                                                  where postId = ?
+                         select c.id, c.postId, c.memberId, c.content, ui.avatarImg, CONCAT(ui.lastName, ' ', ui.firstName) as fullName from comments as c
+                         join members as m on m.id = c.memberId
+                         join user_informations as ui on ui.userId = m.userId
+                         where c.postId = ?
+                         order by c.id desc
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postId);
@@ -82,27 +88,27 @@ public class PostRepositoryImpl implements PostRepository {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                PostComment postComment = new PostComment(rs.getInt("id"), rs.getInt("postId"), rs.getInt("userId"), rs.getNString("content"), rs.getString("avatarImg"), rs.getNString("fullName"));
+                PostComment postComment = new PostComment(rs.getInt("id"), rs.getInt("postId"), rs.getInt("memberId"), rs.getNString("content"), rs.getString("avatarImg"), rs.getNString("fullName"));
                 postComments.add(postComment);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
 
         return postComments;
     }
 
     @Override
-    public void addLove(int postId, int userId) {
+    public void addLove(int postId, int memberId) {
         DBContext db = new DBContext();
         try {
             String sql = """
-                       insert into loves(postId, userId)
+                       insert into loves(postId, memberId)
                        values (?, ?)
                        """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postId);
-            statement.setInt(2, userId);
+            statement.setInt(2, memberId);
             int rs = statement.executeUpdate();
             if (rs == 0) {
                 throw new Exception();
@@ -130,7 +136,7 @@ public class PostRepositoryImpl implements PostRepository {
                 return rs.getInt("sumLoves");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            return 0;
         }
         return 0;
     }
@@ -146,7 +152,7 @@ public class PostRepositoryImpl implements PostRepository {
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postDTO.getClubId());
-            statement.setInt(2, postDTO.getUserId());
+            statement.setInt(2, postDTO.getMemberId());
             statement.setNString(3, postDTO.getContent());
             statement.setTimestamp(4, postDTO.getCreatedAt());
             statement.setString(5, postDTO.getImg());
@@ -157,24 +163,24 @@ public class PostRepositoryImpl implements PostRepository {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
         }
     }
 
     @Override
-    public boolean isLove(int postId, int userId) {
+    public boolean isLove(int postId, int memberId) {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
                          select * from loves
-                         where postId = ? and userId = ?
+                         where postId = ? and memberId = ?
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, postId);
-            statement.setInt(2, userId);
+            statement.setInt(2, memberId);
 
             ResultSet rs = statement.executeQuery();
-            return rs.next();
+            return rs.getInt(1) > 0;
 
         } catch (Exception e) {
             return false;
@@ -187,16 +193,71 @@ public class PostRepositoryImpl implements PostRepository {
 
         try {
             String sql = """
-                         insert into comments(postId, userId, content, createdAt)
+                         insert into comments(postId, memberId, content, createdAt)
                          values (?, ?, ?, ?)
                          """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, commentDTO.getPostId());
-            statement.setInt(2, commentDTO.getUserId());
+            statement.setInt(2, commentDTO.getMemberId());
             statement.setNString(3, commentDTO.getContent());
             statement.setTimestamp(4, commentDTO.getCreatedAt());
 
             int rs = statement.executeUpdate();
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    @Override
+    public void deletePost(int postId) {
+        DBContext db = DBContext.getInstance();
+
+        try {
+            deleteLove(postId);
+            deleteComment(postId);
+            String sql = """
+                         delete from posts where id = ?;
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, postId);
+     
+            int rs = st.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    public void deleteLove(int postId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                        delete from loves where postId = ?;
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, postId);
+            int rs = st.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
+    }
+    public void deleteComment(int postId) {
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                        delete from comments where postId = ?;
+                         """;
+            PreparedStatement st = db.getConnection().prepareStatement(sql);
+            st.setInt(1, postId);
+            int rs = st.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
         } catch (Exception e) {
             return;
         }

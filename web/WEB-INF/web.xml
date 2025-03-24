@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>filter.LoginFilter</filter-class>
-    </filter>
+    <filter-mapping>
+        <filter-name>ForgotFilter</filter-name>
+        <url-pattern>/view/resetPassword.jsp</url-pattern>
+        <url-pattern>/view/resetSuccess.jsp</url-pattern>
+        <url-pattern>/VerifyOTPServlet</url-pattern>
+        <url-pattern>/ResetPasswordServlet</url-pattern>
+        <url-pattern>/view/otpSent.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MemberFilter</filter-name>
+        <url-pattern>/CalendarServlet</url-pattern>
+        <url-pattern>/CreateClubServlet</url-pattern>
+        <url-pattern>/DiscoveryServlet</url-pattern>
+        <url-pattern>/EventServlet</url-pattern>
+        <url-pattern>/filtermember</url-pattern>
+        <url-pattern>/ForumServlet</url-pattern>
+        <url-pattern>/InformationServlet</url-pattern>
+        <url-pattern>/MemberServlet</url-pattern>
+        <url-pattern>/TaskAssignedByMeServlet</url-pattern>
+        <url-pattern>/TaskAssignedToMeServlet</url-pattern>
+        <url-pattern>/UserChangePassword</url-pattern>
+        <url-pattern>/UserSettingServlet</url-pattern>
+        <url-pattern>/RequestClubServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ForumEventFilter</filter-name>
+        <url-pattern>/view/forum.jsp</url-pattern>
+        <url-pattern>/view/event.jsp</url-pattern>
+        <url-pattern>/view/homePage.jsp</url-pattern>
+        <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
+        <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
+        <url-pattern>/view/member.jsp</url-pattern>
+        <url-pattern>/view/calendar.jsp</url-pattern>
+        <url-pattern>/view/createClub.jsp</url-pattern>
+        <url-pattern>/view/messenger.jsp</url-pattern>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/view/calendar.jsp</url-pattern>
@@ -23,52 +56,44 @@
         <url-pattern>/view/settingUserInformation.jsp</url-pattern>
     </filter-mapping>
     <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>filter.LoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>ForumEventFilter</filter-name>
         <filter-class>filter.ForumFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>ForumEventFilter</filter-name>
-        <url-pattern>/view/forum.jsp</url-pattern>
-        <url-pattern>/view/event.jsp</url-pattern>
-        <url-pattern>/view/homePage.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
-        <url-pattern>/view/member.jsp</url-pattern>
-        <url-pattern>/view/calendar.jsp</url-pattern>
-        <url-pattern>/view/createClub.jsp</url-pattern>
-        <url-pattern>/view/messenger.jsp</url-pattern>
-    </filter-mapping>
     <filter>
         <filter-name>MemberFilter</filter-name>
         <filter-class>filter.MemberFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>MemberFilter</filter-name>
-        <url-pattern>/CalendarServlet</url-pattern>
-        <url-pattern>/CreateClubServlet</url-pattern>
-        <url-pattern>/DiscoveryServlet</url-pattern>
-        <url-pattern>/EventServlet</url-pattern>
-        <url-pattern>/filtermember</url-pattern>
-        <url-pattern>/ForumServlet</url-pattern>
-        <url-pattern>/InformationServlet</url-pattern>
-        <url-pattern>/MemberServlet</url-pattern>
-        <url-pattern>/TaskAssignedByMeServlet</url-pattern>
-        <url-pattern>/TaskAssignedToMeServlet</url-pattern>
-        <url-pattern>/UserChangePassword</url-pattern>
-        <url-pattern>/UserSettingServlet</url-pattern>
-        <url-pattern>/RequestClubServlet</url-pattern>
-    </filter-mapping>
     <filter>
         <filter-name>ForgotFilter</filter-name>
         <filter-class>filter.ForgotFilter</filter-class>
     </filter>
     <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/view/admin.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/view/calendar.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ForumEventFilter</filter-name>
+        <url-pattern>/view/forum.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MemberFilter</filter-name>
+        <url-pattern>/CalendarServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>ForgotFilter</filter-name>
         <url-pattern>/view/resetPassword.jsp</url-pattern>
-        <url-pattern>/view/resetSuccess.jsp</url-pattern>
-        <url-pattern>/VerifyOTPServlet</url-pattern>
-        <url-pattern>/ResetPasswordServlet</url-pattern>
-        <url-pattern>/view/otpSent.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>
@@ -141,6 +166,10 @@
     <servlet>
         <servlet-name>FilterMember</servlet-name>
         <servlet-class>controller.FilterMember</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>controller.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
@@ -253,5 +282,9 @@
     <servlet-mapping>
         <servlet-name>FilterMember</servlet-name>
         <url-pattern>/filtermember</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -57,6 +57,7 @@ public class MemberResponse {
         this.del = del;
         this.role = role;
     }
+   
 
     public String getRollNumber() {
         return rollNumber;

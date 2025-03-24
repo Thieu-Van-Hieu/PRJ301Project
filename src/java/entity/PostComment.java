@@ -11,7 +11,7 @@ package entity;
 public class PostComment {
     private int commentId;
     private int postId;
-    private int userId;
+    private int memberId;
     private String content;
     private String createdAt;
     private String avatarUser;
@@ -20,10 +20,10 @@ public class PostComment {
         
     }
 
-    public PostComment(int commentId, int postId, int userId, String content, String createdAt) {
+    public PostComment(int commentId, int postId, int memberId, String content, String createdAt) {
         this.commentId = commentId;
         this.postId = postId;
-        this.userId = userId;
+        this.memberId = memberId;
         this.content = content;
         this.createdAt = createdAt;
     }
@@ -31,7 +31,7 @@ public class PostComment {
     public PostComment(int commentId, int postId, int userId, String content, String avatarUser, String userName) {
         this.commentId = commentId;
         this.postId = postId;
-        this.userId = userId;
+        this.memberId = memberId;
         this.content = content;
         this.avatarUser = avatarUser;
         this.userName = userName;
@@ -53,12 +53,12 @@ public class PostComment {
         this.postId = postId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getContent() {

@@ -106,8 +106,9 @@
     color: #fff;
 }
 
-.item-extend {
+.item-extend, .item-close {
     padding: 8px 12px;
+    cursor:  pointer;
 }
 
 .item-content-text {

@@ -19,9 +19,9 @@ import services.UserService;
 
 /**
  *
- * @author ngoct
+ * @author hunggt1572004
  */
-public class LoginServlet extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet AdminServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,50 +62,56 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (request.getParameter("username") == null) {
-            session.setAttribute("error", "Bạn không có quyền vào đây");
+        String action = request.getParameter("action");
+        ClubService clubService = new ClubService();
+        UserService userService = new UserService();
+
+        if ("updateRole".equals(action)) {
+            try {
+                int userUpdateId = Integer.parseInt(request.getParameter("userUpdateId"));
+
+                String userRole = userService.getUserRole(userUpdateId);
+                if ("admin".equals(userRole)) {
+                    userService.updateUserRole(userUpdateId, "member");
+                } else {
+                    userService.updateUserRole(userUpdateId, "admin");
+                }
+                session.setAttribute("success", "Update Successfully!");
+            } catch (Exception e) {
+                session.setAttribute("error", "Fail To Update!");
+            }
+        } else if ("deleteClub".equals(action)) {
+            try {
+                int clubDeleteId = Integer.parseInt(request.getParameter("clubDeleteId"));
+                clubService.deleteClubFromAdmin(clubDeleteId);
+                session.setAttribute("success", "Delete Successfully!");
+            } catch (Exception e) {
+                session.setAttribute("error", "Fail To Delete!");
+            }
+        } else if ("logout".equals(action)) {
+            session.invalidate();
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+            return;
         }
+        ArrayList<User> userList = userService.getUserListForAdmin();
+        ArrayList<Club> clubList = clubService.getAllClubForAdmin();
+        session.setAttribute("userList", userList);
+        session.setAttribute("clubList", clubList);
+        response.sendRedirect(request.getContextPath() + "/view/admin.jsp");
     }
 
     /**
      * Handles the HTTP <code>POST</code> method.
      *
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs * @param request servlet
-     * request
-     *
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UserService userService = new UserService();
-        boolean isCheck = userService.checkLogin(username, password);
-        int userId = userService.getUsername(username, password).getId();
-        String userRole = userService.getUserRole(userId);
-        if (isCheck && "member".equals(userRole)) {
-            session.setAttribute("userId", userId);
-            session.setAttribute("success", "Đăng nhập thành công");
-            session.setAttribute("username", username);
-            session.setAttribute("member", userRole);
-            response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
-        } else if (isCheck && "admin".equals(userRole)) {
-            ClubService clubService = new ClubService();
-            ArrayList<User> userList = userService.getUserListForAdmin();
-            ArrayList<Club> clubList = clubService.getAllClubForAdmin();
-            session.setAttribute("userList", userList);
-            session.setAttribute("userId", userId);
-            session.setAttribute("admin", userRole);
-            session.setAttribute("clubList", clubList);
-            response.sendRedirect(request.getContextPath() + "/view/admin.jsp");
-        } else {
-            session.setAttribute("error", "Tài khoản hoặc mật khẩu sai!");
-            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**

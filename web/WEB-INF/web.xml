@@ -22,7 +22,6 @@
         <url-pattern>/view/requestClub.jsp</url-pattern>
         <url-pattern>/view/settingUserInformation.jsp</url-pattern>
     </filter-mapping>
-
     <filter>
         <filter-name>ForumEventFilter</filter-name>
         <filter-class>filter.ForumFilter</filter-class>
@@ -143,6 +142,10 @@
         <servlet-name>FilterMember</servlet-name>
         <servlet-class>controller.FilterMember</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>controller.AdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CalendarServlet</servlet-name>
         <url-pattern>/CalendarServlet</url-pattern>
@@ -254,5 +257,9 @@
     <servlet-mapping>
         <servlet-name>FilterMember</servlet-name>
         <url-pattern>/filtermember</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/AdminServlet</url-pattern>
     </servlet-mapping>
 </web-app>

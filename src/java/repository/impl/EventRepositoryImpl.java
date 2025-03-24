@@ -114,10 +114,10 @@ public class EventRepositoryImpl implements EventRepository {
                         .build();
                 result.add(searchEntity);
             }
+            return result;
         } catch (Exception e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return result;
     }
 
     private String joinSearchEvent(SearchEventDTO event) {

@@ -22,4 +22,8 @@ public interface ClubRepository {
     public int addClub(ClubResponse club);
     
     public ArrayList<ClubResponse> getClubsByType(String type);
+    
+    public ArrayList<Club> getAllClubAdmin();
+    
+    public void deleteClub (int clubId);
 }

@@ -5,6 +5,7 @@
 package repository;
 
 import entity.User;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,4 +22,10 @@ public interface UserRepository {
     public int getUserId(String username);
     
     public void resetPassword(String username, String password);
+    
+    public String getUserRole(int userId);
+    
+    public ArrayList<User> getUserForAdmin();
+    
+    public void updateUserRole(int userId, String role);
 }

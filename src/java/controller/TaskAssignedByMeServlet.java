@@ -128,6 +128,7 @@ public class TaskAssignedByMeServlet extends HttpServlet {
             if (task != null) {
                 session.setAttribute("action", "createTask");
                 session.setAttribute("taskId", task.getId());
+                session.setAttribute("success", "Tạo nhiệm vụ thành công");
             } else {
                 session.setAttribute("error", "Có lỗi xảy ra khi tạo task");
             }
@@ -137,11 +138,15 @@ public class TaskAssignedByMeServlet extends HttpServlet {
             task = service.editTask(task);
             if (task == null) {
                 session.setAttribute("error", "Có lỗi xảy ra khi sửa task");
+            } else {
+                session.setAttribute("success", "Sửa nhiệm vụ thành công");
             }
         } else if (action.equals("deleteTask")) {
             int taskId = Integer.parseInt(request.getParameter("taskId"));
             if (!service.deleteTask(taskId)) {
                 session.setAttribute("error", "Có lỗi xảy ra khi xóa task");
+            } else {
+                session.setAttribute("success", "Xóa nhiệm vụ thành công");
             }
         } else if (action.equals("setTaskUncompleted")) {
             int taskId = Integer.parseInt(request.getParameter("taskId"));

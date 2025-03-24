@@ -152,10 +152,10 @@ public class ForumServlet extends HttpServlet {
         int userId = -1;
         try {
             userId = (Integer) session.getAttribute("userId");
-            if (userId == -1) {
+            if(userId == -1){
                 throw new Exception();
             }
-        } catch (Exception e) {
+        } catch (Exception e){
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         }
         String action = request.getParameter("action");

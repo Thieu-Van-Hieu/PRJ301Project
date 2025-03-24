@@ -87,6 +87,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userId", userId);
             session.setAttribute("success", "Đăng nhập thành công");
             session.setAttribute("username", username);
+            session.setAttribute("member", userRole);
             response.sendRedirect(request.getContextPath() + "/DiscoveryServlet");
         } else if (isCheck && "admin".equals(userRole)) {
             ClubService clubService = new ClubService();

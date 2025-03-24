@@ -4,71 +4,41 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>filter.LoginFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern>/view/calendar.jsp</url-pattern>
-        <url-pattern>/view/event.jsp</url-pattern>
-        <url-pattern>/view/forum.jsp</url-pattern>
-        <url-pattern>/view/homePage.jsp</url-pattern>
-        <url-pattern>/view/information.jsp</url-pattern>
-        <url-pattern>/view/member.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
-        <url-pattern>/view/otp.jsp</url-pattern>
-        <url-pattern>/view/discovery.jsp</url-pattern>
-        <url-pattern>/view/changepassword.jsp</url-pattern>
-        <url-pattern>/view/createClub.jsp</url-pattern>
-        <url-pattern>/view/messenger.jsp</url-pattern>
-        <url-pattern>/view/requestClub.jsp</url-pattern>
-        <url-pattern>/view/settingUserInformation.jsp</url-pattern>
-    </filter-mapping>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
     <filter>
         <filter-name>ForumEventFilter</filter-name>
         <filter-class>filter.ForumFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>ForumEventFilter</filter-name>
-        <url-pattern>/view/forum.jsp</url-pattern>
-        <url-pattern>/view/event.jsp</url-pattern>
-        <url-pattern>/view/homePage.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedByMe.jsp</url-pattern>
-        <url-pattern>/view/taskAssignedToMe.jsp</url-pattern>
-        <url-pattern>/view/member.jsp</url-pattern>
-        <url-pattern>/view/calendar.jsp</url-pattern>
-        <url-pattern>/view/createClub.jsp</url-pattern>
-        <url-pattern>/view/messenger.jsp</url-pattern>
-    </filter-mapping>
     <filter>
         <filter-name>MemberFilter</filter-name>
         <filter-class>filter.MemberFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>MemberFilter</filter-name>
-        <url-pattern>/CalendarServlet</url-pattern>
-        <url-pattern>/CreateClubServlet</url-pattern>
-        <url-pattern>/DiscoveryServlet</url-pattern>
-        <url-pattern>/EventServlet</url-pattern>
-        <url-pattern>/FilterMember</url-pattern>
-        <url-pattern>/ForumServlet</url-pattern>
-        <url-pattern>/InformationServlet</url-pattern>
-        <url-pattern>/MemberServlet</url-pattern>
-        <url-pattern>/TaskAssignedByMeServlet</url-pattern>
-        <url-pattern>/TaskAssignedToMeServlet</url-pattern>
-        <url-pattern>/UserChangePassword</url-pattern>
-        <url-pattern>/UserSettingServlet</url-pattern>
-        <url-pattern>/RequestClubServlet</url-pattern>
-    </filter-mapping>
     <filter>
         <filter-name>ForgotFilter</filter-name>
         <filter-class>filter.ForgotFilter</filter-class>
     </filter>
     <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/view/calendar.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ForumEventFilter</filter-name>
+        <url-pattern>/view/forum.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>MemberFilter</filter-name>
+        <url-pattern>/CalendarServlet</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
         <filter-name>ForgotFilter</filter-name>
         <url-pattern>/view/resetPassword.jsp</url-pattern>
-        <url-pattern>/view/resetSuccess.jsp</url-pattern>
-        <url-pattern>/VerifyOTPServlet</url-pattern>
-        <url-pattern>/ResetPasswordServlet</url-pattern>
-        <url-pattern>/view/otpSent.jsp</url-pattern>
     </filter-mapping>
     <servlet>
         <servlet-name>CalendarServlet</servlet-name>

@@ -128,7 +128,15 @@ public class ForumServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int userId = (Integer) session.getAttribute("userId");
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
         String action = request.getParameter("action");
         PostService postService = new PostService();
         if (action == null) {

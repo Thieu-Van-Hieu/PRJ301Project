@@ -90,6 +90,8 @@ public class ForumServlet extends HttpServlet {
                 int postId = Integer.parseInt(request.getParameter("postId"));
                 postService.addLove(postId, userId);
             }
+        } else if("deletePost".equals(action)){
+            
         }
         String clubName = clubService.clubName(clubId);
         UserInformationResponse user = userService.getFullNameAndAvatar(userId);

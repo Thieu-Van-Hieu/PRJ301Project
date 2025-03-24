@@ -207,7 +207,6 @@
                 display: flex;
                 flex-direction: column;
                 grid-area: cont;
-                overflow-y: auto;
                 height: 100%;
             }
 

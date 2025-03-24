@@ -17,7 +17,6 @@
     </head>
 
     <body>
-        <jsp:include page="/view/noticeSuccess.jsp"/>
         <jsp:include page="/view/background.jsp" />
         <jsp:include page="noticeError.jsp"/>
         <div class="container">
@@ -101,15 +100,18 @@
                 </section>
 
                 <div class="modal js-modal" id="modal">
-                    <form action="${pageContext.request.contextPath}/DiscoveryServlet" method="POST">
-                        <input type="hidden" name="action" value="joinClub">
+                    <form action="${pageContext.request.contextPath}/RequestClubServlet" method="POST">
+                        <input type="hidden" name="action" value="createRequest">
                         <div class="modal-container js-modal-container">
                             <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                             <div class="modal-header">
                                 <img src="" alt="coverImage">
                             </div>
                             <input type="hidden" name="createTime" id="createTime" value="">
-                            <input type="hidden" name="clubId" id="clubId" value="">
+                            <input type="hidden" name="clubId" id="clubId">
+                            <input type="hidden" name="userId" value="${userId}">
+                            <input type="hidden" name="studentId" value="${userInformation.studentId}">
+                            <input type="hidden" name="userName" value="${userInformation.firstName}">
                             <div class="modal-body">
                                 <div class="modal-body-header">
                                     <div class="modal-club-avatar">

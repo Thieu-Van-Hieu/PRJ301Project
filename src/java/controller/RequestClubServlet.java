@@ -47,6 +47,14 @@ public class RequestClubServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        if (session.getAttribute("action") != null) {
+            if (session.getAttribute("action").equals("createRequest")) {
+                session.removeAttribute("action");
+                request.getRequestDispatcher("/DiscoveryServlet").forward(request, response);
+                return;
+            }
+        }
+
         RequestClubService service = new RequestClubService();
         String action = request.getParameter("action");
 
@@ -63,8 +71,17 @@ public class RequestClubServlet extends HttpServlet {
             request.setAttribute("requestId", session.getAttribute("requestId"));
             session.removeAttribute("requestId");
         }
-        request.setAttribute("requests", requests);
+
+        if (session.getAttribute("success") != null) {
+            request.setAttribute("success", session.getAttribute("success"));
+            session.removeAttribute("success");
+        }
+
         session.setAttribute("includeWeb", "requestClub.jsp");
+
+        session.removeAttribute("action");
+
+        request.setAttribute("requests", requests);
         request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
     }
 
@@ -76,8 +93,25 @@ public class RequestClubServlet extends HttpServlet {
         RequestClubService service = new RequestClubService();
 
         String action = request.getParameter("action");
+
+        session.setAttribute("action", action);
+
         if (action.equals("createRequest")) {
-            
+            int userId = Integer.parseInt(request.getParameter("userId"));
+            int clubId = Integer.parseInt(request.getParameter("clubId"));
+            String studentId = request.getParameter("studentId");
+
+            RequestClubResponse requestClub = new RequestClubResponse();
+            requestClub.setUserId(userId);
+            requestClub.setClubId(clubId);
+            requestClub.setStudentId(studentId);
+
+            if (!service.createRequest(requestClub)) {
+                session.setAttribute("error", "Yêu cầu gia nhập câu lạc bộ không thành công");
+            } else {
+                session.setAttribute("requestId", requestClub.getId());
+                session.setAttribute("success", "Xin gia nhập câu lạc bộ thành công");
+            }
         }
 
         if (action.equals("updateRequest")) {
@@ -86,7 +120,9 @@ public class RequestClubServlet extends HttpServlet {
 
             if (!service.updateRequest(requestId, status)) {
                 session.setAttribute("error", "Xảy ra lỗi khi cập nhật yêu cầu");
+            } else {
                 session.setAttribute("requestId", requestId);
+                session.setAttribute("success", "Cập nhật yêu cầu thành công");
             }
         }
 

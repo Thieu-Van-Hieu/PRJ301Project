@@ -22,9 +22,9 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                           select * from user_informations
-                           where email like ?
-                         """;
+                      select * from user_informations
+                      where email like ?
+                    """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
@@ -40,8 +40,8 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         int rs = 0;
         try {
             String sql = """
-                        insert into user_informations values(?, ?, ?, ?,?, ?, ?, ?, ?)
-                         """;
+                    insert into user_informations values(?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setInt(1, userid);
             st.setString(2, user.getFirstName());
@@ -50,7 +50,7 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
             st.setString(5, user.getStudentId());
             st.setString(6, user.getAddress());
             st.setString(7, user.getGender());
-            st.setString(8, user.getBirthday());
+            st.setDate(8, Date.valueOf(user.getBirthday()));
             st.setString(9, user.getAvatar());
             rs = st.executeUpdate();
             if (rs == 0) {
@@ -66,9 +66,9 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                          select * from user_informations          
-                         where studentId = ?
-                         """;
+                     select * from user_informations
+                    where studentId = ?
+                    """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setString(1, studentId);
             ResultSet rs = st.executeQuery();
@@ -84,10 +84,10 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         StringBuilder result = new StringBuilder();
         try {
             String sql = """
-                           select * from user_informations ui
-                           join users u on u.id = ui.userId
-                           where ui.email = ?
-                         """;
+                      select * from user_informations ui
+                      join users u on u.id = ui.userId
+                      where ui.email = ?
+                    """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setString(1, email);
             ResultSet rs = st.executeQuery();
@@ -106,16 +106,17 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         UserInformationResponse userInformationResponse = new UserInformationResponse();
         try {
             String sql = """
-                           select (ui.lastName + ' ' + ui.firstName) as fullName, avatarImg
-                           from user_informations ui
-                           join users u on u.id = ui.userId
-                           where ui.userId = ?
-                         """;
+                      select (ui.lastName + ' ' + ui.firstName) as fullName, avatarImg
+                      from user_informations ui
+                      join users u on u.id = ui.userId
+                      where ui.userId = ?
+                    """;
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-                userInformationResponse = new UserInformationResponse(rs.getNString("fullName"), rs.getString("avatarImg"));
+                userInformationResponse = new UserInformationResponse(rs.getNString("fullName"),
+                        rs.getString("avatarImg"));
             }
             return userInformationResponse;
         } catch (Exception e) {
@@ -129,10 +130,10 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         UserInformationResponse results = new UserInformationResponse();
         try {
             String sql = """
-                         select * from user_informations as ui
-                         join users as u on u.id = ui.userId
-                         where u.id = ?
-                         """;
+                    select * from user_informations as ui
+                    join users as u on u.id = ui.userId
+                    where u.id = ?
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
@@ -160,10 +161,10 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
         UserInformationResponse userInformationResponse = new UserInformationResponse();
         try {
             String sql = """
-                         select * from user_informations as ui
-                         join users as u on u.id = ui.userId
-                         where u.id = ?
-                         """;
+                    select * from user_informations as ui
+                    join users as u on u.id = ui.userId
+                    where u.id = ?
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
@@ -188,10 +189,10 @@ public class UserInformationRepositoryImpl implements UserInformationRepository 
 
         try {
             String sql = """
-                         update user_informations 
-                         set avatarImg = ?
-                         where userId = ?
-                         """;
+                    update user_informations
+                    set avatarImg = ?
+                    where userId = ?
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setString(1, user.getAvatar());
             statement.setInt(2, user.getUserId());

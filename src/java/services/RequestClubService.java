@@ -24,4 +24,8 @@ public class RequestClubService {
     public boolean updateRequest(int id, String status) {
         return requestClubRepository.updateRequest(id, status);
     }
+
+    public boolean createRequest(RequestClubResponse request) {
+        return requestClubRepository.createRequest(request);
+    }
 }

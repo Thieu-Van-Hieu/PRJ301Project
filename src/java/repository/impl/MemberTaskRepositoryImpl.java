@@ -39,7 +39,7 @@ public class MemberTaskRepositoryImpl implements MemberTaskRepository {
     public ArrayList<MemberTaskResponse> getMembers(Member member) {
         DBContext db = new DBContext();
         String memberRole = getMemberRole(member.getClubId(), member.getId());
-        String memberRoles[] = { "Chủ nhiệm", "Phó chủ nhiệm", "Trưởng nhóm", "Thành viên" };
+        String memberRoles[] = { "Chủ Nhiệm", "Phó Chủ Nhiệm", "Trưởng Nhóm", "Thành Viên" };
         String memberRolesAvailable = "";
         int indexOfrole = 0;
         for (int i = 0; i < memberRoles.length; i++) {

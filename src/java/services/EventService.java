@@ -70,5 +70,6 @@ public class EventService {
 
     public boolean deleteEvent(int eventId) {
         return eventRepository.deleteEvent(eventId);
+
     }
 }

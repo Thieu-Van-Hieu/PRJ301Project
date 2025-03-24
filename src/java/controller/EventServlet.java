@@ -33,7 +33,8 @@ import services.ClubService;
         maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class EventServlet extends HttpServlet {
 
-    private static final String IMG_DIR = "D:\\Study\\PRJ301\\NB_workplace\\PRJ301Project\\web\\assets\\img\\img-download";
+    // Thay đổi từ đường dẫn tuyệt đối sang đường dẫn tương đối
+    private static final String IMG_RELATIVE_PATH = "/assets/img/img-download";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -157,7 +158,8 @@ public class EventServlet extends HttpServlet {
                 String uploadDir = "";
 
                 if (FileService.isImage(fileExtension)) {
-                    uploadDir = IMG_DIR;
+                    // Lấy đường dẫn thực tế từ đường dẫn tương đối
+                    uploadDir = getServletContext().getRealPath(IMG_RELATIVE_PATH);
                 } else {
                     String error = "Invalid file format! Only JPG, PNG are allowed.";
                 }

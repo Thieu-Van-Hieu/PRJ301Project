@@ -57,7 +57,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        if (request.getParameter("username") == null) {
+            session.setAttribute("error", "Bạn không có quyền vào đây");
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
     }
 
     /**
@@ -72,12 +76,12 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserService userService = new UserService();
         boolean isCheck = userService.checkLogin(username, password);
         int userId = userService.getUsername(username, password).getId();
-        HttpSession session = request.getSession();
 
         if (isCheck) {
             session.setAttribute("userId", userId);

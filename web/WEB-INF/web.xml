@@ -22,7 +22,6 @@
         <url-pattern>/view/requestClub.jsp</url-pattern>
         <url-pattern>/view/settingUserInformation.jsp</url-pattern>
     </filter-mapping>
-
     <filter>
         <filter-name>ForumEventFilter</filter-name>
         <filter-class>filter.ForumFilter</filter-class>
@@ -49,7 +48,7 @@
         <url-pattern>/CreateClubServlet</url-pattern>
         <url-pattern>/DiscoveryServlet</url-pattern>
         <url-pattern>/EventServlet</url-pattern>
-        <url-pattern>/FilterMember</url-pattern>
+        <url-pattern>/filtermember</url-pattern>
         <url-pattern>/ForumServlet</url-pattern>
         <url-pattern>/InformationServlet</url-pattern>
         <url-pattern>/MemberServlet</url-pattern>

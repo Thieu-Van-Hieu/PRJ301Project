@@ -18,7 +18,6 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-
         if (session == null || session.getAttribute("username") == null) {
             session.setAttribute("error", "Bạn chưa đăng nhập vui lòng đăng nhập");
             res.sendRedirect(req.getContextPath() + "/index.jsp");

@@ -65,6 +65,8 @@ public class FilterMember extends HttpServlet {
         String gender = request.getParameter("gender");
         HttpSession session = request.getSession();
         Integer ageFrom;
+        int clubId = (int) session.getAttribute("clubId");
+
         if (!request.getParameter("ageFrom").isBlank()) {
             ageFrom = Integer.valueOf(request.getParameter("ageFrom"));
         } else {
@@ -78,12 +80,12 @@ public class FilterMember extends HttpServlet {
         }
         String nameSearch = request.getParameter("search");
         String dateJoin = request.getParameter("dateJoin");
-        FilterMemberDTO filterMemberDTO = new FilterMemberDTO(departmentId, gender, ageFrom, ageTo, dateJoin, nameSearch);
-        
+        FilterMemberDTO filterMemberDTO = new FilterMemberDTO(clubId, departmentId, gender, ageFrom, ageTo, dateJoin, nameSearch);
+
         MemberService memberService = new MemberService();
-        
+
         ArrayList<FilterMemberResponseDTO> filterMemberResponseDTO = memberService.filterMember(filterMemberDTO);
-        
+
         request.setAttribute("filterMemberResponseDTO", filterMemberResponseDTO);
         session.setAttribute("success", "filter thành công!");
         request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);

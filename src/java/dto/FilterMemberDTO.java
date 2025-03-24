@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class FilterMemberDTO {
 
+    private int clubid;
     private int departmentId;
     private String gender;
     private Integer ageFrom;
@@ -22,13 +23,22 @@ public class FilterMemberDTO {
     public FilterMemberDTO() {
     }
 
-    public FilterMemberDTO(int departmentId, String gender, Integer ageFrom, Integer ageTo, String dateJoin, String nameSearch) {
+    public FilterMemberDTO(int clubid, int departmentId, String gender, Integer ageFrom, Integer ageTo, String dateJoin, String nameSearch) {
+        this.clubid = clubid;
         this.departmentId = departmentId;
         this.gender = gender;
         this.ageFrom = ageFrom;
         this.ageTo = ageTo;
         this.dateJoin = dateJoin;
         this.nameSearch = nameSearch;
+    }
+
+    public int getClubid() {
+        return clubid;
+    }
+
+    public void setClubid(int clubid) {
+        this.clubid = clubid;
     }
 
     public int getDepartmentId() {

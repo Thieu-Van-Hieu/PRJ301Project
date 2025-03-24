@@ -69,8 +69,8 @@
                 <c:forEach var="x" items="${memberResponses}">
                     <tr>
                         <td>${x.rollNumber}</td> 
-                        <td>${x.lastName}</td> 
                         <td>${x.firstName}</td> 
+                        <td>${x.lastName}</td> 
                         <td>${x.birthday}</td> 
                         <td>${x.gender}</td> 
                         <td>${x.del}</td> 
@@ -83,8 +83,8 @@
                 <c:forEach var="x" items="${filterMemberResponseDTO}">
                     <tr>
                         <td>${x.studentID}</td> 
-                        <td>${x.lastName}</td> 
                         <td>${x.firstName}</td> 
+                        <td>${x.lastName}</td> 
                         <td>${x.birthdate}</td> 
                         <td>${x.gender}</td> 
                         <td>${x.department}</td> 

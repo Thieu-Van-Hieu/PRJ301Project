@@ -67,10 +67,10 @@ public class MemberServlet extends HttpServlet {
         if ((Member) session.getAttribute("member") != null) {
             ArrayList<MemberResponse> memberResponses = memberService
                     .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());
-            session.setAttribute("memberResponses", memberResponses);
+            request.setAttribute("memberResponses", memberResponses);
         }
         session.setAttribute("includeWeb", "member.jsp");
-        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
+        request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
     }
 
     @Override

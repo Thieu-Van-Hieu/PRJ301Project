@@ -56,7 +56,7 @@ public class ForgotPasswordServlet extends HttpServlet {
             String otp = OTPService.generateOTP();
             OTPService.sendOTPEmail(email, otp);
             session.setAttribute("otp", otp);
-            session.setAttribute("otpEmail", email);
+            session.setAttribute("email", email);
             session.setAttribute("success", "Chúng tôi đã gửi OTP");
             response.sendRedirect(request.getContextPath() + "/view/otpSent.jsp?email=" + URLEncoder.encode(email, "UTF-8"));
         } else {

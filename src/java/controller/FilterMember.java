@@ -79,14 +79,14 @@ public class FilterMember extends HttpServlet {
         String nameSearch = request.getParameter("search");
         String dateJoin = request.getParameter("dateJoin");
         FilterMemberDTO filterMemberDTO = new FilterMemberDTO(departmentId, gender, ageFrom, ageTo, dateJoin, nameSearch);
-
+        
         MemberService memberService = new MemberService();
-
+        
         ArrayList<FilterMemberResponseDTO> filterMemberResponseDTO = memberService.filterMember(filterMemberDTO);
-
-        session.setAttribute("filterMemberResponseDTO", filterMemberResponseDTO);
+        
+        request.setAttribute("filterMemberResponseDTO", filterMemberResponseDTO);
         session.setAttribute("success", "filter thành công!");
-        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
+        request.getRequestDispatcher("/view/homePage.jsp").forward(request, response);
     }
 
     /**

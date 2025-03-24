@@ -131,10 +131,9 @@ public class MemberRepositoryImpl implements MemberRepository {
     private String whereFilterMemeber(FilterMemberDTO filterMemberDTO) {
         StringBuilder sql = new StringBuilder("where 1 = 1");
         sql.append(" and d.id = " + filterMemberDTO.getDepartmentId());
-        sql.append(" and lower(ui.gender) = " + "'" + filterMemberDTO.getGender() + "'");
+        sql.append(" and ui.gender = N" + "'" + filterMemberDTO.getGender() + "'");
         if (filterMemberDTO.getNameSearch() != null && !filterMemberDTO.getNameSearch().isEmpty()) {
-            sql.append(" and (lower(ui.firstName) like '%" + filterMemberDTO.getNameSearch()
-                    + "%' or lower(ui.lastName) like '%" + filterMemberDTO.getNameSearch() + "%')");
+            sql.append(" and (lower(ui.firstName) like N'%" + filterMemberDTO.getNameSearch() + "%' or lower(ui.lastName) like N'%" + filterMemberDTO.getNameSearch() + "%')");
         }
         if (filterMemberDTO.getAgeFrom() != null) {
             sql.append(" and (\n"

@@ -38,8 +38,10 @@ public class ResetPasswordServlet extends HttpServlet {
         HttpSession session = request.getSession();
         boolean updated = updatePassword(newPassword);
         if (updated) {
-            session.setAttribute("success", "Đổi mật khẩu thành công!");
-            response.sendRedirect(request.getContextPath() + "/view/resetSuccess.jsp");
+            session.invalidate();
+            HttpSession newSession = request.getSession(true); 
+            newSession.setAttribute("success", "Đổi mật khẩu thành công!");
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
         } else {
             session.setAttribute("error", "Có lỗi xảy ra khi cập nhật mật khẩu. Vui lòng thử lại.");
             request.getRequestDispatcher("view/resetPassword.jsp").forward(request, response);

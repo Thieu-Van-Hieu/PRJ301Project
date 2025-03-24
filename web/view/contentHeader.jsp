@@ -48,28 +48,11 @@
         <header class="content-header">
             <h2>${contentHeader}</h2>
             <div class="content-header_util">
-            <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
-            
+            <c:if test="${member.role eq 'Chủ Nhiệm'}">
+                <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
+            </c:if>
             <i class="fa-solid fa-user-group" onclick="location.href='${pageContext.request.contextPath}/MemberServlet'"></i>
             </div>
         </header>
-        <div id="scrollBox" style="display: none; position: absolute; top: 60px; right: 20px; background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-            <p>This is the content inside the box.</p>
-        </div>
-        <script>
-            function toggleBox() {
-            const box = document.getElementById('scrollBox');
-            box.style.display = box.style.display === 'none' ? 'block' : 'none';
-            }
-        </script>
-        <div id="scrollBox" style="display: none; position: absolute; top: 60px; right: 20px; background-color: white; border: 1px solid #ccc; padding: 10px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-            <p>This is the content inside the box.</p>
-        </div>
-        <script>
-            function toggleBox() {
-            const box = document.getElementById('scrollBox');
-            box.style.display = box.style.display === 'none' ? 'block' : 'none';
-            }
-        </script>
     </body>
 </html>

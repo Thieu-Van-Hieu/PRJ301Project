@@ -14,14 +14,27 @@ public class EventResponse {
 
     private int eventId;
     private String eventName;
+    private int clubId;
     private String clubName;
     private Timestamp startDate;
     private Timestamp endDate;
     private String img;
 
-    public EventResponse(int eventId, String eventName, String clubName, Timestamp startDate, Timestamp endDate, String img) {
+    public EventResponse(int eventId, String eventName, String clubName, Timestamp startDate,
+            Timestamp endDate, String img) {
         this.eventId = eventId;
         this.eventName = eventName;
+        this.clubName = clubName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.img = img;
+    }
+
+    public EventResponse(int eventId, String eventName, int clubId, String clubName, Timestamp startDate,
+            Timestamp endDate, String img) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.clubId = clubId;
         this.clubName = clubName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -45,6 +58,14 @@ public class EventResponse {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
     }
 
     public String getClubName() {

@@ -7,9 +7,9 @@
     <header class="content-header">
         <h2>Danh sách yêu cầu vào câu lạc bộ</h2>
         <div class="content-header_util">
-            
-            <i class="fa-solid fa-scroll" onclick="location.href = '${pageContext.request.contextPath}/RequestClubServlet'"></i>
-            
+            <c:if test="${member.role eq 'Chủ Nhiệm'}">
+                <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
+            </c:if>
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
         </div>
     </header>

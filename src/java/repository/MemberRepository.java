@@ -23,6 +23,7 @@ public interface MemberRepository {
     public Member getMember(int userId, int clubId);
 
     public void addMember(MemberDTO member);
-    
+
     public ArrayList<Member> filterMember(FilterMemberDTO filterMemberDTO);
+
 }

@@ -26,19 +26,19 @@ public class MemberRepositoryImpl implements MemberRepository {
 
         try {
             String sql = """
-                         select 
-                         ui.studentId,
-                         ui.lastName,
-                         ui.firstName,
-                         ui.birthday,
-                         ui.gender,
-                         d.name AS departmentName,
-                         m.role
-                         from members m
-                         JOIN user_informations AS ui ON ui.userId = m.userId
-                         JOIN departments AS d ON d.id = m.deptId
-                         WHERE m.clubId = ?
-                         """;
+                    select
+                    ui.studentId,
+                    ui.lastName,
+                    ui.firstName,
+                    ui.birthday,
+                    ui.gender,
+                    d.name AS departmentName,
+                    m.role
+                    from members m
+                    JOIN user_informations AS ui ON ui.userId = m.userId
+                    JOIN departments AS d ON d.id = m.deptId
+                    WHERE m.clubId = ?
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, clubId);
             ResultSet rs = statement.executeQuery();
@@ -52,7 +52,8 @@ public class MemberRepositoryImpl implements MemberRepository {
                 String delName = rs.getNString("departmentName");
                 String role = rs.getNString("role");
 
-                MemberResponse memberResponse = new MemberResponse(rollNumber, lastName, firstName, birthday, gender, delName, role);
+                MemberResponse memberResponse = new MemberResponse(rollNumber, lastName, firstName, birthday, gender,
+                        delName, role);
                 memberResponses.add(memberResponse);
             }
             return memberResponses;
@@ -63,7 +64,23 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public void deleteMemberOfClub(MemberDTO memberDTO) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        DBContext db = DBContext.getInstance();
+        try {
+            String sql = """
+                    update members
+                    set userId = 0
+                    where userId = ? and clubId = ?
+                    """;
+            PreparedStatement statement = db.getConnection().prepareStatement(sql);
+            statement.setInt(1, memberDTO.getUserId());
+            statement.setInt(2, memberDTO.getClubId());
+            int rs = statement.executeUpdate();
+            if (rs == 0) {
+                throw new Exception();
+            }
+        } catch (Exception e) {
+            return;
+        }
     }
 
     @Override
@@ -71,15 +88,16 @@ public class MemberRepositoryImpl implements MemberRepository {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                         select * from members
-                         where userId = ? and clubId = ?
-                         """;
+                    select * from members
+                    where userId = ? and clubId = ?
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, userId);
             statement.setInt(2, clubId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                return new Member.Builder().setId(rs.getInt("id")).setClubId(rs.getInt("clubId")).setRole(rs.getNString("role")).build();
+                return new Member.Builder().setId(rs.getInt("id")).setClubId(rs.getInt("clubId"))
+                        .setRole(rs.getNString("role")).build();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,9 +110,9 @@ public class MemberRepositoryImpl implements MemberRepository {
         DBContext db = DBContext.getInstance();
         try {
             String sql = """
-                         insert into members(userId, clubId, deptId, role)
-                         values (?, ?, ?, ?)
-                         """;
+                    insert into members(userId, clubId, deptId, role)
+                    values (?, ?, ?, ?)
+                    """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
             statement.setInt(1, member.getUserId());
             statement.setInt(2, member.getClubId());
@@ -115,7 +133,8 @@ public class MemberRepositoryImpl implements MemberRepository {
         sql.append(" and d.id = " + filterMemberDTO.getDepartmentId());
         sql.append(" and lower(ui.gender) = " + "'" + filterMemberDTO.getGender() + "'");
         if (filterMemberDTO.getNameSearch() != null && !filterMemberDTO.getNameSearch().isEmpty()) {
-            sql.append(" and (lower(ui.firstName) like '%" + filterMemberDTO.getNameSearch() + "%' or lower(ui.lastName) like '%" + filterMemberDTO.getNameSearch() + "%')");
+            sql.append(" and (lower(ui.firstName) like '%" + filterMemberDTO.getNameSearch()
+                    + "%' or lower(ui.lastName) like '%" + filterMemberDTO.getNameSearch() + "%')");
         }
         if (filterMemberDTO.getAgeFrom() != null) {
             sql.append(" and (\n"
@@ -144,11 +163,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         ArrayList<Member> results = new ArrayList<>();
         try {
             String sql = """
-                         select m.* from members m
-                         join users u on u.id = m.userid
-                         join user_informations ui on ui.userid = u.id
-                         join departments d on d.id = m.deptid
-                         """;
+                    select m.* from members m
+                    join users u on u.id = m.userid
+                    join user_informations ui on ui.userid = u.id
+                    join departments d on d.id = m.deptid
+                    """;
             sql += whereFilterMemeber(filterMemberDTO);
             PreparedStatement st = db.getConnection().prepareStatement(sql);
             ResultSet rs = st.executeQuery();

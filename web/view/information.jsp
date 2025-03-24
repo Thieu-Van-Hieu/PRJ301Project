@@ -210,34 +210,6 @@
 
         <script>
 
-// Khi chọn tỉnh/thành phố
-                                document.getElementById("province").addEventListener("change", function () {
-                                    updateHiddenInput(this, "provinceText");
-
-                                    // Reset quận/huyện và phường/xã về mặc định
-                                    document.getElementById("district").innerHTML = '<option value="">Chọn quận/huyện</option>';
-                                    document.getElementById("ward").innerHTML = '<option value="">Chọn phường/xã</option>';
-
-                                    // Reset input hidden của quận/huyện và phường/xã
-                                    document.getElementById("districtText").value = "";
-                                    document.getElementById("wardText").value = "";
-                                });
-
-// Khi chọn quận/huyện
-                                document.getElementById("district").addEventListener("change", function () {
-                                    updateHiddenInput(this, "districtText");
-
-                                    // Reset phường/xã về mặc định
-                                    document.getElementById("ward").innerHTML = '<option value="">Chọn phường/xã</option>';
-
-                                    // Reset input hidden của phường/xã
-                                    document.getElementById("wardText").value = "";
-                                });
-
-// Khi chọn phường/xã
-                                document.getElementById("ward").addEventListener("change", function () {
-                                    updateHiddenInput(this, "wardText");
-                                });
                                 async function loadProvinces() {
                                     const response = await fetch("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1");
                                     const data = await response.json();
@@ -350,73 +322,40 @@
         </script>
     </body>
     <script>
-        async function loadDistricts() {
-            let provinceId = document.getElementById("province").value;
-            let districtSelect = document.getElementById("district");
-
-            districtSelect.innerHTML = '<option value="">Chọn quận/huyện</option>';
-
-            if (provinceId) {
-                try {
-                    let response = await fetch("https://vn-public-apis.fpo.vn/districts/getAll?limit=-1");
-                    let data = await response.json();
-
-                    console.log("API Response:", data); // Kiểm tra API trả về
-
-                    let districts = data.data.data.filter(d => d.parent_code === provinceId);
-
-                    if (districts.length === 0) {
-                        console.error("❌ Không có dữ liệu quận/huyện cho tỉnh này.");
-                        return;
-                    }
-
-                    districts.forEach(district => {
-                        let option = document.createElement("option");
-                        option.value = district.code;
-                        option.textContent = district.name;
-                        districtSelect.appendChild(option);
-                    });
-
-                } catch (error) {
-                    console.error("Lỗi khi tải danh sách quận/huyện:", error);
-                }
-            }
+        // Hàm cập nhật giá trị vào input hidden
+        function updateHiddenInput(selectElement, hiddenInputId) {
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            document.getElementById(hiddenInputId).value = selectedOption.textContent;
         }
 
-        async function loadWards() {
-            let districtId = document.getElementById("district").value;
-            let wardSelect = document.getElementById("ward");
+        // Khi chọn tỉnh/thành phố
+        document.getElementById("province").addEventListener("change", function () {
+            updateHiddenInput(this, "provinceText");
 
-            wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
+            // Reset quận/huyện và phường/xã về mặc định
+            document.getElementById("district").innerHTML = '<option value="">Chọn quận/huyện</option>';
+            document.getElementById("ward").innerHTML = '<option value="">Chọn phường/xã</option>';
 
-            if (districtId) {
-                try {
-                    let response = await fetch("https://vn-public-apis.fpo.vn/wards/getAll?limit=-1");
-                    let data = await response.json();
+            // Reset input hidden của quận/huyện và phường/xã
+            document.getElementById("districtText").value = "";
+            document.getElementById("wardText").value = "";
+        });
 
-                    console.log("API Response (Wards):", data); // Kiểm tra API trả về
+        // Khi chọn quận/huyện
+        document.getElementById("district").addEventListener("change", function () {
+            updateHiddenInput(this, "districtText");
 
-                    let wards = data.data.data.filter(w => w.parent_code === districtId);
+            // Reset phường/xã về mặc định
+            document.getElementById("ward").innerHTML = '<option value="">Chọn phường/xã</option>';
 
-                    if (wards.length === 0) {
-                        console.error("❌ Không có dữ liệu phường/xã cho quận này.");
-                        return;
-                    }
+            // Reset input hidden của phường/xã
+            document.getElementById("wardText").value = "";
+        });
 
-                    wards.forEach(ward => {
-                        let option = document.createElement("option");
-                        option.value = ward.code;
-                        option.textContent = ward.name;
-                        wardSelect.appendChild(option);
-                    });
-
-                } catch (error) {
-                    console.error("Lỗi khi tải danh sách phường/xã:", error);
-                }
-            }
-        }
-
-        window.onload = loadProvinces;
+        // Khi chọn phường/xã
+        document.getElementById("ward").addEventListener("change", function () {
+            updateHiddenInput(this, "wardText");
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>

@@ -207,7 +207,6 @@
                 display: flex;
                 flex-direction: column;
                 grid-area: cont;
-                overflow-y: auto;
                 height: 100%;
             }
 
@@ -264,7 +263,6 @@
                     <li class="sidebar__item"><a href="${pageContext.request.contextPath}/ForumServlet">Diễn đàn</a></li>
                     <li class="sidebar__item"><a href="${pageContext.request.contextPath}/CalendarServlet">Lịch</a></li>
                     <li class="sidebar__item"><a href="${pageContext.request.contextPath}/EventServlet">Sự Kiện</a></li>
-                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Đóng tiền</a></li>
                     <li class="sidebar__item">
                         <input type="checkbox" id="task__toggle" style="display: none;">
                         <label for="task__toggle">Nhiệm vụ</label>
@@ -275,7 +273,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="sidebar__item"><a href="${pageContext.request.contextPath}/">Báo Cáo</a></li>
                     <li class="sidebar__item"><a href="${pageContext.request.contextPath}/MessengerServlet">Nhóm của bạn</a></li>
                 </ul>
             </div>

@@ -72,7 +72,7 @@
                                         <li>Chỉnh sửa</li>
                                         <li>Ẩn</li>
                                     </ul>
-                                    <div class="item-close"><i class="fa-solid fa-xmark"></i></div>
+                                    <div class="item-close" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=deletePost&postUserId=${post.userId}'"><i class="fa-solid fa-xmark"></i></div>
                                 </div>
                             </div>
                             <div class="item-body">

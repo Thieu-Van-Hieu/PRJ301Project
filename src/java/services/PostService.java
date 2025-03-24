@@ -37,4 +37,8 @@ public class PostService {
     public void addComment(CommentDTO commentDTO){
         postRepository.addComment(commentDTO);
     }
+    
+    public boolean isLove(int postId, int userId){
+        return postRepository.isLove(postId, userId);
+    }
 }

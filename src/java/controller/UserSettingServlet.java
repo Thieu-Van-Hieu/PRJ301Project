@@ -65,7 +65,16 @@ public class UserSettingServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String action = request.getParameter("action");
-
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         if ("logout".equals(action)) {
             session.invalidate();
             response.sendRedirect(request.getContextPath() + "/view/login.jsp");

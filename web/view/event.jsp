@@ -141,7 +141,7 @@
         let endDate = eventElement?.querySelector(".event-info p:nth-child(4)")?.textContent.replace("End Date: ", "");
         let imgUrl = eventElement?.querySelector(".event-img img")?.getAttribute("src");
 
-        let eventData = new Event(id, name,clubId, clubName, startDate, endDate, imgUrl);
+        let eventData = new Event(id, name, clubId, clubName, startDate, endDate, imgUrl);
 
         let message = {
             action: action,
@@ -164,6 +164,7 @@
                     <tr>
                         <td class="filter-time">Ngày Đăng <input type="date" name="date"></td>
                         <td>
+                            <!--                            nhan tu EventServlet-->
                             <select name="type" id="id">
                                 <c:forEach var="eventType" items="${eventTypes}">
                                     <option value="${eventType.getTypeId()}">${eventType.getTypeName()}</option>
@@ -257,7 +258,7 @@
                             </tr>
                             <tr>
                                 <td><input type="text" id="startDate" name="startDate"
-                                        placeholder="Chọn ngày giờ bắt đầu"></td>
+                                           placeholder="Chọn ngày giờ bắt đầu"></td>
                                 <td><input type="text" id="endDate" name="endDate" placeholder="Chọn ngày giờ kết thúc">
                                 </td>
                             </tr>
@@ -311,25 +312,25 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script>
-    // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
-    flatpickr("#startDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
-    });
+                                        // Kích hoạt Flatpickr cho ngày giờ bắt đầu & kết thúc
+                                        flatpickr("#startDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below" // Đảm bảo lịch xuất hiện ngay dưới input
+                                        });
 
-    flatpickr("#endDate", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        time_24hr: true,
-        position: "below"
-    });
+                                        flatpickr("#endDate", {
+                                            enableTime: true,
+                                            dateFormat: "Y-m-d H:i",
+                                            time_24hr: true,
+                                            position: "below"
+                                        });
 
-    // Xử lý chọn file ảnh
-    document.getElementById("customFileUpload").addEventListener("click", function () {
-        document.getElementById("fileInput").click();
-    });
+                                        // Xử lý chọn file ảnh
+                                        document.getElementById("customFileUpload").addEventListener("click", function () {
+                                            document.getElementById("fileInput").click();
+                                        });
 </script>
 
 <script>

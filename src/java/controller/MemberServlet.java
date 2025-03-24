@@ -64,15 +64,15 @@ public class MemberServlet extends HttpServlet {
         HttpSession session = request.getSession();
         MemberService memberService = new MemberService();
         String action = request.getParameter("action");
-
-        ArrayList<MemberResponse> memberResponses = memberService
-                .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());
-        session.setAttribute("memberResponses", memberResponses);
+        if ((Member) session.getAttribute("member") != null) {
+            ArrayList<MemberResponse> memberResponses = memberService
+                    .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());
+            session.setAttribute("memberResponses", memberResponses);
+        }
         session.setAttribute("includeWeb", "member.jsp");
         response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -49,7 +49,6 @@
                             <h4>Email: </h4>
                             <h5>${userInfor.email}</h5>
                         </div>
-                        <button class="btn-setting">Chỉnh sửa</button>
                     </div>
                     <div class="btn-logout"
                          onclick="location.href = '${pageContext.request.contextPath}/UserSettingServlet?action=logout'">Đăng

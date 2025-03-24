@@ -75,11 +75,24 @@ public class ForumServlet extends HttpServlet {
         PostService postService = new PostService();
         UserService userService = new UserService();
         MemberService memberService = new MemberService();
-        int userId = (Integer) session.getAttribute("userId");
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         int clubId = (Integer) session.getAttribute("clubId");
         if ("love".equals(action)) {
-            int postId = Integer.parseInt(request.getParameter("postId"));
-            postService.addLove(postId, userId);
+            if (!postService.isLove(clubId, userId)) {
+                int postId = Integer.parseInt(request.getParameter("postId"));
+                postService.addLove(postId, userId);
+            }
+        } else if("deletePost".equals(action)){
+            
         }
         String clubName = clubService.clubName(clubId);
         UserInformationResponse user = userService.getFullNameAndAvatar(userId);
@@ -89,8 +102,9 @@ public class ForumServlet extends HttpServlet {
         ArrayList<Post> posts = postService.getAllPostOfClub(clubId);
         Member member = memberService.getMemberInfor(userId, clubId);
         String coverImg = clubService.getCoverImg(clubId);
-        session.setAttribute("coverImg", coverImg);
         session.setAttribute("member", member);
+        session.setAttribute("coverImg", coverImg);
+        
         session.setAttribute("userFullName", userFullName);
         session.setAttribute("userAvatarImg", userAvatarImg);
         session.setAttribute("clubListItems", clubListItems);
@@ -123,15 +137,7 @@ public class ForumServlet extends HttpServlet {
             try {
                 int clubId = Integer.parseInt(request.getParameter("clubId"));
                 String content = request.getParameter("content");
-                Timestamp createdAt = null;
-                try {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-                    createdAt = new Timestamp(dateFormat.parse(request.getParameter("createTime")).getTime());
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                Timestamp createdAt = getCurrentTimestamp();
                 Part filePart = request.getPart("file");
                 String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
@@ -142,8 +148,7 @@ public class ForumServlet extends HttpServlet {
                 if (!uploadFolder.exists()) {
                     uploadFolder.mkdirs();
                 }
-                String imgName = "Ảnh" + "_" + clubId + "." + fileExtension;
-                String normalized = FileService.normalizeFileName(imgName);
+                String normalized = FileService.normalizeFileName(fileName);
 
                 String filePath = uploadDir + File.separator + normalized;
                 filePart.write(filePath);

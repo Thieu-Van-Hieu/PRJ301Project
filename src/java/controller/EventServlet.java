@@ -70,8 +70,18 @@ public class EventServlet extends HttpServlet {
         EventService eventService = new EventService();
         ClubService clubService = new ClubService();
         HttpSession session = request.getSession();
+        int userId = -1;
+        try {
+            userId = (Integer) session.getAttribute("userId");
+            if(userId == -1){
+                throw new Exception();
+            }
+        } catch (Exception e){
+            response.sendRedirect(request.getContextPath() + "/view/login.jsp");
+        }
+        request.setAttribute("userId", userId);
         ArrayList<EventType> eventTypes = eventService.selectAllEventType();
-        ArrayList<EventResponse> eventDescriptions = null;
+        ArrayList<EventResponse> eventDescriptions = new ArrayList<EventResponse>();
         ArrayList<ClubResponse> clubIdAndNames = clubService.selectAllClubIdAndClubName();
         if (action == null) {
             eventDescriptions = eventService.getAllEventDescription();
@@ -84,6 +94,7 @@ public class EventServlet extends HttpServlet {
             SearchEventDTO searchEventDTO = new SearchEventDTO(dateStr, typeId, nameEvent, status, clubId);
             eventDescriptions = eventService.getSearchEvent(searchEventDTO);
         }
+        
         request.setAttribute("clubDescriptions", clubIdAndNames);
         request.setAttribute("eventDescriptions", eventDescriptions);
         request.setAttribute("eventTypes", eventTypes);
@@ -93,7 +104,8 @@ public class EventServlet extends HttpServlet {
         request.setAttribute("eventId", session.getAttribute("eventId"));
         System.out.println(session.getAttribute("eventId"));
         session.removeAttribute("eventId");
-        request.setAttribute("clubId", session.getAttribute("clubId"));
+        int clubId = (Integer)session.getAttribute("clubId");
+        session.setAttribute("clubId", clubId);
         request.setAttribute("startDate", session.getAttribute("startDate"));
         session.removeAttribute("startDate");
         request.setAttribute("endDate", session.getAttribute("endDate"));

@@ -17,11 +17,22 @@ public class FilterMemberResponseDTO {
     private String gender;
     private String department;
     private String roleClub;
+    private int clubId;
+    private int memberId;
 
     public FilterMemberResponseDTO() {
     }
 
-    public FilterMemberResponseDTO(String StudentID, String firstName, String lastName, String birthdate, String gender, String department, String roleClub) {
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
+    public FilterMemberResponseDTO(int memberId, String StudentID, String firstName, String lastName, String birthdate, String gender, String department, String roleClub, int clubid) {
+        this.memberId = memberId;
         this.StudentID = StudentID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -29,6 +40,15 @@ public class FilterMemberResponseDTO {
         this.gender = gender;
         this.department = department;
         this.roleClub = roleClub;
+        this.clubId = clubid;
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
     }
 
     public String getStudentID() {

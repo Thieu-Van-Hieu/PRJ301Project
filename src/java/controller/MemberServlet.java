@@ -64,6 +64,13 @@ public class MemberServlet extends HttpServlet {
         HttpSession session = request.getSession();
         MemberService memberService = new MemberService();
         String action = request.getParameter("action");
+        if (("delete").equals(action)) {
+            String memberId = request.getParameter("memberId");
+            int clubId = Integer.valueOf(request.getParameter("clubID"));
+
+            memberService.deleteMemberOfClub(Integer.valueOf(memberId), clubId);
+            session.setAttribute("success", "Xóa thành công!");
+        }
         if ((Member) session.getAttribute("member") != null) {
             ArrayList<MemberResponse> memberResponses = memberService
                     .getAllMemberOfClub(((Member) session.getAttribute("member")).getClubId());

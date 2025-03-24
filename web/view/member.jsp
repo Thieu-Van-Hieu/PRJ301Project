@@ -6,7 +6,7 @@
         <h2>Thành Viên</h2>
         <div class="content-header_util">
             <c:if test="${member.role eq 'Chủ Nhiệm'}">
-                <i class="fa-solid fa-scroll" onclick="location.href='${pageContext.request.contextPath}/RequestClubServlet'"></i>
+                <i class="fa-solid fa-scroll" onclick="location.href = '${pageContext.request.contextPath}/RequestClubServlet'"></i>
             </c:if>
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
         </div>
@@ -61,9 +61,9 @@
                     <th>Giới Tính</th>
                     <th>Phòng Ban</th>
                     <th>Chức vụ</th>
-                    <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
-                    <th></th>
-                    </c:if>
+                        <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
+                        <th></th>
+                        </c:if>
                 </tr>
                 <c:forEach var="x" items="${memberResponses}">
                     <tr>
@@ -74,8 +74,8 @@
                         <td>${x.gender}</td> 
                         <td>${x.del}</td> 
                         <td>${x.role}</td> 
-                        <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
-                            <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${x.rollNumber}'">Xoá</button></td> 
+                        <c:if test="${member.role eq 'Chủ Nhiệm' && x.role ne 'Chủ Nhiệm'}"> 
+                            <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&memberId=${x.memberId}&clubID=${x.clubid}'">Xoá</button></td> 
                         </c:if>
                     </tr>
                 </c:forEach>
@@ -88,8 +88,8 @@
                         <td>${x.gender}</td> 
                         <td>${x.department}</td> 
                         <td>${x.roleClub}</td> 
-                        <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
-                            <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${x.studentID}'">Xoá</button></td> 
+                        <c:if test="${member.role eq 'Chủ Nhiệm' && x.roleClub ne 'Chủ Nhiệm'}"> 
+                            <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&memberId=${x.memberId}&clubID=${x.clubId}'">Xoá</button></td> 
                         </c:if>
                     </tr>
                 </c:forEach>

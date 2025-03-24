@@ -55,7 +55,7 @@ public class MemberRepositoryImpl implements MemberRepository {
                 MemberResponse memberResponse = new MemberResponse(rollNumber, lastName, firstName, birthday, gender, delName, role);
                 memberResponses.add(memberResponse);
             }
-            return  memberResponses;
+            return memberResponses;
         } catch (Exception e) {
             return new ArrayList<>();
         }
@@ -113,7 +113,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     private String whereFilterMemeber(FilterMemberDTO filterMemberDTO) {
         StringBuilder sql = new StringBuilder("where 1 = 1");
         sql.append(" and d.id = " + filterMemberDTO.getDepartmentId());
-        sql.append(" and lower(ui.gender) like " + "'%" + filterMemberDTO.getGender() + "%'");
+        sql.append(" and lower(ui.gender) = " + "'" + filterMemberDTO.getGender() + "'");
         if (filterMemberDTO.getNameSearch() != null && !filterMemberDTO.getNameSearch().isEmpty()) {
             sql.append(" and (lower(ui.firstName) like '%" + filterMemberDTO.getNameSearch() + "%' or lower(ui.lastName) like '%" + filterMemberDTO.getNameSearch() + "%')");
         }

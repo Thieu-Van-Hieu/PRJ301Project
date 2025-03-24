@@ -9,7 +9,8 @@
             <i class="fa-solid fa-user-group" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet'"></i>
         </div>
     </header>
-
+    <jsp:include page="noticeError.jsp"/>
+    <jsp:include page="noticeSuccess.jsp"/>
     <div class="content-body">
         <div class="content-filter">
             <form action="${pageContext.request.contextPath}/filtermember" method="get">
@@ -23,11 +24,10 @@
                                 <option value="5">Chuyên Môn</option>
                             </select>
                         </td>
-                        <td class="filter-time">Thời điểm tham gia<input type="date" name="dateJoin"></td>
                         <td>
                             <select name="gender" id="">
                                 <option value="male">Nam</option>
-                                <option value="famale">Nữ</option>
+                                <option value="female">Nữ</option>
                             </select>
                         </td>
                         <td class="filter-search"><input type="text" placeholder="Name, id, email" name="search"></td>
@@ -36,14 +36,6 @@
                         <td class="age-filter">Age <input type="text" name="ageFrom"> - <input type="text" name="ageTo">
                             year(s)</td>
                         <td>
-                        </td>
-                        <td>
-                            <select name="firstName" id="">
-                                <option value="1">Tên (A-Z)</option>
-                                <option value="2">Tên (Z-A)</option>
-                                <option value="3">Họ (A-Z)</option>
-                                <option value="4">Họ (Z-A)</option>
-                            </select>
                         </td>
                         <td class="filter-submit"><input type="submit" value="Filter"></td>
                     </tr>
@@ -64,18 +56,40 @@
                     <th>Chức vụ</th>
                     <th></th>
                 </tr>
-                <c:forEach var="member" items="${memberResponses}">
-                    <tr>
-                        <td>${member.rollNumber}</td> 
-                        <td>${member.lastName}</td> 
-                        <td>${member.firstName}</td> 
-                        <td>${member.birthday}</td> 
-                        <td>${member.gender}</td> 
-                        <td>${member.del}</td> 
-                        <td>${member.role}</td> 
-                        <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${member.rollNumber}'">Xoá</button></td> 
-                    </tr>
-                </c:forEach>
+
+                <c:if test="${empty filterMemberResponseDTO}">
+                    <c:forEach var="x" items="${memberResponses}">
+                        <tr>
+                            <td>${x.rollNumber}</td> 
+                            <td>${x.lastName}</td> 
+                            <td>${x.firstName}</td> 
+                            <td>${x.birthday}</td> 
+                            <td>${x.gender}</td> 
+                            <td>${x.del}</td> 
+                            <td>${x.role}</td> 
+                            <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
+                                <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${x.rollNumber}'">Xoá</button></td> 
+                            </c:if>
+                        </tr>
+                    </c:forEach>
+                </c:if>
+
+                <c:if test="${not empty filterMemberResponseDTO}">
+                    <c:forEach var="x" items="${filterMemberResponseDTO}">
+                        <tr>
+                            <td>${x.studentID}</td> 
+                            <td>${x.lastName}</td> 
+                            <td>${x.firstName}</td> 
+                            <td>${x.birthdate}</td> 
+                            <td>${x.gender}</td> 
+                            <td>${x.department}</td> 
+                            <td>${x.roleClub}</td> 
+                            <c:if test="${member.role eq 'Chủ Nhiệm'}"> 
+                                <td><button value="Delete" onclick="location.href = '${pageContext.request.contextPath}/MemberServlet?action=delete&rollNumber=${x.studentID}'">Xoá</button></td> 
+                            </c:if>
+                        </tr>
+                    </c:forEach>
+                </c:if>
             </table>
         </div>
     </div>

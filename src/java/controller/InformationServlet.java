@@ -103,9 +103,9 @@ public class InformationServlet extends HttpServlet {
         String address = ward + ", " + district + ", " + city;
 
         UserInformationResponse infor = new UserInformationResponse(firstName, lastName, studentId, address, gender, formattedDate, avatarImg);
-
-        service.addByParamIntoResponse(infor);
+        
         service.addUserRoleMember();
+        service.addByParamIntoResponse(infor);
         service.addInformationOfUser();
 
         UserInformationResponse result = service.getResults();

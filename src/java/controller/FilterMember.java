@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import services.MemberService;
@@ -62,17 +63,30 @@ public class FilterMember extends HttpServlet {
             throws ServletException, IOException {
         int departmentId = Integer.valueOf(request.getParameter("department"));
         String gender = request.getParameter("gender");
-        Integer ageFrom = Integer.valueOf(request.getParameter("ageFrom"));
-        Integer ageTo = Integer.valueOf(request.getParameter("ageTo"));
+        HttpSession session = request.getSession();
+        Integer ageFrom;
+        if (!request.getParameter("ageFrom").isBlank()) {
+            ageFrom = Integer.valueOf(request.getParameter("ageFrom"));
+        } else {
+            ageFrom = null;
+        }
+        Integer ageTo;
+        if (!request.getParameter("ageTo").isBlank()) {
+            ageTo = Integer.valueOf(request.getParameter("ageTo"));
+        } else {
+            ageTo = null;
+        }
         String nameSearch = request.getParameter("search");
         String dateJoin = request.getParameter("dateJoin");
         FilterMemberDTO filterMemberDTO = new FilterMemberDTO(departmentId, gender, ageFrom, ageTo, dateJoin, nameSearch);
-        
+
         MemberService memberService = new MemberService();
-        
+
         ArrayList<FilterMemberResponseDTO> filterMemberResponseDTO = memberService.filterMember(filterMemberDTO);
-        
-        
+
+        session.setAttribute("filterMemberResponseDTO", filterMemberResponseDTO);
+        session.setAttribute("success", "filter thành công!");
+        response.sendRedirect(request.getContextPath() + "/view/homePage.jsp");
     }
 
     /**

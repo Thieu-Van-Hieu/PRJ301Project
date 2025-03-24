@@ -219,7 +219,9 @@
                 display: block;
             }
         </style>
-        <jsp:include page="/view/background.jsp" />
+        <jsp:include page="/view/background.jsp"/>
+        <jsp:include page="noticeError.jsp"/>
+        <jsp:include page="noticeSuccess.jsp"/>
         <div class="container">
             <!-- Header -->
             <div class="header">

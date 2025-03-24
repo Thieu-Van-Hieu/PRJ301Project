@@ -71,6 +71,8 @@ public class FilterMember extends HttpServlet {
         MemberService memberService = new MemberService();
         
         ArrayList<FilterMemberResponseDTO> filterMemberResponseDTO = memberService.filterMember(filterMemberDTO);
+        
+        
     }
 
     /**

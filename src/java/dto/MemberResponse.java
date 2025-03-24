@@ -16,7 +16,6 @@ public class MemberResponse {
     private String gender;
     private String del;
     private String role;
-
     public MemberResponse(String rollNumber, String lastName, String firstName, String birthday, String gender, String del, String role) {
         this.rollNumber = rollNumber;
         this.lastName = lastName;

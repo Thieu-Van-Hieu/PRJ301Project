@@ -156,7 +156,10 @@ public class MemberRepositoryImpl implements MemberRepository {
                 Member member = new Member.Builder().setId(rs.getInt("id"))
                         .setUserId(rs.getInt("userId"))
                         .setDeptId(rs.getInt("deptId"))
-                        .setRole(rs.getString("role")).build();
+                        .setRole(rs.getString("role"))
+                        .setClubId(rs.getInt("clubId"))
+                        .build();
+                        
                 results.add(member);
             }
             return results;

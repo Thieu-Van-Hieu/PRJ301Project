@@ -68,11 +68,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         try {
             String sql = """
                     update members
-                    set userId = 0
-                    where userId = ? and clubId = ?
+                    set userId = 0, role = null
+                    where id = ? and clubId = ?
                     """;
             PreparedStatement statement = db.getConnection().prepareStatement(sql);
-            statement.setInt(1, memberDTO.getUserId());
+            statement.setInt(1, memberDTO.getUserId()); // memberId
             statement.setInt(2, memberDTO.getClubId());
             int rs = statement.executeUpdate();
             if (rs == 0) {

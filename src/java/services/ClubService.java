@@ -70,4 +70,12 @@ public class ClubService {
         }
         return null;
     }
+    
+    public ArrayList<Club> getAllClubForAdmin() {
+        return clubRepository.getAllClubAdmin();
+    }
+    
+    public void deleteClubFromAdmin(int clubId) {
+        clubRepository.deleteClub(clubId);
+    }
 }

@@ -9,6 +9,7 @@ import dto.UserInformationResponse;
 import factory.UserFactory;
 import repository.UserRepository;
 import entity.User;
+import java.util.ArrayList;
 import repository.UserInformationRepository;
 
 /**
@@ -98,4 +99,16 @@ public class UserService {
     public void updateUserAvatar(UserInformationResponse user) {
         userInformationRepository.updateUserAvatar(user);
     }
-}
+    
+    public String getUserRole(int userId){
+        return userRepository.getUserRole(userId);
+    }
+    
+    public ArrayList<User> getUserListForAdmin() {
+        return userRepository.getUserForAdmin();
+    }
+    
+    public void updateUserRole(int userId, String role){
+        userRepository.updateUserRole(userId, role);
+    }
+ }

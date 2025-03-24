@@ -33,8 +33,8 @@
                     <div class="modal-close js-modal-close"><i class="fa-solid fa-xmark"></i></div>
                     <div class="modal-header">Tạo Bài Viết</div>
                     <input type="hidden" name="createTime" id="createTime" value="">
-                    <input type="hidden" name="userId" value="1">
-                    <input type="hidden" name="clubId" value="1">
+                    <input type="hidden" name="memberId" value="${member.id}">
+                    <input type="hidden" name="clubId" value="${clubId}">
                     <div class="modal-body">
                         <div class="modal-body-header">
                             <div class="modal-body-avatar"><img
@@ -74,7 +74,7 @@
                                         <li>Chỉnh sửa</li>
                                         <li>Ẩn</li>
                                     </ul>
-                                    <div class="item-close" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=deletePost&postUserId=${post.userId}'"><i class="fa-solid fa-xmark"></i></div>
+                                    <div class="item-close" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=deletePost&postMemberId=${post.memberId}&postDeleteId=${post.id}'"><i class="fa-solid fa-xmark"></i></div>
                                 </div>
                             </div>
                             <div class="item-body">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="item-footer">
-                                <div class="item-footer-item love" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=love&postId=${post.id}'">
+                                <div class="item-footer-item love" onclick="location.href = '${pageContext.request.contextPath}/ForumServlet?action=love&postLoveId=${post.id}&memberId=${member.id}'">
                                     <i class="fa-regular fa-heart"></i>
                                     <p>Thích</p>
                                 </div>
@@ -106,6 +106,7 @@
                                     </div>
                                     <input type="text" id="commentInput" name="content" class="input" placeholder="Bình luận gì chưa người đẹp?" required>
                                     <input type="hidden" name="postId" value="${post.id}">
+                                    <input type="hidden" name="memberId" value="${member.id}">
                                     <input type="hidden" name="action" value="comment">
                                     <button type="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>
                                 </div>

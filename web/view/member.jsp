@@ -24,6 +24,7 @@
                                 <option value="3">Hậu Cần</option>
                                 <option value="4">Truyền Thông</option>
                                 <option value="5">Chuyên Môn</option>
+                                <option value="6">Quản Lý</option>
                             </select>
                         </td>
                         <td>

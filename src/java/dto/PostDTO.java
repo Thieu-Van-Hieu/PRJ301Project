@@ -13,16 +13,25 @@ import java.sql.Timestamp;
 public class PostDTO {
     private int clubId;
     private int userId;
+    private int memberId;
     private String content;
     private Timestamp createdAt;
     private String img;
 
-    public PostDTO(int clubId, int userId, String content, Timestamp createdAt, String img) {
+    public PostDTO(int clubId, int memberId, String content, Timestamp createdAt, String img) {
         this.clubId = clubId;
-        this.userId = userId;
+        this.memberId = memberId;
         this.content = content;
         this.createdAt = createdAt;
         this.img = img;
+    }
+
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public int getClubId() {
